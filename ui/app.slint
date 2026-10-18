@@ -1,0 +1,16 @@
+// import { MaterialPalette } from "@material";
+import { TitleBar } from "ui.slint";
+import { AppContent, UIPalette } from "ui.slint";
+
+export component MainWindow inherits Window {
+    min-width: 600px;
+    min-height: 300px;
+    maximized: true;
+    no-frame: false;
+    background: UIPalette.bg;
+
+    VerticalLayout {
+        TitleBar {}
+        AppContent {}
+    }
+}

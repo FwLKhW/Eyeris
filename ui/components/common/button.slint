@@ -1,0 +1,46 @@
+import { UIText } from "ui-text.slint";
+import { Icon } from "icon.slint";
+import { UITypography } from "../../styling/ui-typography.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { StateLayerArea } from "state-layer.slint";
+import { StandardButton } from "std-widgets.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+
+export enum ButtonSize { small, medium }
+
+export component BaseButton {
+    in property <ButtonSize> size: medium;
+    in property <image> icon;
+    in property <color> icon-color: UIPalette.icon;
+    in property <color> background: transparent;
+    in property <length> icon-size: UIMetrics.icon-md;
+    in property <string> text;
+    out property <bool> has-icon: root.icon.width > 0 && root.icon.height > 0;
+    in-out property <bool> enabled;
+
+    callback clicked();
+
+    HorizontalLayout {
+        height: root.size == small ? UIMetrics.btn-h-sm : UIMetrics.btn-h-md;
+        padding: 0px;
+        padding-left: UIMetrics.btn-px;
+        padding-right: UIMetrics.btn-px;
+        spacing: UIMetrics.spacing-md;
+        alignment: center;
+
+        if root.has-icon: Icon {
+            source: root.icon;
+            colorize: root.icon-color;
+            opacity: root.enabled ? 100% : 40%;
+            width: root.icon-size;
+        }
+
+        if root.text != "": UIText {
+            text: root.text;
+            style: UITypography.label;
+            opacity: root.enabled ? 100% : 40%;
+        }
+
+        @children
+    }
+}

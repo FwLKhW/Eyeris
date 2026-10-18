@@ -1,0 +1,8 @@
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+
+export component Icon inherits Image {
+    width: UIMetrics.icon-md;
+    height: self.width;
+    colorize: UIPalette.icon;
+}

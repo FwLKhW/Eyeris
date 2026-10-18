@@ -1,0 +1,66 @@
+import { Palette } from "std-widgets.slint";
+import { UISchemes, UIScheme } from "ui-schemes.slint";
+
+export global UIPalette {
+    out property <color> primary: root.scheme.primary;
+    out property <color> error: root.scheme.error;
+
+    out property <color> bg-area: root.scheme.bg-area;
+    out property <color> bg: root.scheme.bg;
+    out property <color> bg-surface: root.scheme.bg-surface;
+    out property <color> bg-hover: root.scheme.bg-hover;
+    
+    out property <color> separator: root.scheme.separator;
+    
+    out property <color> text: root.scheme.text;
+    out property <color> subtext: root.scheme.subtext;
+
+    out property <color> icon: root.scheme.icon;
+    out property <color> icon-hover: root.scheme.icon-hover;
+
+    out property <float> focus-opacity: root.scheme.focus-opacity;
+
+    in property <UISchemes> schemes: {
+        // TODO: light mode
+        light: {
+            primary: #e3e3e3,
+            primary: #d30000,
+
+            bg-area: #111111,
+            bg: #171717,
+            bg-surface: #e3e3e313,
+            bg-hover: #e3e3e321,
+
+            separator: #212121,
+            
+            text: #e3e3e3,
+            subtext: #a1a1a1,
+            
+            icon: #cfcfcf,
+            icon-hover: #e6e6e6,
+
+            focus-opacity: 10%
+        },
+        dark: {
+            primary: #e3e3e3,
+            primary: #d30000,
+
+            bg-area: #111111,
+            bg: #171717,
+            bg-surface: #e3e3e313,
+            bg-hover: #e3e3e321,
+
+            separator: #212121,
+            
+            text: #e3e3e3,
+            subtext: #a1a1a1,
+            
+            icon: #cfcfcf,
+            icon-hover: #e6e6e6,
+            
+            focus-opacity: 10%
+        },
+    };
+
+    property <UIScheme> scheme: Palette.color-scheme == ColorScheme.dark ? root.schemes.dark : root.schemes.light;
+}

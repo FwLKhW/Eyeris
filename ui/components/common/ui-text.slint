@@ -1,0 +1,11 @@
+import { UITypography, TextStyle } from "../../styling/ui-typography.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+
+export component UIText inherits Text {
+    in property <TextStyle> style: UITypography.body;
+
+    font_size: root.style.font_size;
+    font_weight: root.style.font_weight;
+    color: UIPalette.text;
+    overflow: elide;
+}

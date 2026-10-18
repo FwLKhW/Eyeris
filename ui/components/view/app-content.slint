@@ -1,0 +1,27 @@
+import { AboutSlint, VerticalBox } from "std-widgets.slint";
+
+export component AppContent inherits HorizontalLayout {
+    vertical-stretch: 1;
+    
+    Rectangle {
+        width: 240px;
+
+        Text {
+            text: "Left";
+        }
+    }
+    Rectangle {
+        horizontal-stretch: 1;
+
+        Text {
+            text: "Center";
+        }
+    }
+    Rectangle {
+        width: 320px;
+
+        Text {
+            text: "Right";
+        }
+    }
+}

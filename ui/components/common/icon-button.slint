@@ -1,0 +1,41 @@
+import { BaseButton, ButtonSize } from "button.slint";
+import { UITypography } from "../../styling/ui-typography.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+
+export component IconButton {
+    in property <ButtonSize> size;
+    in property <image> icon;
+    in property <image> checked-icon: root.icon;
+    in property <bool> checkable;
+    in-out property <bool> checked;
+    in-out property <bool> enabled <=> base.enabled;
+    in property <bool> has-error;
+
+    callback clicked();
+    
+    base := BaseButton {
+        size: root.size;
+        icon: root.checked ? root.checked-icon : root.icon;
+        height: UIMetrics.btn-h-md;
+        icon-size: UIMetrics.icon-md;
+
+        clicked => {
+            root.toggle();
+            root.clicked();
+        }
+    }
+
+    function toggle() {
+        if !root.checkable {
+            return;
+        }
+        root.checked = !root.checked;
+    }
+
+    states [
+        checked when root.enabled && root.checked: {
+            base.background: UIPalette.primary;
+        }
+    ]
+}
