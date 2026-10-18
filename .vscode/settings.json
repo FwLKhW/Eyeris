@@ -4,7 +4,10 @@
     },
     "cSpell.words": [
         "Flexbox",
+        "noconsole",
         "numpy",
+        "onefile",
+        "pyinstaller",
         "slint",
         "titlebar"
     ]
