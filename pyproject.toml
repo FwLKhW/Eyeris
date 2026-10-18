@@ -8,9 +8,7 @@ dependencies = [
     "slint>=1.18.1b1",
 ]
 
-[project.scripts]
-app = "app.main:main"
-
-[build-system]
-requires = ["uv_build>=0.13.1,<0.14.0"]
-build-backend = "uv_build"
+[dependency-groups]
+dev = [
+    "pyinstaller>=6.22.3",
+]
