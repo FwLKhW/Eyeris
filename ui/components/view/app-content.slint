@@ -1,27 +1,66 @@
-import { AboutSlint, VerticalBox } from "std-widgets.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { VerticalDivider, HorizontalDivider } from "../common/divider.slint";
+import { Skeleton } from "../common/skeleton.slint";
+import { TabGroup } from "tab-group.slint";
+import { FolderGroup } from "folder-group.slint";
+
+component Left inherits Rectangle {
+    background: UIPalette.bg-area;
+
+    VerticalLayout {
+        padding-left: UIMetrics.spacing-lg;
+        padding-right: UIMetrics.spacing-lg;
+        alignment: start;
+
+        TabGroup { }
+
+        HorizontalDivider { }
+
+        FolderGroup { }
+        FolderGroup { }
+        FolderGroup { }
+    }
+}
+
+component Center inherits Rectangle {
+    Text {
+        text: "Center";
+    }
+}
+
+component Right inherits Rectangle {
+    background: UIPalette.bg-area;
+
+    VerticalLayout {
+        padding-left: UIMetrics.spacing-lg;
+        padding-right: UIMetrics.spacing-lg;
+        alignment: start;
+
+        TabGroup { }
+
+        HorizontalDivider { }
+
+        FolderGroup { }
+        FolderGroup { }
+        FolderGroup { }
+    }
+}
 
 export component AppContent inherits HorizontalLayout {
-    vertical-stretch: 1;
-    
-    Rectangle {
+    Left {
         width: 240px;
-
-        Text {
-            text: "Left";
-        }
     }
-    Rectangle {
+
+    VerticalDivider { }
+
+    Center {
         horizontal-stretch: 1;
-
-        Text {
-            text: "Center";
-        }
     }
-    Rectangle {
-        width: 320px;
 
-        Text {
-            text: "Right";
-        }
+    VerticalDivider { }
+
+    Right {
+        width: 320px;
     }
 }

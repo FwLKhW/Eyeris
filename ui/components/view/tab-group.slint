@@ -1,0 +1,21 @@
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { Skeleton } from "../common/skeleton.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+
+export component TabGroup inherits HorizontalLayout {
+    padding-top: UIMetrics.spacing-lg;
+    padding-bottom: UIMetrics.spacing-lg;
+
+    HorizontalLayout {
+        height: 32px;
+        spacing: UIMetrics.spacing-sm;
+
+        Skeleton { }
+
+        Skeleton { }
+
+        Skeleton { }
+
+        Skeleton { }
+    }
+}

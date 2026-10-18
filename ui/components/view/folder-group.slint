@@ -1,0 +1,40 @@
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { Skeleton } from "../common/skeleton.slint";
+import { UIText } from "../common/text.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { UITypography } from "../../styling/ui-typography.slint";
+
+component Title inherits HorizontalLayout {
+    padding: 4px;
+    padding-left: 4px;
+    alignment: start;
+
+    UIText {
+        text: "Group";
+        color: UIPalette.subtext;
+        font-weight: UITypography.semibold;
+    }
+}
+
+component Folder inherits Skeleton {
+    height: 32px;
+}
+
+export component FolderGroup inherits VerticalLayout {
+    padding-top: UIMetrics.spacing-md;
+    padding-bottom: UIMetrics.spacing-md;
+    spacing: UIMetrics.spacing-sm;
+    alignment: start;
+
+    Title { }
+
+    VerticalLayout {
+        spacing: UIMetrics.spacing-sm;
+
+        Folder { }
+
+        Folder { }
+
+        Folder { }
+    }
+}

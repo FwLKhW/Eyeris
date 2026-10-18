@@ -1,41 +1,27 @@
-import { VerticalBox } from "std-widgets.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { HorizontalDivider } from "../common/divider.slint";
-import { Icon } from "../common/icon.slint";
 import { IconButton } from "../common/icon-button.slint";
-import { BaseButton } from "../common/button.slint";
+import { Skeleton } from "../common/skeleton.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
 
 component Left inherits HorizontalLayout {
     spacing: 4px;
 
-    IconButton {
-        icon: @image-url("../../icons/menu.svg");
-    }
-
-    BaseButton {
-        text: "GO BRR";
+    Skeleton {
+        width: 40px;
+        height: 30px;
     }
 }
 
 component Right inherits HorizontalLayout {
     spacing: 2px;
 
-    IconButton {
-        icon: @image-url("../../icons/minimize.svg");
-    }
-    
-    IconButton {
-        icon: @image-url("../../icons/maximize.svg");
-    }
-    
-    IconButton {
-        icon: @image-url("../../icons/close.svg");
+    Skeleton {
+        width: 120px;
     }
 }
 
 export component TitleBar inherits VerticalLayout {
-    vertical-stretch: 0;
-
     Rectangle {
         background: UIPalette.bg-area;
 
@@ -43,9 +29,9 @@ export component TitleBar inherits VerticalLayout {
             spacing: 8px;
             alignment: space-between;
             cross-axis-alignment: center;
-            padding: 4px;
-            padding-left: 12px;
-            padding-right: 12px;
+            padding: UIMetrics.spacing-md;
+            padding-left: UIMetrics.spacing-lg;
+            padding-right: UIMetrics.spacing-lg;
 
             Left { }
 

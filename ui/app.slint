@@ -1,19 +1,23 @@
 import "../assets/fonts/Monda.ttf";
 
-import { TitleBar } from "ui.slint";
-import { AppContent, UIPalette } from "ui.slint";
+import { AppContent, TitleBar, UIPalette, UITypography } from "ui.slint";
 
 export component App inherits Window {
     default-font-family: "Monda";
+    default-font-weight: UITypography.regular;
 
-    min-width: 600px;
-    min-height: 300px;
-    maximized: true;
-    no-frame: false;
+    min-width: 960px;
+    min-height: 640px;
+
     background: UIPalette.bg;
 
     VerticalLayout {
-        TitleBar {}
-        AppContent {}
+        TitleBar {
+            vertical-stretch: 0;
+        }
+
+        AppContent {
+            vertical-stretch: 1;
+        }
     }
 }
