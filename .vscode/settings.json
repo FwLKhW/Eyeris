@@ -1,0 +1,11 @@
+{
+    "slint.libraryPaths": {
+        "ui": "./ui/ui.slint"
+    },
+    "cSpell.words": [
+        "Flexbox",
+        "numpy",
+        "slint",
+        "titlebar"
+    ]
+}
