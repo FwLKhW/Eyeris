@@ -1,23 +1,33 @@
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { HorizontalDivider } from "../common/divider.slint";
-import { IconButton } from "../common/icon-button.slint";
+import { IconButton } from "../common/button.slint";
 import { Skeleton } from "../common/skeleton.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { Icon } from "../common/icon.slint";
+import { Icons } from "../../icons/icons.slint";
 
 component Left inherits HorizontalLayout {
-    spacing: 4px;
+    spacing: UIMetrics.spacing-sm;
 
-    Skeleton {
-        width: 40px;
-        height: 30px;
+    IconButton {
+        icon: Icons.menu;
     }
 }
 
 component Right inherits HorizontalLayout {
-    spacing: 2px;
+    spacing: UIMetrics.spacing-sm;
 
-    Skeleton {
-        width: 120px;
+    IconButton {
+        icon: Icons.minimize;
+    }
+
+    IconButton {
+        icon: Icons.maximize;
+    }
+
+    IconButton {
+        icon: Icons.close;
+        hover: UIPalette.error;
     }
 }
 
@@ -26,12 +36,12 @@ export component TitleBar inherits VerticalLayout {
         background: UIPalette.bg-area;
 
         FlexboxLayout {
-            spacing: 8px;
             alignment: space-between;
             cross-axis-alignment: center;
+            spacing: UIMetrics.spacing-lg;
             padding: UIMetrics.spacing-md;
-            padding-left: UIMetrics.spacing-lg;
-            padding-right: UIMetrics.spacing-lg;
+            padding-left: UIMetrics.spacing-xl;
+            padding-right: UIMetrics.spacing-xl;
 
             Left { }
 
