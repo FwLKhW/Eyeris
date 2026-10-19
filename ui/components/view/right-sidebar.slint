@@ -1,8 +1,9 @@
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
-import { VerticalGroup } from "../ui/vertical-group.slint";
 import { ImagePreview } from "../ui/image-preview.slint";
+import { ColorPalette } from "../ui/color-pallete.slint";
+import { ColorPalleteState } from "../../globals.slint";
 
 export component RightSidebar inherits Rectangle {
     background: UIPalette.bg-area;
@@ -12,10 +13,21 @@ export component RightSidebar inherits Rectangle {
         padding-right: UIMetrics.spacing-xl;
         alignment: start;
 
-        ImagePreview { source: @image-url("../../../fixtures/images/wallpaper.png"); }
+        ImagePreview {
+            source: @image-url("../../../fixtures/images/wallpaper.png");
+        }
 
         HorizontalDivider { }
 
-        VerticalGroup { }
+        VerticalLayout {
+            cross-axis-alignment: center;
+            spacing: UIMetrics.spacing-lg;
+            padding-top: UIMetrics.spacing-2xl;
+            padding-bottom: UIMetrics.spacing-2xl;
+
+            ColorPalette {
+                colors: ColorPalleteState.colors;
+            }
+        }
     }
 }

@@ -1,6 +1,20 @@
+import { UIPalette } from "styling/ui-palette.slint";
+
 export global Actions { }
 
 export global PreviewState {
     in-out property <image> current-source;
     in-out property <bool> is-active: false;
+}
+
+export global ColorPalleteState {
+    in-out property <[color]> colors: [
+        UIPalette.red,
+        UIPalette.pink,
+        UIPalette.orange,
+        UIPalette.yellow,
+        UIPalette.mauve,
+        UIPalette.blue,
+        UIPalette.green,
+    ];
 }
