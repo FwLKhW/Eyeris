@@ -11,7 +11,8 @@ export component IconButton inherits Rectangle {
     in property <length> icon-size: UIMetrics.icon-md;
     in property <image> icon;
     in property <color> hover: UIPalette.bg-hover;
-    in property <bool> selected: false;
+    in property <bool> checkable: false;
+    in-out property <bool> selected: false;
 
     callback clicked();
 
@@ -33,7 +34,12 @@ export component IconButton inherits Rectangle {
     }
 
     touch := TouchArea {
+        mouse-cursor: MouseCursor.pointer;
+
         clicked => {
+            if root.checkable {
+                root.selected = !root.selected;
+            }
             root.clicked();
         }
     }
@@ -78,7 +84,7 @@ export component FullButton inherits Rectangle {
             }
         }
 
-        HorizontalLayout {
+        if root.show-right: HorizontalLayout {
             alignment: end;
             cross-axis-alignment: center;
             padding-right: 4px;
@@ -96,6 +102,8 @@ export component FullButton inherits Rectangle {
     }
 
     touch := TouchArea {
+        mouse-cursor: MouseCursor.pointer;
+
         clicked => {
             root.clicked();
         }
