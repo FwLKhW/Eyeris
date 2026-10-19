@@ -69,7 +69,7 @@ export component App inherits Window {
 
                         IconButton {
                             icon: Icons.close;
-                            icon-size: 16px;
+                            icon-size: 18px;
                             hover: UIPalette.error;
                             clicked => {
                                 root.hide();
@@ -88,8 +88,6 @@ export component App inherits Window {
     Rectangle {
         visible: ImagePreviewState.is-active;
         background: rgba(0, 0, 0, 0.8);
-        width: 100%;
-        height: 100%;
         z: 999;
 
         Image {
