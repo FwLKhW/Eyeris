@@ -48,20 +48,17 @@ export component IconButton inherits Rectangle {
 export component FullButton inherits Rectangle {
     in property <ButtonSize> size: medium;
     in property <color> icon-color: UIPalette.icon;
-    in property <image> left-icon;
-    in property <string> left-text;
-    in property <image> right-icon;
-    in property <string> right-text;
-    in property <bool> show-right;
+    in property <image> left-icon: Icons.folder;
+    in property <string> left-text: "Button";
+    in property <string> right-text: "42";
+    in property <image> right-icon: Icons.dots-vertical;
+    in property <bool> show-right: false;
     in property <bool> activated: false;
 
     callback clicked();
 
     background: touch.pressed || touch.has-hover ? UIPalette.bg-hover : transparent;
     border-radius: UIMetrics.radius-md;
-
-    horizontal-stretch: 1;
-    vertical-stretch: 0;
 
     HorizontalLayout {
         alignment: space-between;
@@ -72,31 +69,31 @@ export component FullButton inherits Rectangle {
         HorizontalLayout {
             alignment: start;
             cross-axis-alignment: center;
-            padding-right: 4px;
             spacing: UIMetrics.spacing-sm;
+            padding-right: UIMetrics.spacing-md;
 
-            IconButton {
-                icon: Icons.home;
+            Icon {
+                icon: root.left-icon;
             }
 
             UIText {
-                text: "Button";
+                text: root.left-text;
             }
         }
 
         if root.show-right: HorizontalLayout {
-            alignment: end;
+            alignment: start;
             cross-axis-alignment: center;
-            padding-right: 4px;
             spacing: UIMetrics.spacing-sm;
+            padding-right: UIMetrics.spacing-md;
 
             UIText {
-                text: "42";
+                text: root.right-text;
                 color: UIPalette.subtext;
             }
 
             Icon {
-                icon: Icons.close;
+                icon: root.right-icon;
             }
         }
     }
