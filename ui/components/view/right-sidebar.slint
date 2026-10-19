@@ -1,6 +1,6 @@
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
-import { ColorPalleteState } from "../../globals.slint";
+import { ColorPaletteState } from "../../globals.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
 import { ImagePreview } from "../ui/image-preview.slint";
 import { ColorPalette } from "../ui/color-pallete.slint";
@@ -31,7 +31,7 @@ export component RightSidebar inherits Rectangle {
             padding-bottom: UIMetrics.spacing-2xl;
 
             ColorPalette {
-                colors: ColorPalleteState.colors;
+                colors: ColorPaletteState.colors;
             }
         }
 

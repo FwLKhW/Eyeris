@@ -6,7 +6,11 @@ export global TabState {
     in-out property <int> current-tab-index;
 }
 
-export global PreviewState {
+export global GalleryState {
+    in property <string> selected-image-hash;
+}
+
+export global ImagePreviewState {
     in-out property <image> current-source;
     in-out property <bool> is-active: false;
     in property <length> initial-mouse-x;
@@ -15,7 +19,7 @@ export global PreviewState {
     in property <length> delta-y;
 }
 
-export global ColorPalleteState {
+export global ColorPaletteState {
     in-out property <[color]> colors: [
         UIPalette.red,
         UIPalette.pink,

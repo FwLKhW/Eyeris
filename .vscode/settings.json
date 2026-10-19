@@ -3,12 +3,15 @@
         "ui": "./ui/ui.slint"
     },
     "cSpell.words": [
+        "Eyeris",
         "Flexbox",
+        "kurisu",
         "Monda",
         "noconsole",
         "numpy",
         "onefile",
         "pyinstaller",
+        "rgba",
         "slint",
         "titlebar"
     ]

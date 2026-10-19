@@ -1,3 +1,4 @@
+import { UITypography } from "../../styling/ui-typography.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { Icons } from "../../icons/icons.slint";
@@ -76,6 +77,7 @@ export component FullButton inherits Rectangle {
 
             UIText {
                 text: root.left-text;
+                style: UITypography.label;
             }
         }
 
