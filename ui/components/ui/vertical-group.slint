@@ -7,9 +7,9 @@ import { UIText } from "text.slint";
 component Title inherits HorizontalLayout {
     in property <string> text;
 
+    alignment: start;
     padding-left: UIMetrics.spacing-lg;
     padding-bottom: UIMetrics.spacing-sm;
-    alignment: start;
 
     UIText {
         text: root.text;

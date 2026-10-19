@@ -96,11 +96,10 @@ export component App inherits Window {
 
         Image {
             source: PreviewState.current-source;
-            x: 60px;
-            y: 60px;
-            width: parent.width - 120px;
-            height: parent.height - 120px;
-            image-fit: contain;
+            x: root.width / 2 - (PreviewState.current-source.width / 2 * 1phx) + (PreviewState.delta-x * root.width / 512 / 1px);
+            y: root.height / 2 - (PreviewState.current-source.height / 2 * 1phx) + (PreviewState.delta-y * root.height / 512 / 1px);
+            width: PreviewState.current-source.width * 1phx;
+            height: PreviewState.current-source.height * 1phx;
         }
     }
 }

@@ -61,13 +61,11 @@ export component FullButton inherits Rectangle {
     border-radius: UIMetrics.radius-md;
 
     HorizontalLayout {
-        alignment: space-between;
         padding: UIMetrics.spacing-sm;
         padding-left: UIMetrics.spacing-md;
         padding-right: UIMetrics.spacing-md;
 
         HorizontalLayout {
-            alignment: start;
             cross-axis-alignment: center;
             spacing: UIMetrics.spacing-sm;
             padding-right: UIMetrics.spacing-md;
@@ -82,7 +80,7 @@ export component FullButton inherits Rectangle {
         }
 
         if root.show-right: HorizontalLayout {
-            alignment: start;
+            alignment: end;
             cross-axis-alignment: center;
             spacing: UIMetrics.spacing-sm;
             padding-right: UIMetrics.spacing-md;

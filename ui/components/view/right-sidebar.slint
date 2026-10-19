@@ -1,25 +1,30 @@
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
+import { ColorPalleteState } from "../../globals.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
 import { ImagePreview } from "../ui/image-preview.slint";
 import { ColorPalette } from "../ui/color-pallete.slint";
-import { ColorPalleteState } from "../../globals.slint";
 
 export component RightSidebar inherits Rectangle {
     background: UIPalette.bg-area;
 
     VerticalLayout {
-        alignment: start;
         padding-left: UIMetrics.spacing-xl;
         padding-right: UIMetrics.spacing-xl;
 
-        ImagePreview {
-            source: @image-url("../../../fixtures/images/wallpaper.png");
+        VerticalLayout {
+            padding-top: UIMetrics.spacing-2xl;
+            padding-bottom: UIMetrics.spacing-2xl;
+
+            ImagePreview {
+                source: @image-url("../../../fixtures/images/wallpaper.png");
+            }
         }
 
         HorizontalDivider { }
 
         VerticalLayout {
+            alignment: start;
             cross-axis-alignment: center;
             spacing: UIMetrics.spacing-lg;
             padding-top: UIMetrics.spacing-2xl;
@@ -29,5 +34,7 @@ export component RightSidebar inherits Rectangle {
                 colors: ColorPalleteState.colors;
             }
         }
+
+        VerticalLayout { }
     }
 }

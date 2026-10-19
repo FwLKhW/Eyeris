@@ -1,11 +1,12 @@
-import { PreviewState } from "../../globals.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { PreviewState } from "../../globals.slint";
 
 export component ImagePreview inherits Rectangle {
     in property <image> source;
 
     min-width: 256px;
     min-height: 256px;
+    max-height: 256px;
 
     Image {
         source: root.source;
@@ -19,9 +20,18 @@ export component ImagePreview inherits Rectangle {
             if (event.kind == PointerEventKind.down) {
                 PreviewState.current-source = root.source;
                 PreviewState.is-active = true;
+                PreviewState.initial-mouse-x = self.mouse-x;
+                PreviewState.initial-mouse-y = self.mouse-y;
+                PreviewState.delta-x = self.mouse-x - PreviewState.initial-mouse-x;
+                PreviewState.delta-y = self.mouse-y - PreviewState.initial-mouse-y;
             } else if (event.kind == PointerEventKind.up) {
                 PreviewState.is-active = false;
             }
+        }
+
+        moved => {
+            PreviewState.delta-x = self.mouse-x - PreviewState.initial-mouse-x;
+            PreviewState.delta-y = self.mouse-y - PreviewState.initial-mouse-y;
         }
     }
 }

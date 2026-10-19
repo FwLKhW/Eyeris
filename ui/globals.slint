@@ -9,6 +9,10 @@ export global TabState {
 export global PreviewState {
     in-out property <image> current-source;
     in-out property <bool> is-active: false;
+    in property <length> initial-mouse-x;
+    in property <length> initial-mouse-y;
+    in property <length> delta-x;
+    in property <length> delta-y;
 }
 
 export global ColorPalleteState {
