@@ -8,7 +8,7 @@ import { UIText } from "text.slint";
 export enum ButtonSize { small, medium }
 
 export component IconButton inherits Rectangle {
-    in property <ButtonSize> size;
+    in property <ButtonSize> size: medium;
     in property <length> icon-size: UIMetrics.icon-md;
     in property <image> icon;
     in property <color> hover: UIPalette.bg-hover;

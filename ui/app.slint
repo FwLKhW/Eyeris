@@ -44,6 +44,7 @@ export component App inherits Window {
 
                     IconButton {
                         icon: Icons.menu;
+                        size: small;
                         icon-size: 16px;
                     }
 
@@ -53,6 +54,7 @@ export component App inherits Window {
 
                         IconButton {
                             icon: Icons.minimize;
+                            size: small;
                             icon-size: 16px;
                             clicked => {
                                 root.minimized = true;
@@ -61,6 +63,7 @@ export component App inherits Window {
 
                         IconButton {
                             icon: Icons.maximize;
+                            size: small;
                             icon-size: 16px;
                             clicked => {
                                 root.maximized = !root.maximized;
@@ -69,6 +72,7 @@ export component App inherits Window {
 
                         IconButton {
                             icon: Icons.close;
+                            size: small;
                             icon-size: 18px;
                             hover: UIPalette.error;
                             clicked => {
