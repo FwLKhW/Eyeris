@@ -9,9 +9,9 @@ export global UIPalette {
     out property <color> bg: root.scheme.bg;
     out property <color> bg-surface: root.scheme.bg-surface;
     out property <color> bg-hover: root.scheme.bg-hover;
-    
+
     out property <color> separator: root.scheme.separator;
-    
+
     out property <color> text: root.scheme.text;
     out property <color> subtext: root.scheme.subtext;
 
@@ -23,41 +23,31 @@ export global UIPalette {
     in property <UISchemes> schemes: {
         // TODO: light mode
         light: {
-            primary: #e3e3e3,
-            primary: #d30000,
-
+            primary: #E3E3E3,
+            error: #D92E41,
             bg-area: #111111,
             bg: #171717,
-            bg-surface: #e3e3e313,
-            bg-hover: #e3e3e321,
-
+            bg-surface: #E3E3E313,
+            bg-hover: #E3E3E321,
             separator: #212121,
-            
-            text: #e3e3e3,
-            subtext: #a1a1a1,
-            
-            icon: #cfcfcf,
-            icon-hover: #e6e6e6,
-
+            text: #E3E3E3,
+            subtext: #A1A1A1,
+            icon: #CFCFCF,
+            icon-hover: #E6E6E6,
             focus-opacity: 10%
         },
         dark: {
-            primary: #e3e3e3,
-            primary: #d30000,
-
+            primary: #E3E3E3,
+            error: #D92E41,
             bg-area: #111111,
             bg: #171717,
-            bg-surface: #e3e3e313,
-            bg-hover: #e3e3e321,
-
+            bg-surface: #E3E3E313,
+            bg-hover: #E3E3E321,
             separator: #212121,
-            
-            text: #e3e3e3,
-            subtext: #a1a1a1,
-            
-            icon: #cfcfcf,
-            icon-hover: #e6e6e6,
-            
+            text: #E3E3E3,
+            subtext: #A1A1A1,
+            icon: #CFCFCF,
+            icon-hover: #E6E6E6,
             focus-opacity: 10%
         },
     };
