@@ -1,7 +1,21 @@
 # Development
 
+Setup:
+
+```bash
+uv sync
+```
+
 Run app:
 
 ```bash
-uv run app
+just dev
 ```
+
+Build:
+
+```bash
+just build
+```
+
+The final single executable file is located at `build/eyeris.exe`.
