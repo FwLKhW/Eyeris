@@ -1,0 +1,38 @@
+import { TabGroup } from "tab-group.slint";
+import { HorizontalDivider } from "../common/divider.slint";
+import { FolderGroup } from "folder-group.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+
+export component LeftSidebar inherits Rectangle {
+    background: UIPalette.bg-area;
+
+    VerticalLayout {
+        alignment: start;
+        padding-left: UIMetrics.spacing-xl;
+        padding-right: UIMetrics.spacing-xl;
+
+        TabGroup { }
+
+        HorizontalDivider { }
+
+        VerticalLayout {
+            alignment: start;
+            spacing: UIMetrics.spacing-xl;
+
+            FolderGroup { }
+
+            FolderGroup {
+                title: "Tag";
+            }
+
+            FolderGroup {
+                title: "View";
+            }
+
+            FolderGroup {
+                title: "Tree";
+            }
+        }
+    }
+}
