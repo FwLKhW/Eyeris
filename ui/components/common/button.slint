@@ -1,45 +1,101 @@
-import { UIText } from "text.slint";
-import { Icon } from "icon.slint";
-import { UITypography } from "../../styling/ui-typography.slint";
-import { UIMetrics } from "../../styling/ui-metrics.slint";
-import { StandardButton } from "std-widgets.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { Icon } from "icon.slint";
+import { UIText } from "text.slint";
+import { Icons } from "../../icons/icons.slint";
 
 export enum ButtonSize { small, medium }
 
-export component BaseButton {
-    in property <ButtonSize> size: medium;
+export component IconButton inherits Rectangle {
+    in property <ButtonSize> size;
     in property <image> icon;
-    in property <color> icon-color: UIPalette.icon;
-    in property <color> background: transparent;
-    in property <length> icon-size: UIMetrics.icon-md;
-    in property <string> text;
-    out property <bool> has-icon: root.icon.width > 0 && root.icon.height > 0;
-    in-out property <bool> enabled;
+    in property <color> hover: UIPalette.bg-hover;
+    in property <bool> selected: false;
 
     callback clicked();
 
+    background: touch.pressed || touch.has-hover || root.selected ? root.hover : transparent;
+    border-radius: UIMetrics.radius-md;
+
     HorizontalLayout {
-        height: root.size == small ? UIMetrics.btn-h-sm : UIMetrics.btn-h-md;
-        padding: 0px;
-        padding-left: UIMetrics.btn-px;
-        padding-right: UIMetrics.btn-px;
-        spacing: UIMetrics.spacing-md;
         alignment: center;
+        cross-axis-alignment: center;
+        padding: root.size == small ? UIMetrics.spacing-xs : UIMetrics.spacing-md;
+        padding-left: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
+        padding-right: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
 
-        if root.has-icon: Icon {
+        Icon {
             source: root.icon;
-            colorize: root.icon-color;
-            opacity: root.enabled ? 100% : 40%;
-            width: root.icon-size;
+            color: touch.has-hover ? UIPalette.icon-hover : UIPalette.icon;
+        }
+    }
+
+    touch := TouchArea {
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component FullButton inherits Rectangle {
+    in property <ButtonSize> size: medium;
+    in property <color> icon-color: UIPalette.icon;
+    in property <image> left-icon;
+    in property <string> left-text;
+    in property <image> right-icon;
+    in property <string> right-text;
+    in property <bool> show-right;
+    in property <bool> activated: false;
+
+    callback clicked();
+
+    background: touch.pressed || touch.has-hover ? UIPalette.bg-hover : transparent;
+    border-radius: UIMetrics.radius-md;
+
+    horizontal-stretch: 1;
+    vertical-stretch: 0;
+
+    HorizontalLayout {
+        alignment: space-between;
+        padding: UIMetrics.spacing-sm;
+        padding-left: UIMetrics.spacing-md;
+        padding-right: UIMetrics.spacing-md;
+
+        HorizontalLayout {
+            alignment: start;
+            cross-axis-alignment: center;
+            padding-right: 4px;
+            spacing: UIMetrics.spacing-sm;
+
+            IconButton {
+                icon: Icons.home;
+            }
+
+            UIText {
+                text: "Button";
+            }
         }
 
-        if root.text != "": UIText {
-            text: root.text;
-            style: UITypography.label;
-            opacity: root.enabled ? 100% : 40%;
-        }
+        HorizontalLayout {
+            alignment: end;
+            cross-axis-alignment: center;
+            padding-right: 4px;
+            spacing: UIMetrics.spacing-sm;
 
-        @children
+            UIText {
+                text: "42";
+                color: UIPalette.subtext;
+            }
+
+            Icon {
+                source: Icons.close;
+            }
+        }
+    }
+
+    touch := TouchArea {
+        clicked => {
+            root.clicked();
+        }
     }
 }
