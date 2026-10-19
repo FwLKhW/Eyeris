@@ -1,21 +1,39 @@
 import { UIMetrics } from "../../styling/ui-metrics.slint";
-import { Skeleton } from "../common/skeleton.slint";
-import { UIPalette } from "../../styling/ui-palette.slint";
+import { IconButton } from "../common/button.slint";
+import { Icons } from "../../icons/icons.slint";
 
 export component TabGroup inherits HorizontalLayout {
-    padding-top: UIMetrics.spacing-lg;
-    padding-bottom: UIMetrics.spacing-lg;
+    in-out property <int> selected-index: 0;
+
+    padding-top: UIMetrics.spacing-xl;
+    padding-bottom: UIMetrics.spacing-xl;
 
     HorizontalLayout {
         height: 32px;
         spacing: UIMetrics.spacing-sm;
 
-        Skeleton { }
+        IconButton {
+            icon: Icons.home;
+            selected: root.selected-index == 0;
+            clicked => { root.selected-index = 0; }
+        }
 
-        Skeleton { }
+        IconButton {
+            icon: Icons.search;
+            selected: root.selected-index == 1;
+            clicked => { root.selected-index = 1; }
+        }
 
-        Skeleton { }
+        IconButton {
+            icon: Icons.chart;
+            selected: root.selected-index == 2;
+            clicked => { root.selected-index = 2; }
+        }
 
-        Skeleton { }
+        IconButton {
+            icon: Icons.star;
+            selected: root.selected-index == 3;
+            clicked => { root.selected-index = 3; }
+        }
     }
 }
