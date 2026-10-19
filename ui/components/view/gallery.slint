@@ -2,13 +2,16 @@ import { UITypography } from "../../styling/ui-typography.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
+import {
+    GalleryState,
+    ImagePreviewState,
+} from "../../globals.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
 import { ScrollView } from "../ui/scroll-view.slint";
 import { IconButton } from "../ui/button.slint";
+import { SearchBar } from "../ui/search-bar.slint";
 import { UIText } from "../ui/text.slint";
 import { ListView } from "std-widgets.slint";
-import { GalleryState, ImagePreviewState } from "../../globals.slint";
-import { SearchBar } from "../ui/search-bar.slint";
 
 component ImageItem inherits Rectangle {
     in property <string> id;
@@ -118,8 +121,15 @@ export component Gallery inherits Rectangle {
 
             HorizontalLayout {
                 alignment: end;
+                spacing: UIMetrics.spacing-md;
 
                 SearchBar { }
+
+                SearchBar {
+                    min-width: 240px;
+                    icon: Icons.vector-square;
+                    placeholder: "Semantic Search";
+                }
             }
         }
 

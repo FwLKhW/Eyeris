@@ -9,9 +9,10 @@ import { UIText } from "text.slint";
 
 export component SearchBar {
     in property <image> icon: Icons.search;
+    in property <string> placeholder: "Search";
     out property <string> text <=> input.text;
 
-    min-width: 200px;
+    min-width: 160px;
 
     callback search();
 
@@ -41,7 +42,7 @@ export component SearchBar {
                 opacity: UIPalette.subtle-text-opacity;
 
                 if input.text == "": UIText {
-                    text: "Search";
+                    text: root.placeholder;
                     color: UIPalette.subtext;
                 }
 
