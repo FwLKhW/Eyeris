@@ -1,0 +1,27 @@
+import { PreviewState } from "../../globals.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+
+export component ImagePreview inherits Rectangle {
+    in property <image> source;
+
+    min-width: 256px;
+    min-height: 256px;
+
+    Image {
+        source: root.source;
+        width: 100%;
+        height: 100%;
+        image-fit: contain;
+    }
+
+    touch := TouchArea {
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down) {
+                PreviewState.current-source = root.source;
+                PreviewState.is-active = true;
+            } else if (event.kind == PointerEventKind.up) {
+                PreviewState.is-active = false;
+            }
+        }
+    }
+}

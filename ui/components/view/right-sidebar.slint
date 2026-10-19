@@ -2,6 +2,7 @@ import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
 import { VerticalGroup } from "../ui/vertical-group.slint";
+import { ImagePreview } from "../ui/image-preview.slint";
 
 export component RightSidebar inherits Rectangle {
     background: UIPalette.bg-area;
@@ -11,7 +12,7 @@ export component RightSidebar inherits Rectangle {
         padding-right: UIMetrics.spacing-xl;
         alignment: start;
 
-        
+        ImagePreview { source: @image-url("../../../fixtures/images/wallpaper.png"); }
 
         HorizontalDivider { }
 

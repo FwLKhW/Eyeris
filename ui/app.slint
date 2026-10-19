@@ -9,7 +9,7 @@ import {
     HorizontalDivider,
     Icons,
 } from "ui.slint";
-import { Actions } from "globals.slint";
+import { Actions, PreviewState } from "globals.slint";
 
 export { Actions }
 export component App inherits Window {
@@ -84,6 +84,23 @@ export component App inherits Window {
 
         AppContent {
             vertical-stretch: 1;
+        }
+    }
+
+    Rectangle {
+        visible: PreviewState.is-active;
+        background: rgba(0, 0, 0, 0.8);
+        width: 100%;
+        height: 100%;
+        z: 999;
+
+        Image {
+            source: PreviewState.current-source;
+            x: 60px;
+            y: 60px;
+            width: parent.width - 120px;
+            height: parent.height - 120px;
+            image-fit: contain;
         }
     }
 }
