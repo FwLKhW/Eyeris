@@ -1,0 +1,22 @@
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { Icons } from "../../icons/icons.slint";
+import { IconButton } from "button.slint";
+
+export component TabGroup inherits HorizontalLayout {
+    in property <[image]> icons;
+    in-out property <int> selected-index: 0;
+
+    padding-top: UIMetrics.spacing-xl;
+    padding-bottom: UIMetrics.spacing-xl;
+
+    HorizontalLayout {
+        height: 32px;
+        spacing: UIMetrics.spacing-sm;
+
+        for icon[index] in icons: IconButton {
+            icon: icon;
+            selected: root.selected-index == index;
+            clicked => { root.selected-index = index; }
+        }
+    }
+}

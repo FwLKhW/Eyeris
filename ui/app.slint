@@ -1,22 +1,86 @@
 import "../assets/fonts/Monda.ttf";
 
-import { AppContent, TitleBar, UIPalette, UITypography } from "ui.slint";
+import {
+    AppContent,
+    UIPalette,
+    UITypography,
+    IconButton,
+    UIMetrics,
+    HorizontalDivider,
+    Icons,
+} from "ui.slint";
+import { Actions } from "globals.slint";
 
+export { Actions }
 export component App inherits Window {
+    title: "Eyeris";
+    icon: @image-url("../assets/icon.svg");
+
     default-font-family: "Monda";
     default-font-weight: UITypography.regular;
 
     min-width: 960px;
     min-height: 640px;
-    full-screen: true;
+    preferred-width: 1560px;
+    preferred-height: 900px;
     no-frame: true;
+    // full-screen: true;
+    // maximized: true;
 
     background: UIPalette.bg;
+    resize-border-width: 6px;
 
     VerticalLayout {
-        TitleBar {
-            vertical-stretch: 0;
+        WindowMoveArea {
+            Rectangle {
+                background: UIPalette.bg-area;
+                HorizontalLayout {
+                    alignment: space-between;
+                    cross-axis-alignment: center;
+                    spacing: UIMetrics.spacing-lg;
+                    padding: UIMetrics.spacing-md;
+                    padding-left: UIMetrics.spacing-xl;
+                    padding-right: UIMetrics.spacing-xl;
+
+                    IconButton {
+                        icon: Icons.menu;
+                        icon-size: 16px;
+                    }
+
+                    HorizontalLayout {
+                        horizontal-stretch: 0;
+                        spacing: UIMetrics.spacing-sm;
+
+                        IconButton {
+                            icon: Icons.minimize;
+                            icon-size: 16px;
+                            clicked => {
+                                root.minimized = true;
+                            }
+                        }
+
+                        IconButton {
+                            icon: Icons.maximize;
+                            icon-size: 16px;
+                            clicked => {
+                                root.maximized = !root.maximized;
+                            }
+                        }
+
+                        IconButton {
+                            icon: Icons.close;
+                            icon-size: 16px;
+                            hover: UIPalette.error;
+                            clicked => {
+                                root.hide();
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+        HorizontalDivider { }
 
         AppContent {
             vertical-stretch: 1;

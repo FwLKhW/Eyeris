@@ -1,8 +1,10 @@
-import { TabGroup } from "tab-group.slint";
-import { HorizontalDivider } from "../common/divider.slint";
-import { FolderGroup } from "folder-group.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
+import { Icons } from "../../icons/icons.slint";
+import { HorizontalDivider } from "../ui/divider.slint";
+import { FullButton } from "../ui/button.slint";
+import { TabGroup } from "../ui/tab-group.slint";
+import { TabContent } from "tab-content.slint";
 
 export component LeftSidebar inherits Rectangle {
     background: UIPalette.bg-area;
@@ -12,27 +14,24 @@ export component LeftSidebar inherits Rectangle {
         padding-left: UIMetrics.spacing-xl;
         padding-right: UIMetrics.spacing-xl;
 
-        TabGroup { }
+        VerticalLayout {
+            padding-top: UIMetrics.spacing-xl;
+            padding-bottom: UIMetrics.spacing-xl;
+
+            FullButton {
+                left-icon: Icons.heart;
+                left-text: "Library";
+            }
+        }
 
         HorizontalDivider { }
 
-        VerticalLayout {
-            alignment: start;
-            spacing: UIMetrics.spacing-xl;
-
-            FolderGroup { }
-
-            FolderGroup {
-                title: "Tag";
-            }
-
-            FolderGroup {
-                title: "View";
-            }
-
-            FolderGroup {
-                title: "Tree";
-            }
+        TabGroup {
+            icons: [Icons.home, Icons.tag, Icons.chart, Icons.map];
         }
+
+        HorizontalDivider { }
+
+        TabContent { }
     }
 }

@@ -1,0 +1,20 @@
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { HorizontalDivider } from "../ui/divider.slint";
+import { VerticalGroup } from "../ui/vertical-group.slint";
+
+export component RightSidebar inherits Rectangle {
+    background: UIPalette.bg-area;
+
+    VerticalLayout {
+        padding-left: UIMetrics.spacing-xl;
+        padding-right: UIMetrics.spacing-xl;
+        alignment: start;
+
+        
+
+        HorizontalDivider { }
+
+        VerticalGroup { }
+    }
+}
