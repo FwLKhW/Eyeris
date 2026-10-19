@@ -1,19 +1,18 @@
+import sys
 from pathlib import Path
 
 import slint
 
+ui_path = Path(__file__).parent / "ui"
+sys.path.append(str(ui_path))
+
+
+class App(slint.loader.app.App):
+    pass
+
 
 def main():
-    ui_path = Path(__file__).parent / "ui"
-
-    ui = slint.load_file(
-        ui_path / "app.slint",
-        library_paths={
-            "ui": ui_path / "ui.slint",
-        },
-    )
-
-    app = ui.App()
+    app = App()
     app.show()
     app.run()
 
