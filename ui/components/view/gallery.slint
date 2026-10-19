@@ -8,6 +8,7 @@ import { IconButton } from "../ui/button.slint";
 import { UIText } from "../ui/text.slint";
 import { ListView } from "std-widgets.slint";
 import { GalleryState, ImagePreviewState } from "../../globals.slint";
+import { SearchBar } from "../ui/search-bar.slint";
 
 component ImageItem inherits Rectangle {
     in property <string> id;
@@ -118,9 +119,7 @@ export component Gallery inherits Rectangle {
             HorizontalLayout {
                 alignment: end;
 
-                IconButton {
-                    icon: Icons.search;
-                }
+                SearchBar { }
             }
         }
 
