@@ -1,5 +1,131 @@
+import { UITypography } from "../../styling/ui-typography.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { Icons } from "../../icons/icons.slint";
+import { HorizontalDivider } from "../ui/divider.slint";
+import { ScrollView } from "../ui/scroll-view.slint";
+import { IconButton } from "../ui/button.slint";
+import { UIText } from "../ui/text.slint";
+import { ListView } from "std-widgets.slint";
+import { GalleryState, ImagePreviewState } from "../../globals.slint";
+
+component ImageItem inherits Rectangle {
+    in property <string> id;
+    in property <image> source;
+    in property <string> name;
+
+    background: touch.pressed || touch.has-hover ? UIPalette.bg-hover : transparent;
+    horizontal-stretch: pow(source.height / source.width, 2);
+
+    VerticalLayout {
+        cross-axis-alignment: center;
+        spacing: UIMetrics.spacing-xl;
+        padding: UIMetrics.spacing-xl;
+
+        Image {
+            height: 256px;
+            min-width: 128px;
+            source: root.source;
+            image-fit: cover;
+        }
+
+        VerticalLayout {
+            alignment: start;
+            cross-axis-alignment: center;
+            spacing: UIMetrics.spacing-xs;
+
+            UIText {
+                text: root.name;
+                font-weight: UITypography.medium;
+            }
+
+            UIText {
+                text: root.source.width + " x " + root.source.height;
+                style: UITypography.small;
+                color: UIPalette.subtext;
+            }
+        }
+    }
+
+    touch := TouchArea {
+        mouse-cursor: MouseCursor.pointer;
+
+        clicked => {
+            GalleryState.selected-image-id = root.id;
+            ImagePreviewState.current-source = root.source;
+        }
+    }
+}
+
+component ImageRow inherits HorizontalLayout {
+    in property <[image]> images;
+
+    height: 360px;
+    alignment: space-around;
+    spacing: 8px;
+    padding: 12px;
+
+    for img in images: ImageItem {
+        source: img;
+        name: "image.png";
+    }
+}
+
+component ImageGrid inherits VerticalLayout {
+    ListView {
+        for index in 8: ImageRow {
+            images: [
+                @image-url("../../../fixtures/images/kurisu.jpg"),
+                @image-url("../../../fixtures/images/thumbnail.jpg"),
+                @image-url("../../../fixtures/images/kurisu.jpg"),
+                @image-url("../../../fixtures/images/thumbnail.jpg"),
+            ];
+        }
+    }
+}
+
 export component Gallery inherits Rectangle {
-    Text {
-        text: "Gallery";
+    VerticalLayout {
+        padding-left: UIMetrics.spacing-xl;
+        padding-right: UIMetrics.spacing-xl;
+
+        HorizontalLayout {
+            padding: UIMetrics.spacing-xl;
+
+            HorizontalLayout {
+                alignment: start;
+                IconButton {
+                    icon: Icons.clock;
+                }
+
+                IconButton {
+                    icon: Icons.clock;
+                }
+
+                IconButton {
+                    icon: Icons.clock;
+                }
+
+                IconButton {
+                    icon: Icons.clock;
+                }
+
+                IconButton {
+                    icon: Icons.clock;
+                }
+            }
+
+            HorizontalLayout {
+                alignment: end;
+
+                IconButton {
+                    icon: Icons.search;
+                }
+            }
+        }
+
+        HorizontalDivider { }
+
+        ImageGrid { }
     }
 }
