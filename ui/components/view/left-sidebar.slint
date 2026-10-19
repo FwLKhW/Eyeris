@@ -1,19 +1,35 @@
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
+import { TabState } from "../../globals.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
 import { FullButton } from "../ui/button.slint";
 import { TabGroup } from "../ui/tab-group.slint";
+import { ScrollView } from "../ui/scroll-view.slint";
 import { TabContent } from "tab-content.slint";
-import { TabState } from "../../globals.slint";
 
 export component LeftSidebar inherits Rectangle {
     background: UIPalette.bg-area;
 
     VerticalLayout {
-        alignment: start;
         padding-left: UIMetrics.spacing-xl;
         padding-right: UIMetrics.spacing-xl;
+
+        TabGroup {
+            icons: [Icons.home, Icons.tag, Icons.chart, Icons.map];
+            selected-index: TabState.current-tab-index;
+        }
+
+        HorizontalDivider { }
+
+        ScrollView {
+            vertical-stretch: 1;
+            content-height: tab-content.preferred-height;
+
+            tab-content := TabContent { }
+        }
+
+        HorizontalDivider { }
 
         VerticalLayout {
             padding-top: UIMetrics.spacing-xl;
@@ -24,16 +40,5 @@ export component LeftSidebar inherits Rectangle {
                 left-text: "Library";
             }
         }
-
-        HorizontalDivider { }
-
-        TabGroup {
-            icons: [Icons.home, Icons.tag, Icons.chart, Icons.map];
-            selected-index: TabState.current-tab-index;
-        }
-
-        HorizontalDivider { }
-
-        TabContent { }
     }
 }
