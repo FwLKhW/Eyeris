@@ -2,6 +2,10 @@ import { UIPalette } from "styling/ui-palette.slint";
 
 export global Actions { }
 
+export global TabState {
+    in-out property <int> current-tab-index;
+}
+
 export global PreviewState {
     in-out property <image> current-source;
     in-out property <bool> is-active: false;

@@ -5,6 +5,7 @@ import { HorizontalDivider } from "../ui/divider.slint";
 import { FullButton } from "../ui/button.slint";
 import { TabGroup } from "../ui/tab-group.slint";
 import { TabContent } from "tab-content.slint";
+import { TabState } from "../../globals.slint";
 
 export component LeftSidebar inherits Rectangle {
     background: UIPalette.bg-area;
@@ -28,6 +29,7 @@ export component LeftSidebar inherits Rectangle {
 
         TabGroup {
             icons: [Icons.home, Icons.tag, Icons.chart, Icons.map];
+            selected-index: TabState.current-tab-index;
         }
 
         HorizontalDivider { }
