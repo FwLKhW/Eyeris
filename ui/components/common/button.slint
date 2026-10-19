@@ -8,6 +8,7 @@ export enum ButtonSize { small, medium }
 
 export component IconButton inherits Rectangle {
     in property <ButtonSize> size;
+    in property <length> icon-size: UIMetrics.icon-md;
     in property <image> icon;
     in property <color> hover: UIPalette.bg-hover;
     in property <bool> selected: false;
@@ -25,7 +26,8 @@ export component IconButton inherits Rectangle {
         padding-right: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
 
         Icon {
-            source: root.icon;
+            icon: root.icon;
+            icon-size: icon-size;
             color: touch.has-hover ? UIPalette.icon-hover : UIPalette.icon;
         }
     }
@@ -88,7 +90,7 @@ export component FullButton inherits Rectangle {
             }
 
             Icon {
-                source: Icons.close;
+                icon: Icons.close;
             }
         }
     }

@@ -2,18 +2,19 @@ import { UIPalette } from "../../styling/ui-palette.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 
 export component Icon inherits HorizontalLayout {
-    in property <image> source;
+    in property <image> icon;
+    in property <length> icon-size: UIMetrics.icon-md;
     in property <color> color: UIPalette.icon;
 
-    width: UIMetrics.icon-md;
+    width: UIMetrics.icon-container-md;
     height: self.width;
     alignment: center;
     cross-axis-alignment: center;
 
     Image {
-        width: 16px;
-        height: self.width;
-        source: root.source;
+        width: root.icon-size;
+        height: root.icon-size;
+        source: root.icon;
         colorize: root.color;
     }
 }
