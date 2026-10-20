@@ -95,11 +95,13 @@ export component Gallery inherits Rectangle {
         padding-right: UIMetrics.spacing-xl;
 
         HorizontalLayout {
-            spacing: UIMetrics.spacing-md;
-            padding: UIMetrics.spacing-xl;
+            spacing: UIMetrics.spacing-sm;
+            padding-top: UIMetrics.spacing-xl;
+            padding-bottom: UIMetrics.spacing-xl;
 
             HorizontalLayout {
                 alignment: start;
+                spacing: UIMetrics.spacing-sm;
 
                 IconButton {
                     icon: Icons.circle;
@@ -152,7 +154,7 @@ export component Gallery inherits Rectangle {
 
             HorizontalLayout {
                 alignment: end;
-                spacing: UIMetrics.spacing-md;
+                spacing: UIMetrics.spacing-sm;
 
                 SearchBar { }
 
