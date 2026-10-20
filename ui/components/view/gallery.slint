@@ -3,14 +3,15 @@ import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
 import {
-    GalleryState,
     ImagePreviewState,
+    GalleryState,
+    LayoutState,
 } from "../../globals.slint";
 
 import { FullButtonPopover, IconButtonPopover } from "../ui/popover.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
-import { ScrollView } from "../ui/scroll-view.slint";
-import { FilterBar } from "filter-bar.slint";
+import { ScrollArea } from "../ui/scroll-area.slint";
+import { Filter } from "filter.slint";
 import { UIText } from "../ui/text.slint";
 
 component ImageItem inherits Rectangle {
@@ -76,16 +77,14 @@ component ImageRow inherits HorizontalLayout {
 
 export component Gallery inherits Rectangle {
     VerticalLayout {
-        padding-left: UIMetrics.spacing-xl;
-        padding-right: UIMetrics.spacing-xl;
-
-        FilterBar { }
+        if LayoutState.show-filter: Filter { }
 
         HorizontalDivider { }
 
-        ScrollView {
+        ScrollArea {
             VerticalLayout {
                 spacing: UIMetrics.spacing-2xl;
+                padding: UIMetrics.spacing-2xl;
 
                 for index in 8: ImageRow {
                     images: [

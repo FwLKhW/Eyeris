@@ -2,13 +2,11 @@ import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
 
-import { FullButton } from "button.slint";
 import { UIText } from "text.slint";
 
 component Title inherits HorizontalLayout {
     in property <string> text;
 
-    alignment: start;
     padding-left: UIMetrics.spacing-lg;
     padding-bottom: UIMetrics.spacing-sm;
 
@@ -20,13 +18,9 @@ component Title inherits HorizontalLayout {
 
 export component VerticalGroup inherits VerticalLayout {
     in property <string> title;
-    in property <image> icon: Icons.folder;
-    in property <[string]> names;
 
     alignment: start;
     spacing: UIMetrics.spacing-sm;
-    padding-top: UIMetrics.spacing-lg;
-    padding-bottom: UIMetrics.spacing-lg;
 
     if root.title != "": Title {
         text: root.title;
@@ -34,11 +28,6 @@ export component VerticalGroup inherits VerticalLayout {
 
     VerticalLayout {
         spacing: UIMetrics.spacing-sm;
-
-        for name in root.names: FullButton {
-            left-icon: root.icon;
-            left-text: name;
-        }
 
         @children
     }

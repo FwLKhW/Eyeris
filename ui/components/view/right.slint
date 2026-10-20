@@ -6,16 +6,12 @@ import { HorizontalDivider } from "../ui/divider.slint";
 import { ColorPalette } from "../ui/color-palette.slint";
 import { ImagePreview } from "../ui/image-preview.slint";
 
-export component SidebarRight inherits Rectangle {
+export component Right inherits Rectangle {
     background: UIPalette.bg-area;
 
     VerticalLayout {
-        padding-left: UIMetrics.spacing-xl;
-        padding-right: UIMetrics.spacing-xl;
-
         VerticalLayout {
-            padding-top: UIMetrics.spacing-2xl;
-            padding-bottom: UIMetrics.spacing-2xl;
+            padding: UIMetrics.spacing-xl;
 
             ImagePreview { }
         }
@@ -26,8 +22,7 @@ export component SidebarRight inherits Rectangle {
             alignment: start;
             cross-axis-alignment: center;
             spacing: UIMetrics.spacing-lg;
-            padding-top: UIMetrics.spacing-2xl;
-            padding-bottom: UIMetrics.spacing-2xl;
+            padding: UIMetrics.spacing-xl;
 
             ColorPalette {
                 colors: ColorPaletteState.colors;

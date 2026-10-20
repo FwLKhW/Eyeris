@@ -6,17 +6,14 @@ import { TabState } from "../../globals.slint";
 import { FullButtonPopover } from "../ui/popover.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
 import { FullButton } from "../ui/button.slint";
-import { TabContent } from "tab-content.slint";
-import { ScrollView } from "../ui/scroll-view.slint";
+import { ScrollArea } from "../ui/scroll-area.slint";
 import { TabGroup } from "../ui/tab-group.slint";
+import { TabHome } from "tab-home.slint";
 
-export component SidebarLeft inherits Rectangle {
+export component Left inherits Rectangle {
     background: UIPalette.bg-area;
 
     VerticalLayout {
-        padding-left: UIMetrics.spacing-xl;
-        padding-right: UIMetrics.spacing-xl;
-
         TabGroup {
             icons: [Icons.home, Icons.tag, Icons.chart];
             selected-index <=> TabState.current-tab-index;
@@ -24,17 +21,16 @@ export component SidebarLeft inherits Rectangle {
 
         HorizontalDivider { }
 
-        ScrollView {
-            content-height: tab-content.preferred-height;
+        ScrollArea {
+            content-height: tab.preferred-height;
 
-            tab-content := TabContent { }
+            tab := TabHome { }
         }
 
         HorizontalDivider { }
 
         VerticalLayout {
-            padding-top: UIMetrics.spacing-xl;
-            padding-bottom: UIMetrics.spacing-xl;
+            padding: UIMetrics.spacing-xl;
 
             FullButtonPopover {
                 left-icon: Icons.heart;

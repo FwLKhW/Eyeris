@@ -11,14 +11,14 @@ import {
     HorizontalDivider,
     IconButtonPopover,
     UITypography,
-    AppContent,
     IconButton,
     FullButton,
     UIMetrics,
     UIPalette,
     TitleBar,
     Icons,
-} from "ui.slint";
+    Main,
+} from "lib.slint";
 
 export { Actions, WindowState, LayoutState, ImagePreviewState }
 export component App inherits Window {
@@ -33,7 +33,7 @@ export component App inherits Window {
     min-width: 960px;
     min-height: 640px;
     preferred-width: 1560px;
-    preferred-height: 900px;
+    preferred-height: 840px;
     maximized: true;
 
     no-frame: true;
@@ -67,14 +67,21 @@ export component App inherits Window {
         KeyBinding {
             keys: @keys(Alt + B);
             activated => {
-                LayoutState.show-left-sidebar = !LayoutState.show-left-sidebar;
+                LayoutState.show-left = !LayoutState.show-left;
             }
         }
 
         KeyBinding {
             keys: @keys(Alt + M);
             activated => {
-                LayoutState.show-right-sidebar = !LayoutState.show-right-sidebar;
+                LayoutState.show-right = !LayoutState.show-right;
+            }
+        }
+
+        KeyBinding {
+            keys: @keys(Alt + F);
+            activated => {
+                LayoutState.show-filter = !LayoutState.show-filter;
             }
         }
 
@@ -90,7 +97,7 @@ export component App inherits Window {
 
                 HorizontalDivider { }
 
-                AppContent { }
+                Main { }
             }
         }
     }
