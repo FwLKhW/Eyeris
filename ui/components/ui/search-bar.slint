@@ -2,10 +2,10 @@ import { UITypography } from "../../styling/ui-typography.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { Icons } from "../../icons/icons.slint";
+
 import { IconButton } from "button.slint";
-import { Icon } from "icon.slint";
-import { LineEdit, TextEdit } from "std-widgets.slint";
 import { UIText } from "text.slint";
+import { Icon } from "icon.slint";
 
 export component SearchBar {
     in property <image> icon: Icons.search;
@@ -47,11 +47,11 @@ export component SearchBar {
                 }
 
                 key-pressed(event) => {
-                    if event.text == "\u{1b}" {
-                        self.clear-focus();
-                        EventResult.accept
+                    if event.text == Key.Escape {
+                        self.accepted();
+                        accept
                     } else {
-                        EventResult.reject
+                        reject
                     }
                 }
 
