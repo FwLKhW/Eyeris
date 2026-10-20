@@ -14,6 +14,7 @@ import { SearchBar } from "../ui/search-bar.slint";
 import { UIText } from "../ui/text.slint";
 import { ListView } from "std-widgets.slint";
 import { MinimalColorPalette } from "../ui/minimal-color-palette.slint";
+import { Slider } from "../ui/slider.slint";
 
 component ImageItem inherits Rectangle {
     in property <string> id;
@@ -110,7 +111,12 @@ export component Gallery inherits Rectangle {
                     icon-hover-color: UIPalette.subtext;
                     popup-width: 260px;
 
-                    MinimalColorPalette {}
+                    MinimalColorPalette { }
+
+                    Slider {
+                        width: 220px;
+                        thumb-border-color: UIPalette.bg-surface;
+                    }
                 }
 
                 IconButton {
