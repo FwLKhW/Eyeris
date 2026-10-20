@@ -2,6 +2,12 @@ import { UIPalette } from "styling/ui-palette.slint";
 
 export global Actions { }
 
+export global LayoutState {
+    in-out property <bool> show-titlebar: true;
+    in-out property <bool> show-left-sidebar: true;
+    in-out property <bool> show-right-sidebar: true;
+}
+
 export global TabState {
     in-out property <int> current-tab-index;
 }

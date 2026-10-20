@@ -1,15 +1,19 @@
 import "../assets/fonts/Monda.ttf";
 
 import {
-    AppContent,
-    UIPalette,
     UITypography,
-    IconButton,
     UIMetrics,
-    HorizontalDivider,
+    UIPalette,
     Icons,
+    TitleBar,
+    AppContent,
+    IconButton,
+    FullButton,
+    HorizontalDivider,
+    IconButtonPopover,
+    FullButtonPopover,
 } from "ui.slint";
-import { Actions, ImagePreviewState } from "globals.slint";
+import { Actions, ImagePreviewState, LayoutState } from "globals.slint";
 
 export { Actions }
 export component App inherits Window {
@@ -25,67 +29,46 @@ export component App inherits Window {
     min-height: 640px;
     preferred-width: 1560px;
     preferred-height: 900px;
+    maximized: true;
 
     no-frame: true;
     resize-border-width: 6px;
 
-    VerticalLayout {
-        WindowMoveArea {
-            Rectangle {
-                background: UIPalette.bg-area;
-                HorizontalLayout {
-                    alignment: space-between;
-                    cross-axis-alignment: center;
-                    spacing: UIMetrics.spacing-lg;
-                    padding: UIMetrics.spacing-md;
-                    padding-left: UIMetrics.spacing-xl;
-                    padding-right: UIMetrics.spacing-xl;
+    forward-focus: scope;
 
-                    IconButton {
-                        icon: Icons.menu;
-                        size: small;
-                        icon-size: 16px;
-                    }
-
-                    HorizontalLayout {
-                        horizontal-stretch: 0;
-                        spacing: UIMetrics.spacing-sm;
-
-                        IconButton {
-                            icon: Icons.minimize;
-                            size: small;
-                            icon-size: 16px;
-                            clicked => {
-                                root.minimized = true;
-                            }
-                        }
-
-                        IconButton {
-                            icon: Icons.maximize;
-                            size: small;
-                            icon-size: 16px;
-                            clicked => {
-                                root.maximized = !root.maximized;
-                            }
-                        }
-
-                        IconButton {
-                            icon: Icons.close;
-                            size: small;
-                            icon-size: 18px;
-                            hover: UIPalette.error;
-                            clicked => {
-                                root.hide();
-                            }
-                        }
-                    }
-                }
+    scope := FocusScope {
+        KeyBinding {
+            keys: @keys(Control + B);
+            activated => {
+                LayoutState.show-left-sidebar = !LayoutState.show-left-sidebar;
             }
         }
 
-        HorizontalDivider { }
+        KeyBinding {
+            keys: @keys(Control + Shift + B);
+            activated => {
+                LayoutState.show-right-sidebar = !LayoutState.show-right-sidebar;
+            }
+        }
 
-        AppContent { }
+        KeyBinding {
+            keys: @keys(Alt + M);
+            activated => {
+                LayoutState.show-titlebar = !LayoutState.show-titlebar;
+            }
+        }
+
+        VerticalLayout {
+            if LayoutState.show-titlebar: TitleBar {
+                window-minimize => { root.minimized = true; }
+                window-maximize => { root.maximized = true; }
+                window-close => { root.hide(); }
+            }
+
+            HorizontalDivider { }
+
+            AppContent { }
+        }
     }
 
     // Image preview overlay

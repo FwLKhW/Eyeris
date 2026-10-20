@@ -5,21 +5,22 @@ import { VerticalGroup } from "../ui/vertical-group.slint";
 import { LeftSidebar } from "left-sidebar.slint";
 import { RightSidebar } from "right-sidebar.slint";
 import { Gallery } from "gallery.slint";
+import { LayoutState } from "../../globals.slint";
 
 export component AppContent inherits HorizontalLayout {
-    LeftSidebar {
+    if LayoutState.show-left-sidebar: LeftSidebar {
         width: 240px;
     }
 
-    VerticalDivider { }
+    if LayoutState.show-left-sidebar: VerticalDivider { }
 
     Gallery {
         horizontal-stretch: 1;
     }
 
-    VerticalDivider { }
+    if LayoutState.show-right-sidebar: VerticalDivider { }
 
-    RightSidebar {
+    if LayoutState.show-right-sidebar: RightSidebar {
         width: 320px;
     }
 }
