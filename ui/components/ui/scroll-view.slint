@@ -35,9 +35,6 @@ export component ScrollBar {
     touch-area := TouchArea {
         property <length> pressed-value;
 
-        width: parent.width;
-        height: parent.height;
-
         pointer-event(event) => {
             if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
                 self.pressed-value = -root.value;
@@ -149,7 +146,6 @@ export component ScrollView {
         y: 0;
         width: root.visible ? root.scroll-bar-size : 0;
         height: root.vertical-scrollbar-policy != ScrollBarPolicy.always-off ? parent.height - horizontal-bar.height : parent.height;
-        horizontal: false;
         maximum: flickable.content-height - flickable.height;
         page-size: flickable.height;
     }

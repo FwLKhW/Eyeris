@@ -1,26 +1,26 @@
 import "../assets/fonts/Monda.ttf";
 
 import {
-    UITypography,
-    UIMetrics,
-    UIPalette,
-    Icons,
-    TitleBar,
-    AppContent,
-    IconButton,
-    FullButton,
-    HorizontalDivider,
-    IconButtonPopover,
-    FullButtonPopover,
-} from "ui.slint";
-import {
-    Actions,
     ImagePreviewState,
     LayoutState,
     WindowState,
+    Actions,
 } from "globals.slint";
+import {
+    FullButtonPopover,
+    HorizontalDivider,
+    IconButtonPopover,
+    UITypography,
+    AppContent,
+    IconButton,
+    FullButton,
+    UIMetrics,
+    UIPalette,
+    TitleBar,
+    Icons,
+} from "ui.slint";
 
-export { Actions }
+export { Actions, WindowState, LayoutState, ImagePreviewState }
 export component App inherits Window {
     title: "Eyeris";
     icon: @image-url("../assets/icon.svg");

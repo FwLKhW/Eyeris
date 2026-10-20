@@ -1,5 +1,5 @@
-import { UIPalette } from "../../styling/ui-palette.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
 
 export component Slider {
     in-out property <float> value: 0.5;
@@ -38,7 +38,7 @@ export component Slider {
                 root.changed(root.value);
             }
 
-            pointer_event(event) => {
+            pointer-event(event) => {
                 if event.kind == PointerEventKind.up {
                     root.released(root.value);
                 }
