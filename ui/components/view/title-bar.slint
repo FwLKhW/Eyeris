@@ -1,11 +1,8 @@
-import {
-    UIMetrics,
-    UIPalette,
-    Icons,
-    IconButtonPopover,
-    FullButton,
-    IconButton,
-} from "../../ui.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { Icons } from "../../icons/icons.slint";
+import { IconButtonPopover } from "../ui/popover.slint";
+import { FullButton, IconButton } from "../ui/button.slint";
 
 export component TitleBar inherits Rectangle {
     callback window-minimize();
@@ -42,6 +39,7 @@ export component TitleBar inherits Rectangle {
                 icon: Icons.minimize;
                 size: small;
                 icon-size: 16px;
+
                 clicked => {
                     window-minimize();
                 }
@@ -51,6 +49,7 @@ export component TitleBar inherits Rectangle {
                 icon: Icons.maximize;
                 size: small;
                 icon-size: 16px;
+
                 clicked => {
                     window-maximize();
                 }
@@ -60,7 +59,8 @@ export component TitleBar inherits Rectangle {
                 icon: Icons.close;
                 size: small;
                 icon-size: 18px;
-                hover: UIPalette.error;
+                bg-hover: UIPalette.error;
+
                 clicked => {
                     window-close();
                 }
