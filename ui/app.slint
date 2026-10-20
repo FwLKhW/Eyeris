@@ -50,24 +50,31 @@ export component App inherits Window {
     }
 
     scope := FocusScope {
+        capture-key-pressed(event) => {
+            if event.modifiers.alt || event.text == Key.Escape || event.text == Key.Return {
+                self.focus();
+            }
+            reject
+        }
+
         KeyBinding {
-            keys: @keys(Control + B);
+            keys: @keys(Alt + T);
+            activated => {
+                LayoutState.show-titlebar = !LayoutState.show-titlebar;
+            }
+        }
+
+        KeyBinding {
+            keys: @keys(Alt + B);
             activated => {
                 LayoutState.show-left-sidebar = !LayoutState.show-left-sidebar;
             }
         }
 
         KeyBinding {
-            keys: @keys(Control + Shift + B);
-            activated => {
-                LayoutState.show-right-sidebar = !LayoutState.show-right-sidebar;
-            }
-        }
-
-        KeyBinding {
             keys: @keys(Alt + M);
             activated => {
-                LayoutState.show-titlebar = !LayoutState.show-titlebar;
+                LayoutState.show-right-sidebar = !LayoutState.show-right-sidebar;
             }
         }
 

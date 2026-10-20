@@ -1,29 +1,28 @@
+import { LayoutState, WindowState } from "../../globals.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
-import { LayoutState, WindowState } from "../../globals.slint";
+
 import { VerticalDivider, HorizontalDivider } from "../ui/divider.slint";
 import { VerticalGroup } from "../ui/vertical-group.slint";
-import { LeftSidebar } from "left-sidebar.slint";
-import { RightSidebar } from "right-sidebar.slint";
+import { SidebarRight } from "sidebar-right.slint";
+import { SidebarLeft } from "sidebar-left.slint";
 import { Gallery } from "gallery.slint";
 
 export component AppContent inherits HorizontalLayout {
     if LayoutState.show-left-sidebar: HorizontalLayout {
-        LeftSidebar {
+        SidebarLeft {
             width: 240px;
         }
 
         VerticalDivider { }
     }
 
-    Gallery {
-        horizontal-stretch: 1;
-    }
+    Gallery { }
 
-    if LayoutState.show-left-sidebar && WindowState.width > 1200px: HorizontalLayout {
+    if LayoutState.show-right-sidebar && WindowState.width > 1200px: HorizontalLayout {
         VerticalDivider { }
 
-        RightSidebar {
+        SidebarRight {
             width: 320px;
         }
     }
