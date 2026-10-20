@@ -58,16 +58,20 @@ export component App inherits Window {
             }
         }
 
-        VerticalLayout {
-            if LayoutState.show-titlebar: TitleBar {
-                window-minimize => { root.minimized = true; }
-                window-maximize => { root.maximized = true; }
-                window-close => { root.hide(); }
+        WindowMoveArea {
+            enabled: !root.full-screen && !ImagePreviewState.is-active;
+
+            VerticalLayout {
+                if LayoutState.show-titlebar: TitleBar {
+                    window-minimize => { root.minimized = true; }
+                    window-maximize => { root.maximized = !root.maximized; }
+                    window-close => { root.hide(); }
+                }
+
+                HorizontalDivider { }
+
+                AppContent { }
             }
-
-            HorizontalDivider { }
-
-            AppContent { }
         }
     }
 
