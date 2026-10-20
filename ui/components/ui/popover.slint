@@ -1,0 +1,60 @@
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { FullButton, IconButton } from "button.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { Icons } from "../../icons/icons.slint";
+
+export enum PopoverPosition { top, bottom }
+
+export component IconButtonPopover inherits IconButton {
+    in property <length> popup-width: 0px;
+    in property <PopoverPosition> position: bottom;
+
+    clicked => {
+        popup.show();
+    }
+
+    popup := PopupWindow {
+        close-policy: close-on-click-outside;
+
+        width: root.popup-width == 0 ? root.width : root.popup-width;
+        y: root.position == top ? -self.height - UIMetrics.spacing-sm : root.height + UIMetrics.spacing-sm;
+
+        Rectangle {
+            background: UIPalette.bg-surface;
+            border-radius: 8px;
+
+            VerticalLayout {
+                padding: UIMetrics.radius-sm;
+
+                @children
+            }
+        }
+    }
+}
+
+export component FullButtonPopover inherits FullButton {
+    in property <length> popup-width: 0px;
+    in property <PopoverPosition> position: bottom;
+
+    clicked => {
+        popup.show();
+    }
+
+    popup := PopupWindow {
+        close-policy: close-on-click-outside;
+
+        width: root.popup-width == 0 ? root.width : root.popup-width;
+        y: root.position == top ? -self.height - UIMetrics.spacing-sm : root.height + UIMetrics.spacing-sm;
+
+        Rectangle {
+            background: UIPalette.bg-surface;
+            border-radius: 8px;
+
+            VerticalLayout {
+                padding: UIMetrics.radius-sm;
+
+                @children
+            }
+        }
+    }
+}
