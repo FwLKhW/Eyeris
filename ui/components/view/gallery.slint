@@ -7,6 +7,7 @@ import {
     ImagePreviewState,
 } from "../../globals.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
+import { FullButtonPopover } from "../ui/popover.slint";
 import { ScrollView } from "../ui/scroll-view.slint";
 import { IconButton } from "../ui/button.slint";
 import { SearchBar } from "../ui/search-bar.slint";
@@ -94,28 +95,58 @@ export component Gallery inherits Rectangle {
         padding-right: UIMetrics.spacing-xl;
 
         HorizontalLayout {
+            spacing: UIMetrics.spacing-md;
             padding: UIMetrics.spacing-xl;
 
             HorizontalLayout {
                 alignment: start;
+
                 IconButton {
-                    icon: Icons.clock;
+                    icon: Icons.circle;
+                    icon-color: UIPalette.subtext;
+                    icon-hover-color: UIPalette.subtext;
+                }
+
+                IconButton {
+                    icon: Icons.file-text;
+                    icon-color: UIPalette.blue;
+                    icon-hover-color: UIPalette.blue;
+                }
+
+                IconButton {
+                    icon: Icons.box;
+                    icon-color: UIPalette.mauve;
+                    icon-hover-color: UIPalette.mauve;
+                }
+
+                IconButton {
+                    icon: Icons.tag;
+                    icon-color: UIPalette.orange;
+                    icon-hover-color: UIPalette.orange;
+                }
+
+                IconButton {
+                    icon: Icons.star;
+                    icon-color: UIPalette.yellow;
+                    icon-hover-color: UIPalette.yellow;
+                }
+
+                IconButton {
+                    icon: Icons.crop;
+                    icon-color: UIPalette.yellow;
+                    icon-hover-color: UIPalette.yellow;
                 }
 
                 IconButton {
                     icon: Icons.clock;
+                    icon-color: UIPalette.green;
+                    icon-hover-color: UIPalette.green;
                 }
 
                 IconButton {
                     icon: Icons.clock;
-                }
-
-                IconButton {
-                    icon: Icons.clock;
-                }
-
-                IconButton {
-                    icon: Icons.clock;
+                    icon-color: UIPalette.orange;
+                    icon-hover-color: UIPalette.orange;
                 }
             }
 
