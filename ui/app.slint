@@ -85,17 +85,41 @@ export component App inherits Window {
             }
         }
 
+        KeyBinding {
+            keys: @keys(Alt + Z);
+            activated => {
+                LayoutState.zen-mode = !LayoutState.zen-mode;
+                if LayoutState.zen-mode {
+                    LayoutState.prev-show-filter = LayoutState.show-filter;
+                    LayoutState.prev-show-left = LayoutState.show-left;
+                    LayoutState.prev-show-right = LayoutState.show-right;
+                    LayoutState.prev-show-titlebar = LayoutState.show-titlebar;
+                    LayoutState.show-filter = false;
+                    LayoutState.show-left = false;
+                    LayoutState.show-right = false;
+                    LayoutState.show-titlebar = false;
+                } else {
+                    LayoutState.show-filter = LayoutState.prev-show-filter;
+                    LayoutState.show-left = LayoutState.prev-show-left;
+                    LayoutState.show-right = LayoutState.prev-show-right;
+                    LayoutState.show-titlebar = LayoutState.prev-show-titlebar;
+                }
+            }
+        }
+
         WindowMoveArea {
             enabled: !root.full-screen && !ImagePreviewState.is-active;
 
             VerticalLayout {
-                if LayoutState.show-titlebar: TitleBar {
-                    window-minimize => { root.minimized = true; }
-                    window-maximize => { root.maximized = !root.maximized; }
-                    window-close => { root.hide(); }
-                }
+                if LayoutState.show-titlebar: VerticalLayout {
+                    TitleBar {
+                        window-minimize => { root.minimized = true; }
+                        window-maximize => { root.maximized = !root.maximized; }
+                        window-close => { root.hide(); }
+                    }
 
-                HorizontalDivider { }
+                    HorizontalDivider { }
+                }
 
                 Main { }
             }

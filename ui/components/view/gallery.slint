@@ -77,9 +77,11 @@ component ImageRow inherits HorizontalLayout {
 
 export component Gallery inherits Rectangle {
     VerticalLayout {
-        if LayoutState.show-filter: Filter { }
+        if LayoutState.show-filter: VerticalLayout {
+            Filter { }
 
-        HorizontalDivider { }
+            HorizontalDivider { }
+        }
 
         ScrollArea {
             VerticalLayout {
