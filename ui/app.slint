@@ -86,6 +86,13 @@ export component App inherits Window {
         }
 
         KeyBinding {
+            keys: @keys(Alt + Q);
+            activated => {
+                root.hide();
+            }
+        }
+
+        KeyBinding {
             keys: @keys(Alt + Z);
             activated => {
                 LayoutState.zen-mode = !LayoutState.zen-mode;
