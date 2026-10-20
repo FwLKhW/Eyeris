@@ -18,8 +18,8 @@ export component SidebarLeft inherits Rectangle {
         padding-right: UIMetrics.spacing-xl;
 
         TabGroup {
-            icons: [Icons.home, Icons.tag, Icons.chart, Icons.map];
-            selected-index: TabState.current-tab-index;
+            icons: [Icons.home, Icons.tag, Icons.chart];
+            selected-index <=> TabState.current-tab-index;
         }
 
         HorizontalDivider { }

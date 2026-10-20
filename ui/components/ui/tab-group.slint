@@ -5,7 +5,7 @@ import { IconButton } from "button.slint";
 
 export component TabGroup inherits HorizontalLayout {
     in property <[image]> icons;
-    in-out property <int> selected-index: 0;
+    in-out property <int> selected-index;
 
     padding-top: UIMetrics.spacing-xl;
     padding-bottom: UIMetrics.spacing-xl;
@@ -16,7 +16,9 @@ export component TabGroup inherits HorizontalLayout {
         for icon[index] in icons: IconButton {
             icon: icon;
             selected: root.selected-index == index;
-            clicked => { root.selected-index = index; }
+            clicked => {
+                root.selected-index = index;
+            }
         }
     }
 }
