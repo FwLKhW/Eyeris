@@ -11,13 +11,15 @@ export component IconButton inherits Rectangle {
     in property <ButtonSize> size: medium;
     in property <image> icon: Icons.settings;
     in property <length> icon-size: UIMetrics.icon-md;
-    in property <color> hover: UIPalette.bg-hover;
+    in property <color> icon-color: UIPalette.icon;
+    in property <color> icon-hover-color: UIPalette.icon-hover;
+    in property <color> bg-hover: UIPalette.bg-hover;
     in property <bool> checkable: false;
     in-out property <bool> selected: false;
 
     callback clicked();
 
-    background: touch.pressed || touch.has-hover || root.selected ? root.hover : transparent;
+    background: touch.pressed || touch.has-hover || root.selected ? root.bg-hover : transparent;
     border-radius: UIMetrics.radius-md;
 
     HorizontalLayout {
@@ -30,7 +32,7 @@ export component IconButton inherits Rectangle {
         Icon {
             icon: root.icon;
             icon-size: icon-size;
-            color: touch.has-hover ? UIPalette.icon-hover : UIPalette.icon;
+            color: touch.has-hover ? root.icon-hover-color : root.icon-color;
         }
     }
 
