@@ -93,6 +93,13 @@ export component App inherits Window {
         }
 
         KeyBinding {
+            keys: @keys(F11);
+            activated => {
+                root.full-screen = !root.full-screen;
+            }
+        }
+
+        KeyBinding {
             keys: @keys(Alt + Z);
             activated => {
                 LayoutState.zen-mode = !LayoutState.zen-mode;
