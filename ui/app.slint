@@ -13,7 +13,12 @@ import {
     IconButtonPopover,
     FullButtonPopover,
 } from "ui.slint";
-import { Actions, ImagePreviewState, LayoutState } from "globals.slint";
+import {
+    Actions,
+    ImagePreviewState,
+    LayoutState,
+    WindowState,
+} from "globals.slint";
 
 export { Actions }
 export component App inherits Window {
@@ -35,6 +40,14 @@ export component App inherits Window {
     resize-border-width: 6px;
 
     forward-focus: scope;
+
+    changed width => {
+        WindowState.width = root.width;
+    }
+
+    changed height => {
+        WindowState.height = root.height;
+    }
 
     scope := FocusScope {
         KeyBinding {

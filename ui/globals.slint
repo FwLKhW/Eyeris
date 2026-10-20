@@ -2,6 +2,11 @@ import { UIPalette } from "styling/ui-palette.slint";
 
 export global Actions { }
 
+export global WindowState {
+    in-out property <length> width;
+    in-out property <length> height;
+}
+
 export global LayoutState {
     in-out property <bool> show-titlebar: true;
     in-out property <bool> show-left-sidebar: true;
