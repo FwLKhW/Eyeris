@@ -3,11 +3,13 @@
         "ui": "./ui/ui.slint"
     },
     "cSpell.words": [
+        "distpath",
         "Eyeris",
         "Flexbox",
         "flickable",
         "kurisu",
         "Monda",
+        "noconfirm",
         "noconsole",
         "numpy",
         "onefile",

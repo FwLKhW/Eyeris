@@ -10,9 +10,11 @@ import { Icon } from "icon.slint";
 export component SearchBar {
     in property <image> icon: Icons.search;
     in property <string> placeholder: "Search";
+    in property <int> max-length: 24;
     out property <string> text <=> input.text;
 
     min-width: 160px;
+    max-width: 320px;
 
     callback search();
 
@@ -41,7 +43,7 @@ export component SearchBar {
                 font-size: UITypography.body.font-size;
                 opacity: UIPalette.subtle-text-opacity;
 
-                if input.text == "": UIText {
+                if input.text.is-empty: UIText {
                     text: root.placeholder;
                     color: UIPalette.subtext;
                 }
@@ -49,10 +51,17 @@ export component SearchBar {
                 key-pressed(event) => {
                     if event.text == Key.Escape {
                         self.accepted();
-                        accept
-                    } else {
-                        reject
+                        return accept;
                     }
+                    if self.text.character-count > root.max-length
+                        && event.text != Key.Backspace
+                        && event.text != Key.LeftArrow
+                        && event.text != Key.RightArrow
+                        && event.text != Key.UpArrow
+                        && event.text != Key.DownArrow {
+                        return accept;
+                    }
+                    reject
                 }
 
                 accepted() => {

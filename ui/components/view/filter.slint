@@ -80,7 +80,10 @@ export component Filter inherits Rectangle {
             alignment: end;
             spacing: UIMetrics.spacing-sm;
 
-            SearchBar { }
+            SearchBar {
+                min-width: 180px;
+                max-length: 16;
+            }
 
             SearchBar {
                 min-width: 240px;
