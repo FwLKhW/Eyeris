@@ -3,9 +3,10 @@ import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
 import { TabState } from "../../globals.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
+import { FullButtonPopover } from "../ui/popover.slint";
 import { FullButton } from "../ui/button.slint";
-import { TabGroup } from "../ui/tab-group.slint";
 import { ScrollView } from "../ui/scroll-view.slint";
+import { TabGroup } from "../ui/tab-group.slint";
 import { TabContent } from "tab-content.slint";
 
 export component LeftSidebar inherits Rectangle {
@@ -23,7 +24,6 @@ export component LeftSidebar inherits Rectangle {
         HorizontalDivider { }
 
         ScrollView {
-            vertical-stretch: 1;
             content-height: tab-content.preferred-height;
 
             tab-content := TabContent { }
@@ -35,9 +35,15 @@ export component LeftSidebar inherits Rectangle {
             padding-top: UIMetrics.spacing-xl;
             padding-bottom: UIMetrics.spacing-xl;
 
-            FullButton {
+            FullButtonPopover {
                 left-icon: Icons.heart;
                 left-text: "Library";
+                position: top;
+
+                FullButton {
+                    left-icon: Icons.folder;
+                    left-text: "Open Folder";
+                }
             }
         }
     }
