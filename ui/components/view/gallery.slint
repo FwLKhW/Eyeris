@@ -9,9 +9,9 @@ import {
 
 import { FullButtonPopover, IconButtonPopover } from "../ui/popover.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
-import { UIText } from "../ui/text.slint";
-import { ListView } from "std-widgets.slint";
+import { ScrollView } from "../ui/scroll-view.slint";
 import { FilterBar } from "filter-bar.slint";
+import { UIText } from "../ui/text.slint";
 
 component ImageItem inherits Rectangle {
     in property <string> id;
@@ -66,25 +66,11 @@ component ImageRow inherits HorizontalLayout {
 
     height: 360px;
     alignment: space-around;
-    spacing: 8px;
-    padding: 12px;
+    spacing: UIMetrics.spacing-lg;
 
     for img in images: ImageItem {
         source: img;
         name: "image.png";
-    }
-}
-
-component ImageGrid inherits VerticalLayout {
-    ListView {
-        for index in 8: ImageRow {
-            images: [
-                @image-url("../../../fixtures/images/kurisu.jpg"),
-                @image-url("../../../fixtures/images/thumbnail.jpg"),
-                @image-url("../../../fixtures/images/kurisu.jpg"),
-                @image-url("../../../fixtures/images/thumbnail.jpg"),
-            ];
-        }
     }
 }
 
@@ -97,6 +83,19 @@ export component Gallery inherits Rectangle {
 
         HorizontalDivider { }
 
-        ImageGrid { }
+        ScrollView {
+            VerticalLayout {
+                spacing: UIMetrics.spacing-2xl;
+
+                for index in 8: ImageRow {
+                    images: [
+                        @image-url("../../../fixtures/images/kurisu.jpg"),
+                        @image-url("../../../fixtures/images/thumbnail.jpg"),
+                        @image-url("../../../fixtures/images/kurisu.jpg"),
+                        @image-url("../../../fixtures/images/thumbnail.jpg"),
+                    ];
+                }
+            }
+        }
     }
 }
