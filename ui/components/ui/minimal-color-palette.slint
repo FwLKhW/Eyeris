@@ -1,0 +1,65 @@
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { ColorNode } from "color-palette.slint";
+
+export component MinimalColorPalette inherits VerticalLayout {
+    private property <[color]> lighter-colors: [
+        #fecaca,
+        #fed7aa,
+        #fef08a,
+        #ecfccb,
+        #dcfce7,
+        #cffafe,
+        #dbeafe,
+        #f3e8ff,
+        #fce7f3
+    ];
+    private property <[color]> standard-colors: [
+        #ef4444,
+        #f97316,
+        #eab308,
+        #84cc16,
+        #22c55e,
+        #06b6d4,
+        #3b82f6,
+        #a855f7,
+        #ec4899
+    ];
+    private property <[color]> darker-colors: [
+        #991b1b,
+        #9a3412,
+        #713f12,
+        #365314,
+        #14532d,
+        #164e63,
+        #1e3a8a,
+        #581c87,
+        #831843
+    ];
+
+    spacing: 6px;
+    padding: 10px;
+
+    HorizontalLayout {
+        spacing: UIMetrics.spacing-md;
+
+        for bg in lighter-colors: ColorNode {
+            background: bg;
+        }
+    }
+
+    HorizontalLayout {
+        spacing: UIMetrics.spacing-md;
+
+        for bg in standard-colors: ColorNode {
+            background: bg;
+        }
+    }
+
+    HorizontalLayout {
+        spacing: UIMetrics.spacing-md;
+
+        for bg in darker-colors: ColorNode {
+            background: bg;
+        }
+    }
+}

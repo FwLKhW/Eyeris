@@ -1,15 +1,17 @@
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 
+export component ColorNode inherits Rectangle {
+    width: UIMetrics.icon-md;
+    height: self.width;
+    border-radius: UIMetrics.radius-sm;
+}
+
 export component ColorPalette inherits HorizontalLayout {
     in property <[color]> colors;
 
     spacing: UIMetrics.spacing-sm;
 
-    for color in root.colors: Rectangle {
-        width: UIMetrics.icon-md;
-        height: self.width;
-
+    for color in root.colors: ColorNode {
         background: color;
-        border-radius: UIMetrics.radius-sm;
     }
 }

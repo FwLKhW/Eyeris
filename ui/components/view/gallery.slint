@@ -7,12 +7,13 @@ import {
     ImagePreviewState,
 } from "../../globals.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
-import { FullButtonPopover } from "../ui/popover.slint";
+import { FullButtonPopover, IconButtonPopover } from "../ui/popover.slint";
 import { ScrollView } from "../ui/scroll-view.slint";
 import { IconButton } from "../ui/button.slint";
 import { SearchBar } from "../ui/search-bar.slint";
 import { UIText } from "../ui/text.slint";
 import { ListView } from "std-widgets.slint";
+import { MinimalColorPalette } from "../ui/minimal-color-palette.slint";
 
 component ImageItem inherits Rectangle {
     in property <string> id;
@@ -103,10 +104,13 @@ export component Gallery inherits Rectangle {
                 alignment: start;
                 spacing: UIMetrics.spacing-sm;
 
-                IconButton {
+                IconButtonPopover {
                     icon: Icons.circle;
                     icon-color: UIPalette.subtext;
                     icon-hover-color: UIPalette.subtext;
+                    popup-width: 260px;
+
+                    MinimalColorPalette {}
                 }
 
                 IconButton {
