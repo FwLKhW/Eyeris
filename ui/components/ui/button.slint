@@ -9,8 +9,8 @@ export enum ButtonSize { small, medium }
 
 export component IconButton inherits Rectangle {
     in property <ButtonSize> size: medium;
+    in property <image> icon: Icons.settings;
     in property <length> icon-size: UIMetrics.icon-md;
-    in property <image> icon;
     in property <color> hover: UIPalette.bg-hover;
     in property <bool> checkable: false;
     in-out property <bool> selected: false;
@@ -51,9 +51,9 @@ export component FullButton inherits Rectangle {
     in property <color> icon-color: UIPalette.icon;
     in property <image> left-icon: Icons.folder;
     in property <string> left-text: "Button";
-    in property <string> right-text: "42";
-    in property <image> right-icon: Icons.dots-vertical;
-    in property <bool> show-right: false;
+    in property <string> right-text;
+    in property <image> right-icon: Icons.chevron-right;
+    in property <bool> show-right: true;
     in property <bool> activated: false;
 
     callback clicked();
@@ -62,6 +62,7 @@ export component FullButton inherits Rectangle {
     border-radius: UIMetrics.radius-md;
 
     HorizontalLayout {
+        spacing: UIMetrics.spacing-sm;
         padding: UIMetrics.spacing-sm;
         padding-left: UIMetrics.spacing-md;
         padding-right: UIMetrics.spacing-md;
@@ -69,13 +70,13 @@ export component FullButton inherits Rectangle {
         HorizontalLayout {
             cross-axis-alignment: center;
             spacing: UIMetrics.spacing-sm;
-            padding-right: UIMetrics.spacing-md;
+            padding-right: left-text != "" ? UIMetrics.spacing-sm : 0;
 
             Icon {
                 icon: root.left-icon;
             }
 
-            UIText {
+            if left-text != "": UIText {
                 text: root.left-text;
                 style: UITypography.label;
             }
@@ -85,7 +86,6 @@ export component FullButton inherits Rectangle {
             alignment: end;
             cross-axis-alignment: center;
             spacing: UIMetrics.spacing-sm;
-            padding-right: UIMetrics.spacing-md;
 
             UIText {
                 text: root.right-text;
