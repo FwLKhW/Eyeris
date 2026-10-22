@@ -4,16 +4,16 @@ from pathlib import Path
 from crossfiledialog import choose_folder
 from tinydb import TinyDB
 
-from src.config import APPLICATION_DATA_PATH, LIBRARY_JSON_PATH
+from src.config import APPLICATION_DATA_PATH
 from src.schema import Library
 
 os.makedirs(APPLICATION_DATA_PATH, exist_ok=True)
 
-db = TinyDB(LIBRARY_JSON_PATH)
+db = TinyDB(APPLICATION_DATA_PATH / "library.json")
 
 
 def open_library():
-    folder_path = choose_folder("Open a folder as library")
+    folder_path = choose_folder("Open a folder as Library")
     if folder_path is None:
         return None
 
