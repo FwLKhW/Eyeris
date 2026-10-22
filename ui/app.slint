@@ -21,8 +21,9 @@ import {
     UIMetrics,
     UIPalette,
     TitleBar,
+    UIText,
     Icons,
-    Main, UIText,
+    Main,
 } from "lib.slint";
 
 export {
@@ -181,11 +182,11 @@ export component App inherits Window {
         z: 999;
 
         Image {
-            source: ImagePreviewState.source;
-            x: root.width / 2 - (ImagePreviewState.source.width / 2 * 1phx) + (ImagePreviewState.delta-x * root.width / 512 / 1px);
-            y: root.height / 2 - (ImagePreviewState.source.height / 2 * 1phx) + (ImagePreviewState.delta-y * root.height / 512 / 1px);
-            width: ImagePreviewState.source.width * 1phx;
-            height: ImagePreviewState.source.height * 1phx;
+            source: ImagePreviewState.image-full;
+            x: root.width / 2 - (ImagePreviewState.image-full.width / 2 * 1phx) + (ImagePreviewState.delta-x * root.width / 512 / 1px);
+            y: root.height / 2 - (ImagePreviewState.image-full.height / 2 * 1phx) + (ImagePreviewState.delta-y * root.height / 512 / 1px);
+            width: ImagePreviewState.image-full.width * 1phx;
+            height: ImagePreviewState.image-full.height * 1phx;
         }
     }
 }

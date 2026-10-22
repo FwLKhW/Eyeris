@@ -1,4 +1,4 @@
-import { ImagePreviewState } from "../../globals.slint";
+import { ImagePreviewState, Actions } from "../../globals.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 
 export component ImagePreview inherits Rectangle {
@@ -7,7 +7,7 @@ export component ImagePreview inherits Rectangle {
     max-height: 256px;
 
     Image {
-        source: ImagePreviewState.source;
+        source: ImagePreviewState.preview;
         width: 100%;
         height: 100%;
         image-fit: contain;
@@ -17,6 +17,7 @@ export component ImagePreview inherits Rectangle {
         pointer-event(event) => {
             if (event.kind == PointerEventKind.down) {
                 ImagePreviewState.is-active = true;
+                ImagePreviewState.image-full = Actions.load-image(ImagePreviewState.image-path);
                 ImagePreviewState.initial-mouse-x = self.mouse-x;
                 ImagePreviewState.initial-mouse-y = self.mouse-y;
                 ImagePreviewState.delta-x = self.mouse-x - ImagePreviewState.initial-mouse-x;

@@ -4,6 +4,7 @@ from pathlib import Path
 import slint
 from slint import ListModel
 
+from src import utils
 from src.collection import CollectionManager
 
 ui_path = Path(__file__).parent / "ui"
@@ -14,6 +15,10 @@ class App(slint.loader.app.App):
     def __init__(self) -> None:
         super().__init__()
         self.collection_manager = CollectionManager()
+
+    @slint.callback(global_name="Actions")
+    def load_image(self, path: str):
+        return utils.load_image(path)
 
     @slint.callback(global_name="Actions")
     def load_collection_list(self):

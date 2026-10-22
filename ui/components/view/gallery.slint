@@ -59,7 +59,8 @@ component ImageItem inherits Rectangle {
         mouse-cursor: MouseCursor.pointer;
 
         clicked => {
-            GalleryState.selected-image-id = img.id;
+            ImagePreviewState.image-path = img.path;
+            ImagePreviewState.preview = thumbnail.source;
         }
     }
 }

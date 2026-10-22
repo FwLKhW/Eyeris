@@ -2,6 +2,7 @@ import { Align, IndexedImage, Collection } from "types.slint";
 import { UIPalette } from "styling/ui-palette.slint";
 
 export global Actions {
+    callback load-image(string) -> image;
     callback load-collection-list();
     callback add-collection();
     callback open-collection(string);
@@ -41,7 +42,9 @@ export global GalleryState {
 }
 
 export global ImagePreviewState {
-    in-out property <image> source;
+    in-out property <image> preview;
+    in-out property <string> image-path;
+    in-out property <image> image-full;
     in-out property <bool> is-active: false;
     in property <length> initial-mouse-x;
     in property <length> initial-mouse-y;
