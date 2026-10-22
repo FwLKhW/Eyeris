@@ -41,7 +41,13 @@ class Collection:
         else:
             Img = Query()
             for image_path in image_paths:
-                if len(self.db.search(Img.path == str(image_path))) > 0:
+                matches = self.db.search(
+                    Img.fragment(
+                        {"path": str(image_path), "size": image_path.stat().st_size}
+                    )
+                )
+
+                if len(matches) > 0:
                     continue
 
                 image_data, thumbnail = index_image(image_path)
