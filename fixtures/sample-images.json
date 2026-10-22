@@ -1,14 +1,12 @@
 [
   {
     "id": "b48c23a7...",
-    "info": {
-      "name": "sunset_beach.jpg",
-      "path": "wallpapers/sunset_beach.jpg",
-      "size_bytes": 2458900,
-      "width": 3840,
-      "height": 2160,
-      "format": "JPEG"
-    },
+    "name": "sunset_beach.jpg",
+    "path": "home/david/Pictures/Wallpapers/sunset_beach.jpg",
+    "size": 2458900,
+    "width": 3840,
+    "height": 2160,
+    "format": "JPEG",
     "timestamps": {
       "indexed": 1792321201,
       "created": 1792321201,
@@ -23,7 +21,7 @@
         [0.12, 0.212, 0.36],
         [0.02, 0.212, 0.36]
       ],
-      "creator": "David Ng.",
+      "creator": "David",
       "description": "Beautiful sunset at Phu Quoc beach"
     }
   }

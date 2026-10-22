@@ -1,7 +1,5 @@
 from typing import TypedDict
 
-from slint import Image, ListModel
-
 
 class Library(TypedDict):
     path: str
@@ -13,7 +11,6 @@ class GalleryImage(TypedDict):
     name: str
     width: int
     height: int
-    thumbnail: Image
 
 
 class Timestamps(TypedDict):
@@ -24,9 +21,10 @@ class Timestamps(TypedDict):
 
 class Metadata(TypedDict):
     rating: int
-    tags: ListModel[str]
-    palette: ListModel[ListModel[float]]
+    tags: list[str]
+    palette: list[tuple[float]]
     creator: str
+    description: str
 
 
 class IndexedImage(TypedDict):
