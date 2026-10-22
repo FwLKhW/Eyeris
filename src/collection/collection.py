@@ -16,6 +16,8 @@ class Collection:
         self.name = path.name
 
     def indexing(self):
+        """Read/write images data and create thumbnail."""
+
         thumbnail_folder = self.path / DOT_FOLDER / "thumbnail"
         os.makedirs(thumbnail_folder, exist_ok=True)
 
@@ -32,15 +34,21 @@ class Collection:
             )
         ]
 
+        # TODO: dont index indexed images again
         for image_path in image_paths:
             image_data, thumbnail = index_image(image_path)
             thumbnail.save(thumbnail_folder / f"{image_data['id']}.png")
             db.upsert(image_data, where("id") == image_data["id"])
 
     def get_images(self):
+        """Get IndexedImage[]"""
+
         with TinyDB(self.path / DOT_FOLDER / "images.json", indent=4) as db:
             images = db.all()
             return images
+
+    def schema(self):
+        return CollectionSchema(name=self.name, path=str(self.path))
 
 
 class CollectionManager:
@@ -68,7 +76,9 @@ class CollectionManager:
         libs = self.db.search(where("path").map(lambda p: Path(p) == path) == True)
         if len(libs) == 0:
             return
-        self.current_collection = Collection(libs[0]["path"])
+        self.current_collection = Collection(Path(libs[0]["path"]))
+
+        return self.current_collection
 
     def list(self):
         """List all Collection.
