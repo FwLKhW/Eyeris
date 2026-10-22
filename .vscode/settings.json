@@ -3,6 +3,7 @@
         "ui": "./ui/ui.slint"
     },
     "cSpell.words": [
+        "crossfiledialog",
         "distpath",
         "Eyeris",
         "Flexbox",
