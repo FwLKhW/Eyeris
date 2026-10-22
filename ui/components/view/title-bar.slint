@@ -4,6 +4,7 @@ import { Icons } from "../../icons/icons.slint";
 
 import { FullButton, IconButton } from "../ui/button.slint";
 import { IconButtonPopover } from "../ui/popover.slint";
+import { TooltipArea } from "../ui/tooltip.slint";
 
 export component TitleBar inherits Rectangle {
     callback window-minimize();
@@ -25,6 +26,7 @@ export component TitleBar inherits Rectangle {
             size: small;
             icon-size: 16px;
             popup-width: 160px;
+            tooltip-text: "Menu";
 
             FullButton {
                 left-icon: Icons.settings;
@@ -40,6 +42,7 @@ export component TitleBar inherits Rectangle {
                 icon: Icons.minimize;
                 size: small;
                 icon-size: 16px;
+                tooltip-text: "Minimize";
 
                 clicked => {
                     window-minimize();
@@ -50,6 +53,7 @@ export component TitleBar inherits Rectangle {
                 icon: Icons.maximize;
                 size: small;
                 icon-size: 16px;
+                tooltip-text: "Maximize";
 
                 clicked => {
                     window-maximize();
@@ -60,6 +64,7 @@ export component TitleBar inherits Rectangle {
                 icon: Icons.close;
                 size: small;
                 icon-size: 18px;
+                tooltip-text: "Close";
                 bg-hover: UIPalette.error;
 
                 clicked => {
