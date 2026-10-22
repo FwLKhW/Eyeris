@@ -1,17 +1,78 @@
+import { FilterState } from "../../globals.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 
 export component ColorNode inherits Rectangle {
+    in property <color> value;
+
     width: UIMetrics.icon-md;
     height: self.width;
     border-radius: UIMetrics.radius-sm;
+    background: root.value;
+
+    TouchArea {
+        mouse-cursor: MouseCursor.pointer;
+
+        clicked => {
+            FilterState.color = root.value;
+        }
+    }
 }
 
 export component ColorPalette inherits HorizontalLayout {
     in property <[color]> colors;
 
-    spacing: UIMetrics.spacing-sm;
+    spacing: UIMetrics.spacing-lg;
 
     for color in root.colors: ColorNode {
-        background: color;
+        value: color;
+    }
+}
+
+export component MinimalColorPalette inherits VerticalLayout {
+    private property <[[color]]> palettes: [
+        [
+            #fecaca,
+            #fed7aa,
+            #fef08a,
+            #ecfccb,
+            #dcfce7,
+            #cffafe,
+            #dbeafe,
+            #f3e8ff,
+            #fce7f3
+        ],
+        [
+            #ef4444,
+            #f97316,
+            #eab308,
+            #84cc16,
+            #22c55e,
+            #06b6d4,
+            #3b82f6,
+            #a855f7,
+            #ec4899
+        ],
+        [
+            #991b1b,
+            #9a3412,
+            #713f12,
+            #365314,
+            #14532d,
+            #164e63,
+            #1e3a8a,
+            #581c87,
+            #831843
+        ]
+    ];
+
+    spacing: UIMetrics.spacing-lg;
+    padding: UIMetrics.spacing-lg;
+
+    for palette in palettes: HorizontalLayout {
+        spacing: UIMetrics.spacing-lg;
+
+        for bg in palette: ColorNode {
+            value: bg;
+        }
     }
 }

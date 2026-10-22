@@ -1,8 +1,9 @@
+import { FilterState } from "../../globals.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
 
-import { MinimalColorPalette } from "../ui/minimal-color-palette.slint";
+import { MinimalColorPalette } from "../ui/color-palette.slint";
 import { IconButtonPopover } from "../ui/popover.slint";
 import { IconButton } from "../ui/button.slint";
 import { SearchBar } from "../ui/search-bar.slint";
@@ -20,10 +21,10 @@ export component Filter inherits Rectangle {
             spacing: UIMetrics.spacing-sm;
 
             IconButtonPopover {
-                icon: Icons.circle;
-                icon-color: UIPalette.subtext;
-                icon-hover-color: UIPalette.subtext;
-                popup-width: 260px;
+                icon: FilterState.color == transparent ? Icons.circle : Icons.filled-circle;
+                icon-color: FilterState.color == transparent ? UIPalette.subtext : FilterState.color;
+                icon-hover-color: self.icon-color;
+                popup-width: 270px;
                 tooltip-text: "Color";
 
                 MinimalColorPalette { }
