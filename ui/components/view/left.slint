@@ -42,16 +42,22 @@ export component Left inherits Rectangle {
                     Actions.load-library-list();
                 }
 
-                for lib in LibraryState.libraries: FullButton {
-                    left-icon: Icons.heart;
-                    left-text: lib.name;
-                }
+                if LibraryState.libraries.length > 0: VerticalLayout {
+                    for lib in LibraryState.libraries: FullButton {
+                        left-icon: Icons.heart;
+                        left-text: lib.name;
+                    }
 
-                HorizontalDivider { } 
+                    HorizontalDivider { }
+                }
 
                 FullButton {
                     left-icon: Icons.folder;
-                    left-text: "Open Folder";
+                    left-text: "Open";
+
+                    clicked => {
+                        Actions.open-library();
+                    }
                 }
             }
         }

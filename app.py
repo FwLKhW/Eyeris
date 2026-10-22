@@ -19,6 +19,10 @@ class App(slint.loader.app.App):
     def load_library_list(self):
         self.libraries = ListModel(library.load_library_list())
         self.LibraryState.libraries = self.libraries
+        
+    @slint.callback(global_name="Actions")
+    def open_library(self):
+        library.open_library()
 
 
 def main():

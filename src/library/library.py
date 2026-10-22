@@ -1,6 +1,8 @@
 import os
+from pathlib import Path
 from typing import TypedDict
 
+from crossfiledialog import choose_folder
 from platformdirs import user_data_path
 from tinydb import TinyDB
 
@@ -17,6 +19,17 @@ class Library(TypedDict):
     name: str
 
 
+def open_library():
+    folder_path = choose_folder("Open a folder as library")
+    if folder_path is None:
+        return None
+
+    name = Path(folder_path).name
+    add_library(Library(name=name, path=folder_path))
+
+    return folder_path
+
+
 def load_library_list():
     return db.all()
 
@@ -26,10 +39,4 @@ def add_library(lib: Library):
 
 
 if __name__ == "__main__":
-    from pprint import pprint
-
-    add_library({"name": "Wallpapers", "path": "~/Pictures/Wallpapers"})
-    add_library({"name": "Anime", "path": "~/Pictures/Anime"})
-    add_library({"name": "Design", "path": "~/Pictures/Design"})
-
-    pprint(load_library_list())
+    pass
