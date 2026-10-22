@@ -3,12 +3,13 @@ import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
 
+import { TooltipArea } from "tooltip.slint";
 import { UIText } from "text.slint";
 import { Icon } from "icon.slint";
 
 export enum ButtonSize { small, medium }
 
-export component IconButton inherits Rectangle {
+export component IconButton inherits TooltipArea {
     in property <ButtonSize> size: medium;
     in property <image> icon: Icons.settings;
     in property <length> icon-size: UIMetrics.icon-md;
@@ -18,33 +19,30 @@ export component IconButton inherits Rectangle {
     in property <bool> checkable: false;
     in-out property <bool> selected: false;
 
-    callback clicked();
+    mouse-cursor: MouseCursor.pointer;
 
-    background: touch.pressed || touch.has-hover || root.selected ? root.bg-hover : transparent;
-    border-radius: UIMetrics.radius-md;
-
-    HorizontalLayout {
-        alignment: center;
-        cross-axis-alignment: center;
-        padding: root.size == small ? UIMetrics.spacing-xs : UIMetrics.spacing-md;
-        padding-left: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
-        padding-right: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
-
-        Icon {
-            icon: root.icon;
-            icon-size: icon-size;
-            color: touch.has-hover ? root.icon-hover-color : root.icon-color;
+    clicked => {
+        if root.checkable {
+            root.selected = !root.selected;
         }
     }
 
-    touch := TouchArea {
-        mouse-cursor: MouseCursor.pointer;
+    Rectangle {
+        background: root.pressed || root.has-hover || root.selected ? root.bg-hover : transparent;
+        border-radius: UIMetrics.radius-md;
 
-        clicked => {
-            if root.checkable {
-                root.selected = !root.selected;
+        HorizontalLayout {
+            alignment: center;
+            cross-axis-alignment: center;
+            padding: root.size == small ? UIMetrics.spacing-xs : UIMetrics.spacing-md;
+            padding-left: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
+            padding-right: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
+
+            Icon {
+                icon: root.icon;
+                icon-size: icon-size;
+                color: root.has-hover ? root.icon-hover-color : root.icon-color;
             }
-            root.clicked();
         }
     }
 }
