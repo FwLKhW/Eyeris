@@ -3,7 +3,7 @@ from pathlib import Path
 
 from crossfiledialog import choose_folder
 from slint import slint
-from tinydb import TinyDB, where
+from tinydb import Query, TinyDB, where
 
 from src.config import ALLOWED_IMAGE_EXTENSIONS, APPLICATION_DATA_PATH, DOT_FOLDER
 from src.schema import CollectionSchema
@@ -19,7 +19,7 @@ class Collection:
         self.thumbnail_folder = self.path / DOT_FOLDER / "thumbnail"
         os.makedirs(self.thumbnail_folder, exist_ok=True)
 
-    def indexing(self):
+    def indexing(self, clean=False):
         """Read/write images data and create thumbnail."""
 
         image_paths = [
@@ -33,11 +33,20 @@ class Collection:
             )
         ]
 
-        # TODO: dont index indexed images again
-        for image_path in image_paths:
-            image_data, thumbnail = index_image(image_path)
-            thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
-            self.db.upsert(image_data, where("id") == image_data["id"])
+        if clean:
+            for image_path in image_paths:
+                image_data, thumbnail = index_image(image_path)
+                thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
+                self.db.upsert(image_data, where("id") == image_data["id"])
+        else:
+            Img = Query()
+            for image_path in image_paths:
+                if len(self.db.search(Img.path == str(image_path))) > 0:
+                    continue
+
+                image_data, thumbnail = index_image(image_path)
+                thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
+                self.db.upsert(image_data, where("id") == image_data["id"])
 
     def get_images(self):
         """Get IndexedImage[]"""
