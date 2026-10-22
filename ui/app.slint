@@ -2,9 +2,13 @@ import "../assets/fonts/Monda.ttf";
 
 import {
     ImagePreviewState,
+    ColorPaletteState,
+    GalleryState,
+    LibraryState,
     LayoutState,
     WindowState,
-    Actions,
+    TabState,
+    Actions, TooltipState,
 } from "globals.slint";
 import {
     FullButtonPopover,
@@ -17,10 +21,21 @@ import {
     UIPalette,
     TitleBar,
     Icons,
-    Main,
+    Main, UIText,
 } from "lib.slint";
 
-export { Actions, WindowState, LayoutState, ImagePreviewState }
+export {
+    ImagePreviewState,
+    ColorPaletteState,
+    GalleryState,
+    LibraryState,
+    LayoutState,
+    WindowState,
+    TabState,
+    Actions,
+} from "globals.slint";
+
+
 export component App inherits Window {
     title: "Eyeris";
     icon: @image-url("../assets/icon.svg");
@@ -137,6 +152,24 @@ export component App inherits Window {
 
                 Main { }
             }
+        }
+    }
+
+    // Tooltip overlay
+    if TooltipState.visible: Rectangle {
+        x: TooltipState.x - self.width / 2;
+        y: TooltipState.align == start ? TooltipState.y - self.height : TooltipState.y;
+        z: 99999;
+        width: txt.width + UIMetrics.spacing-lg * 2;
+        height: txt.height + UIMetrics.spacing-sm * 2;
+        background: UIPalette.bg-surface;
+        border-radius: UIMetrics.radius-sm;
+
+        txt := UIText {
+            x: UIMetrics.spacing-lg;
+            y: UIMetrics.spacing-sm;
+            text: TooltipState.text;
+            style: UITypography.small;
         }
     }
 

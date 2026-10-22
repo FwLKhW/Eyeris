@@ -1,6 +1,13 @@
 import { UIPalette } from "styling/ui-palette.slint";
+import { Library, Align } from "types.slint";
 
-export global Actions { }
+export global Actions {
+    callback load-library-list();
+}
+
+export global LibraryState {
+    in-out property <[Library]> libraries;
+}
 
 export global WindowState {
     in-out property <length> width;
@@ -46,4 +53,12 @@ export global ColorPaletteState {
         UIPalette.blue,
         UIPalette.green,
     ];
+}
+
+export global TooltipState {
+    in-out property <string> text: "";
+    in-out property <length> x: 0;
+    in-out property <length> y: 0;
+    in-out property <Align> align: start;
+    in-out property <bool> visible: false;
 }

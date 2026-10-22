@@ -16,6 +16,7 @@
         "pyinstaller",
         "rgba",
         "slint",
+        "tinydb",
         "titlebar"
     ]
 }
