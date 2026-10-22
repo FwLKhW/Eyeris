@@ -1,7 +1,7 @@
+import { TabState, Actions, LibraryState } from "../../globals.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
-import { TabState } from "../../globals.slint";
 
 import { FullButtonPopover } from "../ui/popover.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
@@ -9,6 +9,7 @@ import { FullButton } from "../ui/button.slint";
 import { ScrollArea } from "../ui/scroll-area.slint";
 import { TabGroup } from "../ui/tab-group.slint";
 import { TabHome } from "tab-home.slint";
+import { Button } from "std-widgets.slint";
 
 export component Left inherits Rectangle {
     background: UIPalette.bg-area;
@@ -36,6 +37,17 @@ export component Left inherits Rectangle {
                 left-icon: Icons.heart;
                 left-text: "Library";
                 position: top;
+
+                pre-action => {
+                    Actions.load-library-list();
+                }
+
+                for lib in LibraryState.libraries: FullButton {
+                    left-icon: Icons.heart;
+                    left-text: lib.name;
+                }
+
+                HorizontalDivider { } 
 
                 FullButton {
                     left-icon: Icons.folder;

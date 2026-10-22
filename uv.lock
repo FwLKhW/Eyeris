@@ -11,7 +11,7 @@ resolution-markers = [
     "python_full_version >= '3.15' and platform_machine == 's390x' and sys_platform == 'linux'",
     "(python_full_version >= '3.15' and platform_machine != 'aarch64' and platform_machine != 'armv7l' and platform_machine != 'i686' and platform_machine != 'ppc64le' and platform_machine != 's390x' and platform_machine != 'x86_64' and sys_platform == 'linux') or (python_full_version >= '3.15' and sys_platform != 'linux' and sys_platform != 'win32')",
     "python_full_version >= '3.13' and python_full_version < '3.15' and sys_platform == 'win32'",
-    "(python_full_version < '3.15' and platform_machine != 'aarch64' and platform_machine != 'armv7l' and platform_machine != 'i686' and platform_machine != 'ppc64le' and platform_machine != 's390x' and platform_machine != 'x86_64' and sys_platform == 'linux') or (python_full_version < '3.13' and sys_platform == 'win32') or (python_full_version < '3.15' and sys_platform != 'linux' and sys_platform != 'win32')",
+    "(python_full_version >= '3.13' and python_full_version < '3.15' and platform_machine != 'aarch64' and platform_machine != 'armv7l' and platform_machine != 'i686' and platform_machine != 'ppc64le' and platform_machine != 's390x' and platform_machine != 'x86_64' and sys_platform == 'linux') or (python_full_version < '3.13' and platform_machine != 'aarch64' and platform_machine != 'armv7l' and platform_machine != 'i686' and platform_machine != 'ppc64le' and platform_machine != 's390x' and platform_machine != 'x86_64') or (python_full_version < '3.13' and sys_platform == 'win32') or (python_full_version < '3.15' and sys_platform != 'linux' and sys_platform != 'win32')",
     "python_full_version < '3.15' and platform_machine == 'x86_64' and sys_platform == 'linux'",
     "python_full_version < '3.15' and platform_machine == 'i686' and sys_platform == 'linux'",
     "python_full_version < '3.15' and platform_machine == 'aarch64' and sys_platform == 'linux'",
@@ -34,7 +34,9 @@ name = "app"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "platformdirs" },
     { name = "slint" },
+    { name = "tinydb" },
 ]
 
 [package.dev-dependencies]
@@ -43,7 +45,11 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "slint", specifier = ">=1.18.1b1" }]
+requires-dist = [
+    { name = "platformdirs", specifier = ">=4.13.5" },
+    { name = "slint", specifier = ">=1.18.1b1" },
+    { name = "tinydb", specifier = ">=4.9.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pyinstaller", specifier = ">=6.22.3" }]
@@ -76,6 +82,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/03/4f/2750f7f6f025a1507cd3b7218691671eecfd0bbebebe8b39aa0fe1d360b8/pefile-2024.8.26.tar.gz", hash = "sha256:3ff6c5d8b43e8c37bb6e6dd5085658d658a7a0bdcd20b6a07b1fcfc1c4e9d632", size = 76008, upload-time = "2024-08-26T20:58:38.155Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/54/16/12b82f791c7f50ddec566873d5bdd245baa1491bac11d15ffb98aecc8f8b/pefile-2024.8.26-py3-none-any.whl", hash = "sha256:76f8b485dcd3b1bb8166f1128d395fa3d87af26360c2358fb75b80019b957c6f", size = 74766, upload-time = "2024-08-26T21:01:02.632Z" },
+]
+
+[[package]]
+name = "platformdirs"
+version = "4.13.5"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/e6/d0abbb256b44e6a05748c6942511ff67db8dbb068de0c35b24bf1b395b09/platformdirs-4.13.5.tar.gz", hash = "sha256:05831adf87d392760f4b5c3a0a95579ab5a10b18b9b9bd43680dcb47544788a0", size = 62362, upload-time = "2026-10-19T01:02:11.778Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6c/8a/1d8cb3842909dc193a73835adedf412e32e18f8ffd59f43983949622fe6f/platformdirs-4.13.5-py3-none-any.whl", hash = "sha256:53d3ec4280b815c1e0b02edad7f9ee8fda1ba9c0865dd9c2e6e63849ce82fc1e", size = 32779, upload-time = "2026-10-19T01:02:10.17Z" },
 ]
 
 [[package]]
@@ -151,4 +166,13 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/dc/d9/56b1e86a60d1114561cd28ae10b4ac7b6057d8027adb8a8f4c5187b9d929/slint-1.18.1b1-cp311-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:56f95c1fdb922823ba9d77c05ce09bc514303d82cc1e7746ec631f3d6b7dd981", size = 15578270, upload-time = "2026-09-21T11:43:15.775Z" },
     { url = "https://files.pythonhosted.org/packages/c4/70/11d0b333fa4ed7a4f94aac0c5e96dd728e75b550b10b95f2c35b4ca5eca8/slint-1.18.1b1-cp311-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:61999a7179fbdbbf6f6b900962b8e9d68dbed780ffe6d782946489b3a6fa56bd", size = 15858917, upload-time = "2026-09-21T11:43:19.327Z" },
     { url = "https://files.pythonhosted.org/packages/49/01/08592028ab039fe560571abf0d583e4effbcc67cf0492c6c405141432c3d/slint-1.18.1b1-cp311-abi3-win_amd64.whl", hash = "sha256:124d6587c47ea9276a372657da78e0473f9e38b5b84d721b8390c08078091fbf", size = 12548714, upload-time = "2026-09-21T11:43:22.39Z" },
+]
+
+[[package]]
+name = "tinydb"
+version = "4.9.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/01/e9/d30dd8b1b88a75ec3e464eb81feee514ccf97f50bd306d198959e6733210/tinydb-4.9.0.tar.gz", hash = "sha256:6928b1fa785186bda7952a0ba05aaeedc883ede565ca9c7d608de44e5e75de70", size = 31987, upload-time = "2026-08-06T15:03:44.78Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/54/ef/321cb77b49bc26f36ed1c85d55cd8e80f8f81e5e183b769abf67386c257a/tinydb-4.9.0-py3-none-any.whl", hash = "sha256:111f1f680978a1b7c534d698dd1d76739ff31c74c27fd26a111140b51d8b35d6", size = 25731, upload-time = "2026-08-06T15:03:43.582Z" },
 ]
