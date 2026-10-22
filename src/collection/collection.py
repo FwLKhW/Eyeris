@@ -1,7 +1,9 @@
 import os
 from pathlib import Path
 
+import numpy as np
 from crossfiledialog import choose_folder
+from PIL import Image
 from slint import slint
 from tinydb import TinyDB, where
 
@@ -16,12 +18,11 @@ class Collection:
         self.path = path
         self.name = path.name
         self.db = TinyDB(self.path / DOT_FOLDER / "images.json", indent=4)
+        self.thumbnail_folder = self.path / DOT_FOLDER / "thumbnail"
+        os.makedirs(self.thumbnail_folder, exist_ok=True)
 
     def indexing(self):
         """Read/write images data and create thumbnail."""
-
-        thumbnail_folder = self.path / DOT_FOLDER / "thumbnail"
-        os.makedirs(thumbnail_folder, exist_ok=True)
 
         image_paths = [
             path
@@ -37,7 +38,7 @@ class Collection:
         # TODO: dont index indexed images again
         for image_path in image_paths:
             image_data, thumbnail = index_image(image_path)
-            thumbnail.save(thumbnail_folder / f"{image_data['id']}.png")
+            thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
             self.db.upsert(image_data, where("id") == image_data["id"])
 
     def get_images(self):
@@ -49,6 +50,10 @@ class Collection:
 
     def schema(self):
         return CollectionSchema(name=self.name, path=str(self.path))
+
+    def thumbnail(self, id: str) -> slint.Image:
+        img = Image.open(self.thumbnail_folder / f"{id}.png")
+        return slint.Image.load_from_array(np.array(img))
 
 
 class CollectionManager:
