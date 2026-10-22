@@ -1,25 +1,12 @@
 from typing import TypedDict
 
 
-class Library(TypedDict):
+class CollectionSchema(TypedDict):
     path: str
     name: str
 
 
-class GalleryImage(TypedDict):
-    id: str
-    name: str
-    width: int
-    height: int
-
-
-class Timestamps(TypedDict):
-    indexed: int
-    created: int
-    modified: int
-
-
-class Metadata(TypedDict):
+class MetadataSchema(TypedDict):
     rating: int
     tags: list[str]
     palette: list[tuple[float]]
@@ -27,13 +14,15 @@ class Metadata(TypedDict):
     description: str
 
 
-class IndexedImage(TypedDict):
+class IndexedImageSchema(TypedDict):
     id: str
-    name: str
+    indexed: int
     path: str
+    name: str
+    format: str
     size: int
     width: int
     height: int
-    format: str
-    timestamps: Timestamps
+    created: int
+    modified: int
     # metadata: Metadata

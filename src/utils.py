@@ -5,7 +5,7 @@ from blake3 import blake3
 from PIL import Image
 
 from src.config import THUMBNAIL_SIZE
-from src.schema import IndexedImage
+from src.schema import IndexedImageSchema
 
 
 def hash_image(image_path: Path) -> str:
@@ -19,12 +19,12 @@ def hash_image(image_path: Path) -> str:
     return pixel_hash
 
 
-def index_image(image_path: Path) -> tuple[IndexedImage, Image.Image]:
+def index_image(image_path: Path) -> tuple[IndexedImageSchema, Image.Image]:
     """Pure function to create indexed data and thumbnail for an image."""
 
     img = Image.open(image_path)
 
-    indexed = IndexedImage(
+    indexed = IndexedImageSchema(
         id=hash_image(image_path),
         name=image_path.name,
         format=image_path.suffix[1:].upper(),
