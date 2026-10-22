@@ -1,4 +1,4 @@
-import { TabState, Actions, LibraryState } from "../../globals.slint";
+import { TabState, Actions, CollectionState } from "../../globals.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
@@ -35,22 +35,22 @@ export component Left inherits Rectangle {
 
             FullButtonPopover {
                 left-icon: Icons.heart;
-                left-text: LibraryState.library.name.is-empty ? "Open a Library" : LibraryState.library.name;
+                left-text: CollectionState.current-collection.name.is-empty ? "Open a Collection" : CollectionState.current-collection.name;
                 position: top;
 
                 pre-action => {
-                    Actions.load-library-list();
+                    Actions.load-collection-list();
                 }
 
-                if LibraryState.libraries.length > 0: VerticalLayout {
+                if CollectionState.collections.length > 0: VerticalLayout {
                     spacing: UIMetrics.spacing-md;
 
-                    for lib in LibraryState.libraries: FullButton {
+                    for lib in CollectionState.collections: FullButton {
                         left-icon: Icons.heart;
                         left-text: lib.name;
 
                         clicked => {
-                            Actions.open-library(lib.path);
+                            Actions.open-collection(lib.path);
                         }
                     }
 
@@ -62,8 +62,8 @@ export component Left inherits Rectangle {
                     left-text: "Open";
 
                     clicked => {
-                        Actions.open-library-chooser();
-                        Actions.load-library-list();
+                        Actions.add-collection();
+                        Actions.load-collection-list();
                     }
                 }
             }
