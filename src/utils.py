@@ -1,11 +1,17 @@
 from datetime import UTC, datetime
 from pathlib import Path
 
+import numpy as np
 from blake3 import blake3
 from PIL import Image
+from slint import slint
 
 from src.config import THUMBNAIL_SIZE
 from src.schema import IndexedImageSchema
+
+
+def load_image(path: str) -> slint.Image:
+    return slint.Image.load_from_array(np.array(Image.open(path)))
 
 
 def hash_image(image_path: Path) -> str:
