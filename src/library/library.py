@@ -1,20 +1,15 @@
 import os
 from pathlib import Path
-from typing import TypedDict
 
 from crossfiledialog import choose_folder
 from tinydb import TinyDB
 
 from src.config import APPLICATION_DATA_PATH, LIBRARY_JSON_PATH
+from src.schema import Library
 
 os.makedirs(APPLICATION_DATA_PATH, exist_ok=True)
 
 db = TinyDB(LIBRARY_JSON_PATH)
-
-
-class Library(TypedDict):
-    path: str
-    name: str
 
 
 def open_library():
