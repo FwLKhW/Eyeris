@@ -10,7 +10,7 @@ import { Slider } from "../ui/slider.slint";
 
 export component Filter inherits Rectangle {
     clip: true;
-    
+
     HorizontalLayout {
         spacing: UIMetrics.spacing-sm;
         padding: UIMetrics.spacing-xl;
@@ -28,9 +28,13 @@ export component Filter inherits Rectangle {
 
                 MinimalColorPalette { }
 
-                Slider {
-                    width: 220px;
-                    thumb-border-color: UIPalette.bg-surface;
+                HorizontalLayout {
+                    alignment: center;
+
+                    Slider {
+                        width: 220px;
+                        thumb-border-color: UIPalette.bg-surface;
+                    }
                 }
             }
 
