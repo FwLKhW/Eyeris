@@ -3,11 +3,9 @@ from pathlib import Path
 from typing import TypedDict
 
 from crossfiledialog import choose_folder
-from platformdirs import user_data_path
 from tinydb import TinyDB
 
-APPLICATION_DATA_PATH = user_data_path() / "eyeris"
-LIBRARY_JSON_PATH = APPLICATION_DATA_PATH / "library.json"
+from src.config import APPLICATION_DATA_PATH, LIBRARY_JSON_PATH
 
 os.makedirs(APPLICATION_DATA_PATH, exist_ok=True)
 
