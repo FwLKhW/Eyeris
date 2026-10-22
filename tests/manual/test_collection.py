@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 from pprint import pprint
 
@@ -9,24 +8,21 @@ collections = CollectionManager()
 print("Collection DB:", collections.db_path)
 
 collections.clear()
-
-with open(collections.db_path, "r") as f:
-    txt = json.load(f)
-    pprint(txt)
+print("List Collection:", collections.list())
 
 col = collections.add()
 collections.add()
 
-with open(collections.db_path, "r") as f:
-    txt = json.load(f)
-    pprint(txt)
+print("List Collection:", collections.list())
 
 if col is not None:
     col = Collection(Path(col["path"]))
     col.indexing()
     images = col.get_images()
 
-    print(f"Load {len(images)} images from {col.path}")
+    print(f"Loaded {len(images)} images from {col.path}:")
+    for i, img in enumerate(images):
+        print(f"{i} {img['name']}")
 
-    print("Head 3 images:")
-    pprint(images[:3], sort_dicts=False)
+    print("First image:")
+    pprint(images[0], sort_dicts=False)

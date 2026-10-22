@@ -35,7 +35,7 @@ class Collection:
         for image_path in image_paths:
             image_data, thumbnail = index_image(image_path)
             thumbnail.save(thumbnail_folder / f"{image_data['id']}.png")
-            db.insert(image_data)
+            db.upsert(image_data, where("id") == image_data["id"])
 
     def get_images(self):
         with TinyDB(self.path / DOT_FOLDER / "images.json", indent=4) as db:
@@ -71,7 +71,12 @@ class CollectionManager:
         self.current_collection = Collection(libs[0]["path"])
 
     def list(self):
-        """List all Collection."""
+        """List all Collection.
+
+        Returns:
+            list[CollectionSchema]
+        """
+
         self.db.remove(where("path").map(lambda p: os.path.exists(p)) == False)
         return self.db.all()
 
