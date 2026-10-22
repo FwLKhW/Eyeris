@@ -28,5 +28,9 @@ def load_library_list():
     return db.all()
 
 
+def select_library_by_path(path: str):
+    return db.search(where("path") == path)[0]
+
+
 if __name__ == "__main__":
     pass

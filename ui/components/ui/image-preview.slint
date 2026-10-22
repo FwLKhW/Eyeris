@@ -7,7 +7,7 @@ export component ImagePreview inherits Rectangle {
     max-height: 256px;
 
     Image {
-        source: ImagePreviewState.current-source;
+        source: ImagePreviewState.source;
         width: 100%;
         height: 100%;
         image-fit: contain;
@@ -16,7 +16,6 @@ export component ImagePreview inherits Rectangle {
     touch := TouchArea {
         pointer-event(event) => {
             if (event.kind == PointerEventKind.down) {
-                ImagePreviewState.current-source = ImagePreviewState.current-source;
                 ImagePreviewState.is-active = true;
                 ImagePreviewState.initial-mouse-x = self.mouse-x;
                 ImagePreviewState.initial-mouse-y = self.mouse-y;

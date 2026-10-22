@@ -17,7 +17,7 @@ export component Left inherits Rectangle {
     VerticalLayout {
         TabGroup {
             icons: [Icons.home, Icons.tag, Icons.chart];
-            selected-index <=> TabState.current-tab-index;
+            selected-index <=> TabState.index;
         }
 
         HorizontalDivider { }
@@ -35,7 +35,7 @@ export component Left inherits Rectangle {
 
             FullButtonPopover {
                 left-icon: Icons.heart;
-                left-text: "Library";
+                left-text: LibraryState.library.name.is-empty ? "Open a Library" : LibraryState.library.name;
                 position: top;
 
                 pre-action => {
@@ -43,9 +43,15 @@ export component Left inherits Rectangle {
                 }
 
                 if LibraryState.libraries.length > 0: VerticalLayout {
+                    spacing: UIMetrics.spacing-md;
+
                     for lib in LibraryState.libraries: FullButton {
                         left-icon: Icons.heart;
                         left-text: lib.name;
+
+                        clicked => {
+                            Actions.open-library(lib.path);
+                        }
                     }
 
                     HorizontalDivider { }
@@ -56,7 +62,8 @@ export component Left inherits Rectangle {
                     left-text: "Open";
 
                     clicked => {
-                        Actions.open-library();
+                        Actions.open-library-chooser();
+                        Actions.load-library-list();
                     }
                 }
             }

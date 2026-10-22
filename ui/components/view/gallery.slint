@@ -1,12 +1,14 @@
-import { UITypography } from "../../styling/ui-typography.slint";
-import { UIMetrics } from "../../styling/ui-metrics.slint";
-import { UIPalette } from "../../styling/ui-palette.slint";
-import { Icons } from "../../icons/icons.slint";
 import {
     ImagePreviewState,
     GalleryState,
     LayoutState,
+    Actions,
 } from "../../globals.slint";
+import { GalleryImage } from "../../types.slint";
+import { UITypography } from "../../styling/ui-typography.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { Icons } from "../../icons/icons.slint";
 
 import { FullButtonPopover, IconButtonPopover } from "../ui/popover.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
@@ -15,22 +17,23 @@ import { Filter } from "filter.slint";
 import { UIText } from "../ui/text.slint";
 
 component ImageItem inherits Rectangle {
-    in property <string> id;
-    in property <image> source;
-    in property <string> name;
+    in property <GalleryImage> img;
 
     background: touch.pressed || touch.has-hover ? UIPalette.bg-hover : transparent;
-    horizontal-stretch: pow(source.height / source.width, 2);
+    horizontal-stretch: pow(img.height / img.width, 2);
+
+    init => {
+        thumbnail.source = Actions.load-thumbnail(img.id);
+    }
 
     VerticalLayout {
         cross-axis-alignment: center;
         spacing: UIMetrics.spacing-xl;
         padding: UIMetrics.spacing-xl;
 
-        Image {
+        thumbnail := Image {
             height: 256px;
             min-width: 128px;
-            source: root.source;
             image-fit: cover;
         }
 
@@ -40,12 +43,12 @@ component ImageItem inherits Rectangle {
             spacing: UIMetrics.spacing-xs;
 
             UIText {
-                text: root.name;
+                text: img.name;
                 font-weight: UITypography.medium;
             }
 
             UIText {
-                text: root.source.width + " x " + root.source.height;
+                text: img.width + " x " + img.height;
                 style: UITypography.small;
                 color: UIPalette.subtext;
             }
@@ -56,23 +59,18 @@ component ImageItem inherits Rectangle {
         mouse-cursor: MouseCursor.pointer;
 
         clicked => {
-            GalleryState.selected-image-id = root.id;
-            ImagePreviewState.current-source = root.source;
+            GalleryState.selected-image-id = img.id;
         }
     }
 }
 
 component ImageRow inherits HorizontalLayout {
-    in property <[image]> images;
-
     height: 360px;
     alignment: space-around;
+    cross-axis-alignment: center;
     spacing: UIMetrics.spacing-lg;
 
-    for img in images: ImageItem {
-        source: img;
-        name: "image.png";
-    }
+    @children
 }
 
 export component Gallery inherits Rectangle {
@@ -88,13 +86,10 @@ export component Gallery inherits Rectangle {
                 spacing: UIMetrics.spacing-2xl;
                 padding: UIMetrics.spacing-2xl;
 
-                for index in 8: ImageRow {
-                    images: [
-                        @image-url("../../../fixtures/images/kurisu.jpg"),
-                        @image-url("../../../fixtures/images/thumbnail.jpg"),
-                        @image-url("../../../fixtures/images/kurisu.jpg"),
-                        @image-url("../../../fixtures/images/thumbnail.jpg"),
-                    ];
+                for start-index in (GalleryState.images.length / GalleryState.per-row-images): ImageRow {
+                    for row-item-index in GalleryState.per-row-images: ImageItem {
+                        img: GalleryState.images[start-index + row-item-index];
+                    }
                 }
             }
         }

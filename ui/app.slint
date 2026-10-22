@@ -180,11 +180,11 @@ export component App inherits Window {
         z: 999;
 
         Image {
-            source: ImagePreviewState.current-source;
-            x: root.width / 2 - (ImagePreviewState.current-source.width / 2 * 1phx) + (ImagePreviewState.delta-x * root.width / 512 / 1px);
-            y: root.height / 2 - (ImagePreviewState.current-source.height / 2 * 1phx) + (ImagePreviewState.delta-y * root.height / 512 / 1px);
-            width: ImagePreviewState.current-source.width * 1phx;
-            height: ImagePreviewState.current-source.height * 1phx;
+            source: ImagePreviewState.source;
+            x: root.width / 2 - (ImagePreviewState.source.width / 2 * 1phx) + (ImagePreviewState.delta-x * root.width / 512 / 1px);
+            y: root.height / 2 - (ImagePreviewState.source.height / 2 * 1phx) + (ImagePreviewState.delta-y * root.height / 512 / 1px);
+            width: ImagePreviewState.source.width * 1phx;
+            height: ImagePreviewState.source.height * 1phx;
         }
     }
 }

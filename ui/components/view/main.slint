@@ -18,9 +18,9 @@ export component Main inherits HorizontalLayout {
         VerticalDivider { }
     }
 
-    if TabState.current-tab-index == 0: Gallery { }
-    if TabState.current-tab-index == 1: Dashboard { }
-    if TabState.current-tab-index == 2: Dashboard { }
+    if TabState.index == 0: Gallery { }
+    if TabState.index == 1: Dashboard { }
+    if TabState.index == 2: Dashboard { }
 
     if LayoutState.show-right && WindowState.width > 1200px: HorizontalLayout {
         VerticalDivider { }

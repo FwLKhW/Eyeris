@@ -1,12 +1,15 @@
 import { UIPalette } from "styling/ui-palette.slint";
-import { Library, Align } from "types.slint";
+import { Align, GalleryImage, Library } from "types.slint";
 
 export global Actions {
     callback load-library-list();
-    callback open-library();
+    callback open-library(string);
+    callback open-library-chooser();
+    callback load-thumbnail(string) -> image;
 }
 
 export global LibraryState {
+    in-out property <Library> library;
     in-out property <[Library]> libraries;
 }
 
@@ -28,15 +31,17 @@ export global LayoutState {
 }
 
 export global TabState {
-    in-out property <int> current-tab-index;
+    in-out property <int> index;
 }
 
 export global GalleryState {
+    in-out property <int> per-row-images: 4;
     in property <string> selected-image-id;
+    in property <[GalleryImage]> images;
 }
 
 export global ImagePreviewState {
-    in-out property <image> current-source;
+    in-out property <image> source;
     in-out property <bool> is-active: false;
     in property <length> initial-mouse-x;
     in property <length> initial-mouse-y;

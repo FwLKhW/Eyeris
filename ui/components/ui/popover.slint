@@ -9,14 +9,13 @@ export enum PopoverPosition { top, bottom }
 export component IconButtonPopover inherits IconButton {
     in property <length> popup-width: 0px;
     in property <PopoverPosition> position: bottom;
-    in property <PopupClosePolicy> close-policy: close-on-click;
 
     clicked => {
         popup.show();
     }
 
     popup := PopupWindow {
-        close-policy: root.close-policy;
+        close-policy: close-on-click;
 
         width: root.popup-width == 0 ? root.width : root.popup-width;
         y: root.position == top ? -self.height - UIMetrics.spacing-sm : root.height + UIMetrics.spacing-sm;
@@ -38,7 +37,6 @@ export component IconButtonPopover inherits IconButton {
 export component FullButtonPopover inherits FullButton {
     in property <length> popup-width: 0px;
     in property <PopoverPosition> position: bottom;
-    in property <PopupClosePolicy> close-policy: close-on-click;
 
     callback pre-action();
     
@@ -48,7 +46,7 @@ export component FullButtonPopover inherits FullButton {
     }
 
     popup := PopupWindow {
-        close-policy: root.close-policy;
+        close-policy: close-on-click;
 
         width: root.popup-width == 0 ? root.width : root.popup-width;
         y: root.position == top ? -self.height - UIMetrics.spacing-lg : root.height + UIMetrics.spacing-lg;

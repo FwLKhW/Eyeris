@@ -28,8 +28,14 @@ class App(slint.loader.app.App):
         self.open_library(lib)
 
     @slint.callback(global_name="Actions")
-    def open_library(self, lib: str):
-        print("Open Library:", lib)
+    def open_library(self, path: str):
+        self.LibraryState.library = library.select_library_by_path(path)
+        print("Open Library:", path)
+        # TODO
+
+    @slint.callback(global_name="Actions")
+    def load_thumbnail(self, id: str):
+        pass
 
 
 def main():
