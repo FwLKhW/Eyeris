@@ -5,7 +5,9 @@ description = "A Digital Asset Management focus on images."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "blake3>=1.0.11",
     "crossfiledialog>=1.3.1",
+    "pillow>=13.0.0",
     "platformdirs>=4.13.5",
     "slint>=1.18.1b1",
     "tinydb>=4.9.0",
