@@ -4,7 +4,7 @@ import {
     LayoutState,
     Actions,
 } from "../../globals.slint";
-import { GalleryImage } from "../../types.slint";
+import { IndexedImage } from "../../types.slint";
 import { UITypography } from "../../styling/ui-typography.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
@@ -17,7 +17,7 @@ import { Filter } from "filter.slint";
 import { UIText } from "../ui/text.slint";
 
 component ImageItem inherits Rectangle {
-    in property <GalleryImage> img;
+    in property <IndexedImage> img;
 
     background: touch.pressed || touch.has-hover ? UIPalette.bg-hover : transparent;
     horizontal-stretch: pow(img.height / img.width, 2);
@@ -88,7 +88,13 @@ export component Gallery inherits Rectangle {
 
                 for start-index in (GalleryState.images.length / GalleryState.per-row-images): ImageRow {
                     for row-item-index in GalleryState.per-row-images: ImageItem {
-                        img: GalleryState.images[start-index + row-item-index];
+                        img: GalleryState.images[start-index * GalleryState.per-row-images + row-item-index];
+                    }
+                }
+
+                ImageRow {
+                    for row-item-index in Math.mod(GalleryState.images.length, GalleryState.per-row-images): ImageItem {
+                        img: GalleryState.images[GalleryState.images.length - row-item-index - 1];
                     }
                 }
             }
