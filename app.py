@@ -39,7 +39,9 @@ class App(slint.loader.app.App):
 
     @slint.callback(global_name="Actions")
     def load_thumbnail(self, id: str):
-        pass
+        if self.collection_manager.current_collection is None:
+            return
+        return self.collection_manager.current_collection.thumbnail(id)
 
 
 def main():
