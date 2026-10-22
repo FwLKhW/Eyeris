@@ -1,15 +1,13 @@
 import os
 from pathlib import Path
 
-import numpy as np
 from crossfiledialog import choose_folder
-from PIL import Image
 from slint import slint
 from tinydb import TinyDB, where
 
 from src.config import ALLOWED_IMAGE_EXTENSIONS, APPLICATION_DATA_PATH, DOT_FOLDER
 from src.schema import CollectionSchema
-from src.utils import index_image
+from src.utils import index_image, load_image
 
 
 class Collection:
@@ -52,8 +50,7 @@ class Collection:
         return CollectionSchema(name=self.name, path=str(self.path))
 
     def thumbnail(self, id: str) -> slint.Image:
-        img = Image.open(self.thumbnail_folder / f"{id}.png")
-        return slint.Image.load_from_array(np.array(img))
+        return load_image(str(self.thumbnail_folder / f"{id}.png"))
 
 
 class CollectionManager:
