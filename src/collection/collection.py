@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from crossfiledialog import choose_folder
+from slint import slint
 from tinydb import TinyDB, where
 
 from src.config import ALLOWED_IMAGE_EXTENSIONS, APPLICATION_DATA_PATH, DOT_FOLDER
@@ -14,14 +15,13 @@ class Collection:
         os.makedirs(path / DOT_FOLDER, exist_ok=True)
         self.path = path
         self.name = path.name
+        self.db = TinyDB(self.path / DOT_FOLDER / "images.json", indent=4)
 
     def indexing(self):
         """Read/write images data and create thumbnail."""
 
         thumbnail_folder = self.path / DOT_FOLDER / "thumbnail"
         os.makedirs(thumbnail_folder, exist_ok=True)
-
-        db = TinyDB(self.path / DOT_FOLDER / "images.json", indent=4)
 
         image_paths = [
             path
@@ -38,7 +38,7 @@ class Collection:
         for image_path in image_paths:
             image_data, thumbnail = index_image(image_path)
             thumbnail.save(thumbnail_folder / f"{image_data['id']}.png")
-            db.upsert(image_data, where("id") == image_data["id"])
+            self.db.upsert(image_data, where("id") == image_data["id"])
 
     def get_images(self):
         """Get IndexedImage[]"""
