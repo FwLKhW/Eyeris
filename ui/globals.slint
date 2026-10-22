@@ -1,16 +1,16 @@
+import { Align, IndexedImage, Collection } from "types.slint";
 import { UIPalette } from "styling/ui-palette.slint";
-import { Align, GalleryImage, Library } from "types.slint";
 
 export global Actions {
-    callback load-library-list();
-    callback open-library(string);
-    callback open-library-chooser();
+    callback load-collection-list();
+    callback add-collection();
+    callback open-collection(string);
     callback load-thumbnail(string) -> image;
 }
 
-export global LibraryState {
-    in-out property <Library> library;
-    in-out property <[Library]> libraries;
+export global CollectionState {
+    in-out property <Collection> current-collection;
+    in-out property <[Collection]> collections;
 }
 
 export global WindowState {
@@ -37,7 +37,7 @@ export global TabState {
 export global GalleryState {
     in-out property <int> per-row-images: 4;
     in property <string> selected-image-id;
-    in property <[GalleryImage]> images;
+    in property <[IndexedImage]> images;
 }
 
 export global ImagePreviewState {

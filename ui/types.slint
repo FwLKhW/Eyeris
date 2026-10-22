@@ -4,14 +4,28 @@ export enum Align {
     end,
 }
 
-export struct Library {
+export struct Collection {
     path: string,
     name: string,
 }
 
-export struct GalleryImage {
+export struct Metadata {
+    rating: int,
+    tags: [string],
+    palette: [color],
+    creator: string,
+    description: string,
+}
+
+export struct IndexedImage {
     id: string,
+    path: string,
     name: string,
+    format: string,
+    size: int,
     width: int,
     height: int,
+    indexed: int,
+    created: int,
+    modified: int,
 }
