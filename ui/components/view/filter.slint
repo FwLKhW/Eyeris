@@ -55,11 +55,17 @@ export component Filter inherits Rectangle {
                 }
             }
 
-            SimpleButton {
+            SimpleButtonPopover {
                 icon: Icons.box;
                 color: UIPalette.mauve;
                 hover-color: UIPalette.mauve;
+                popup-width: 200px;
                 tooltip-text: "Shape";
+
+                TabGroup {
+                    icons: [Icons.aspect-portrait, Icons.aspect-square, Icons.aspect-landscape];
+                    labels: ["Portrait", "Square", "Landscape"];
+                }
             }
 
             SimpleButton {
