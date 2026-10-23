@@ -69,6 +69,7 @@ component ImageItem inherits Rectangle {
         clicked => {
             ImagePreviewState.image-path = img.path;
             ImagePreviewState.preview = thumbnail.source;
+            GalleryState.selected-image = img;
         }
     }
 }

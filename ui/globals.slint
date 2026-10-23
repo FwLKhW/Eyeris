@@ -39,7 +39,7 @@ export global TabState {
 
 export global GalleryState {
     in-out property <int> per-row-images: 4;
-    in property <string> selected-image-id;
+    in property <IndexedImage> selected-image;
     in property <[IndexedImage]> images;
 }
 
@@ -53,18 +53,6 @@ export global ImagePreviewState {
     in property <length> initial-mouse-y;
     in property <length> delta-x;
     in property <length> delta-y;
-}
-
-export global ColorPaletteState {
-    in-out property <[color]> colors: [
-        UIPalette.red,
-        UIPalette.pink,
-        UIPalette.orange,
-        UIPalette.yellow,
-        UIPalette.mauve,
-        UIPalette.blue,
-        UIPalette.green,
-    ];
 }
 
 export enum Types { all, jpg, png, webp }
