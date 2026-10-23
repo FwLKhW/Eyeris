@@ -41,7 +41,9 @@ class App(slint.loader.app.App):
         self.CollectionState.current_collection = col.schema()
         print(f"Open Collection '{col.name}' ({col.path})")
 
+        self.CollectionState.indexing = True
         await asyncio.to_thread(col.indexing)
+        self.CollectionState.indexing = False
 
         self.GalleryState.images = ListModel(col.get_images())
 

@@ -189,4 +189,26 @@ export component App inherits Window {
             height: ImagePreviewState.image-full.height * 1phx;
         }
     }
+
+    // Loading overlay
+    Rectangle {
+        visible: CollectionState.indexing;
+        background: rgba(0, 0, 0, 0.8);
+        z: 1000;
+
+        VerticalLayout {
+            alignment: center;
+            cross-axis-alignment: center;
+
+            UIText {
+                style: UITypography.title;
+                text: "Indexing " + CollectionState.current-collection.name;
+            }
+
+            UIText {
+                style: UITypography.body;
+                text: CollectionState.current-collection.path;
+            }
+        }
+    }
 }
