@@ -11,8 +11,9 @@ export enum ButtonSize { small, medium }
 
 export component SimpleButton inherits TooltipArea {
     in property <ButtonSize> size: medium;
-    in property <string> label;
+    in property <bool> show-icon: true;
     in property <image> icon: Icons.settings;
+    in property <string> label: "Button";
     in property <length> icon-size: UIMetrics.icon-md;
     in property <color> color: UIPalette.icon;
     in property <color> hover-color: UIPalette.icon-hover;
@@ -39,13 +40,13 @@ export component SimpleButton inherits TooltipArea {
             padding-left: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
             padding-right: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
 
-            if root.label.is-empty: Icon {
+            if root.show-icon: Icon {
                 icon: root.icon;
                 icon-size: icon-size;
                 color: root.has-hover ? root.hover-color : root.color;
             }
 
-            if !root.label.is-empty: UIText {
+            if !root.show-icon: UIText {
                 text: root.label;
                 color: root.has-hover ? root.hover-color : root.color;
             }
