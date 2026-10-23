@@ -40,6 +40,8 @@ class App(slint.loader.app.App):
         self.CollectionState.current_collection = col.schema()
         print(f"Open Collection '{col.name}' ({col.path})")
 
+        col.indexing()
+
         self.GalleryState.images = ListModel(col.get_images())
 
     @slint.callback(global_name="Actions")
