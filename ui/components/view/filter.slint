@@ -154,6 +154,11 @@ export component Filter inherits Rectangle {
             SearchBar {
                 min-width: 180px;
                 max-length: 16;
+
+                search(name) => {
+                    FilterState.name = name;
+                    Actions.apply-filters();
+                }
             }
 
             SearchBar {

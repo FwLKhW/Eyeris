@@ -1,5 +1,6 @@
 import operator
 import os
+import re
 from functools import reduce
 from pathlib import Path
 
@@ -57,10 +58,15 @@ class Collection:
                 thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
                 self.db.upsert(image_data, where("id") == image_data["id"])
 
-    def get_images(self, filters):
+    def get_images(self, filters: dict):
         """Get IndexedImage[]"""
 
         queries = []
+
+        if filters.get("name") is not None:
+            queries.append(
+                self.Filter.name.search(filters["name"], flags=re.IGNORECASE)
+            )
 
         if filters["types"].lower() in ["jpg", "png", "webp"]:
             queries.append(self.Filter.format == filters["types"].upper())

@@ -64,6 +64,7 @@ class App(slint.loader.app.App):
 
     def get_filters(self):
         return {
+            "name": self.FilterState.name,
             "types": self.FilterState.types.value,
             "shape": self.FilterState.shape.value,
         }
