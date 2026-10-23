@@ -3,6 +3,7 @@ from pathlib import Path
 
 import numpy as np
 from blake3 import blake3
+from colorthief import ColorThief
 from PIL import Image
 from slint import slint
 
@@ -45,3 +46,13 @@ def index_image(image_path: Path) -> tuple[IndexedImageSchema, Image.Image]:
     img.thumbnail((THUMBNAIL_SIZE, THUMBNAIL_SIZE))
 
     return (indexed, img)
+
+
+def get_color_pallete(thumbnail_path: Path) -> list[tuple[int]]:
+    """Get color pallete. Should use thumbnail for speed."""
+
+    color_thief = ColorThief(thumbnail_path)
+    # dominant_color = color_thief.get_color(quality=1)
+    palette = color_thief.get_palette(color_count=4, quality=4)
+
+    return palette
