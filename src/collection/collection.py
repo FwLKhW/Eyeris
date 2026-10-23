@@ -1,4 +1,6 @@
+import operator
 import os
+from functools import reduce
 from pathlib import Path
 
 from crossfiledialog import choose_folder
@@ -18,6 +20,7 @@ class Collection:
         self.db = TinyDB(self.path / DOT_FOLDER / "images.json", indent=4)
         self.thumbnail_folder = self.path / DOT_FOLDER / "thumbnail"
         os.makedirs(self.thumbnail_folder, exist_ok=True)
+        self.Filter = Query()
 
     def indexing(self, clean=False):
         """Read/write images data and create thumbnail."""
@@ -54,11 +57,28 @@ class Collection:
                 thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
                 self.db.upsert(image_data, where("id") == image_data["id"])
 
-    def get_images(self):
+    def get_images(self, types="all", shape="all"):
         """Get IndexedImage[]"""
 
+        filters = []
+
+        if types.lower() in ["jpg", "png", "webp"]:
+            filters.append(self.Filter.format == types.upper())
+
+        if shape == "square":
+            filters.append(lambda doc: doc.get("width", 0) == doc.get("height", 0))
+        elif shape == "landscape":
+            filters.append(lambda doc: doc.get("width", 0) > doc.get("height", 0))
+        elif shape == "portrait":
+            filters.append(lambda doc: doc.get("width", 0) < doc.get("height", 0))
+
+        query = None if len(filters) == 0 else reduce(operator.and_, filters)
+
         with TinyDB(self.path / DOT_FOLDER / "images.json", indent=4) as db:
-            images = db.all()
+            if query is None:
+                images = db.all()
+            else:
+                images = db.search(query)
             return images
 
     def schema(self):
