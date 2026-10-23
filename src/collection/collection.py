@@ -79,6 +79,7 @@ class Collection:
                 images = db.all()
             else:
                 images = db.search(query)
+            print(f"Loaded {len(images)} with query {query}")
             return images
 
     def schema(self):
@@ -93,7 +94,7 @@ class CollectionManager:
         os.makedirs(APPLICATION_DATA_PATH, exist_ok=True)
         self.db_path = APPLICATION_DATA_PATH / "collection.json"
         self.db = TinyDB(self.db_path, indent=4)
-        self.current_collection: Collection | None
+        self.current_collection: Collection | None = None
 
     def add(self):
         """Open a folder dialog to choose Collection, then add to DB."""

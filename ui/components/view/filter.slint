@@ -1,4 +1,4 @@
-import { FilterState } from "../../globals.slint";
+import { FilterState, Actions } from "../../globals.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
@@ -68,6 +68,7 @@ export component Filter inherits Rectangle {
                         if self.selected-index == 3 {
                             FilterState.types = webp;
                         }
+                        Actions.apply-filters();
                     }
                 }
             }

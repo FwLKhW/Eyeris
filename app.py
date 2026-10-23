@@ -53,6 +53,17 @@ class App(slint.loader.app.App):
             return
         return self.collection_manager.current_collection.thumbnail(id)
 
+    @slint.callback(global_name="Actions")
+    def apply_filters(self):
+        if self.collection_manager.current_collection is None:
+            return
+
+        self.GalleryState.images = ListModel(
+            self.collection_manager.current_collection.get_images(
+                types=self.FilterState.types.value, shape=self.FilterState.shape.value
+            )
+        )
+
 
 async def main(app: slint.Component) -> None:
     app.show()
