@@ -104,6 +104,7 @@ class App(slint.loader.app.App):
         return {
             "name": self.FilterState.name,
             "color": color,
+            "color_distance": self.FilterState.color_distance,
             "types": self.FilterState.types.value,
             "shape": self.FilterState.shape.value,
         }

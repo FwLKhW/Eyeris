@@ -94,7 +94,11 @@ class Collection:
 
         if filters.get("color") is not None:
             queries.append(
-                self.Filter.palette.test(have_similar_color, filters["color"])  # pyright: ignore[reportArgumentType]
+                self.Filter.palette.test(
+                    have_similar_color,  # pyright: ignore[reportArgumentType]
+                    filters["color"],
+                    filters["color_distance"],
+                )
             )
 
         final_query = None if len(queries) == 0 else reduce(operator.and_, queries)
@@ -104,7 +108,7 @@ class Collection:
                 images = db.all()
             else:
                 images = db.search(final_query)
-            print(f"Loaded {len(images)} with query {final_query}")
+            print(f"Loaded {len(images)} images with query {final_query}")
 
             return [indexed_image_to_slint(i) for i in images]
 

@@ -63,8 +63,7 @@ def get_color_palette(thumbnail_path: Path) -> list[tuple[int, int, int]]:
     """Get color palette. Should use thumbnail for speed."""
 
     color_thief = ColorThief(thumbnail_path)
-    # dominant_color = color_thief.get_color(quality=1)
-    palette = color_thief.get_palette(color_count=4, quality=4)
+    palette = color_thief.get_palette(color_count=5, quality=1)
 
     return palette
 
@@ -98,7 +97,7 @@ def indexed_image_to_slint(img):
     }
 
 
-def have_similar_color(palette, target_color, max_distance=0.5):
+def have_similar_color(palette, target_color, max_distance=0.2):
     if not palette:
         return False
 
@@ -108,7 +107,7 @@ def have_similar_color(palette, target_color, max_distance=0.5):
             + (color[1] - target_color[1]) ** 2
             + (color[2] - target_color[2]) ** 2
         )
-        if distance <= max_distance:
+        if distance <= max_distance * 255:
             return True
 
     return False
