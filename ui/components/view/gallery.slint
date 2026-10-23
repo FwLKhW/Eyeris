@@ -93,7 +93,7 @@ export component Gallery inherits Rectangle {
                     }
                 }
 
-                ImageRow {
+                if Math.mod(GalleryState.images.length, GalleryState.per-row-images) > 0: ImageRow {
                     for row-item-index in Math.mod(GalleryState.images.length, GalleryState.per-row-images): ImageItem {
                         img: GalleryState.images[GalleryState.images.length - row-item-index - 1];
                     }
