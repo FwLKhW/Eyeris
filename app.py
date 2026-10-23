@@ -63,8 +63,19 @@ class App(slint.loader.app.App):
         )
 
     def get_filters(self):
+        color = (
+            None
+            if self.FilterState.color.color.alpha < 255
+            else (
+                self.FilterState.color.color.red,
+                self.FilterState.color.color.blue,
+                self.FilterState.color.color.green,
+            )
+        )
+
         return {
             "name": self.FilterState.name,
+            "color": color,
             "types": self.FilterState.types.value,
             "shape": self.FilterState.shape.value,
         }
