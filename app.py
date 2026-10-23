@@ -1,3 +1,4 @@
+import asyncio
 import sys
 from pathlib import Path
 
@@ -32,7 +33,7 @@ class App(slint.loader.app.App):
         self.open_collection(col["path"])
 
     @slint.callback(global_name="Actions")
-    def open_collection(self, path: str):
+    async def open_collection(self, path: str):
         col = self.collection_manager.load(Path(path))
         if col is None:
             return
@@ -40,7 +41,7 @@ class App(slint.loader.app.App):
         self.CollectionState.current_collection = col.schema()
         print(f"Open Collection '{col.name}' ({col.path})")
 
-        col.indexing()
+        await asyncio.to_thread(col.indexing)
 
         self.GalleryState.images = ListModel(col.get_images())
 
@@ -51,11 +52,9 @@ class App(slint.loader.app.App):
         return self.collection_manager.current_collection.thumbnail(id)
 
 
-def main():
-    app = App()
+async def main(app: slint.Component) -> None:
     app.show()
-    app.run()
 
 
-if __name__ == "__main__":
-    main()
+app = App()
+slint.run_event_loop(main(app))
