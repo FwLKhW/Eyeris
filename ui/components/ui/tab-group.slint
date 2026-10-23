@@ -3,10 +3,10 @@ import { Icons } from "../../icons/icons.slint";
 
 import { SimpleButton, FullButton } from "button.slint";
 
-export component TabGroup {
+export component HorizontalTabGroup {
     in property <[image]> icons;
     in property <[string]> labels;
-    in property <bool> show-icon: true;
+    in property <bool> show-label: false;
     in-out property <int> selected-index;
 
     HorizontalLayout {
@@ -15,7 +15,31 @@ export component TabGroup {
         for icon[index] in icons: SimpleButton {
             icon: icon;
             label: root.labels[index];
-            show-icon: root.show-icon;
+            show-label: root.show-label;
+            selected: root.selected-index == index;
+
+            clicked => {
+                root.selected-index = index;
+            }
+        }
+    }
+}
+
+
+export component VerticalTabGroup {
+    in property <[image]> icons;
+    in property <[string]> labels;
+    in property <bool> show-label: false;
+    in-out property <int> selected-index;
+
+    VerticalLayout {
+        spacing: UIMetrics.spacing-sm;
+
+        for icon[index] in icons: SimpleButton {
+            align: start;
+            icon: icon;
+            label: root.labels[index];
+            show-label: root.show-label;
             selected: root.selected-index == index;
 
             clicked => {

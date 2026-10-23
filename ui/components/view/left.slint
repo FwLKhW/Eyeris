@@ -7,7 +7,7 @@ import { FullButtonPopover } from "../ui/popover.slint";
 import { HorizontalDivider } from "../ui/divider.slint";
 import { FullButton } from "../ui/button.slint";
 import { ScrollArea } from "../ui/scroll-area.slint";
-import { TabGroup } from "../ui/tab-group.slint";
+import { HorizontalTabGroup } from "../ui/tab-group.slint";
 import { TabHome } from "tab-home.slint";
 import { Button } from "std-widgets.slint";
 
@@ -18,7 +18,7 @@ export component Left inherits Rectangle {
         HorizontalLayout {
             padding: UIMetrics.spacing-xl;
 
-            TabGroup {
+            HorizontalTabGroup {
                 icons: [Icons.home, Icons.tag, Icons.chart];
                 labels: ["Home", "Tag", "Chart"];
                 selected-index <=> TabState.index;
