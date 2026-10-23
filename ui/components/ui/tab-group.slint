@@ -3,13 +3,11 @@ import { Icons } from "../../icons/icons.slint";
 
 import { SimpleButton, FullButton } from "button.slint";
 
-export component TabGroup inherits HorizontalLayout {
+export component TabGroup {
     in property <[image]> icons;
     in property <[string]> labels;
     in property <bool> show-icon: true;
     in-out property <int> selected-index;
-
-    padding: UIMetrics.spacing-xl;
 
     HorizontalLayout {
         spacing: UIMetrics.spacing-sm;
