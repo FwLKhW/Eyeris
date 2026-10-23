@@ -39,7 +39,7 @@ class Collection:
             and path.suffix.lower() in ALLOWED_IMAGE_EXTENSIONS
             and not any(
                 part.startswith(".")
-                for part in path.relative_to(other=self.path).parts[:-1]
+                for part in path.relative_to(self.path).parts[:-1]
             )
         ]
 
