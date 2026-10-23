@@ -9,7 +9,7 @@ class CollectionSchema(TypedDict):
 class MetadataSchema(TypedDict):
     rating: int
     tags: list[str]
-    palette: list[tuple[float]]
+    palette: list[tuple[int]]
     creator: str
     description: str
 
@@ -25,4 +25,4 @@ class IndexedImageSchema(TypedDict):
     height: int
     created: int
     modified: int
-    # metadata: Metadata
+    metadata: MetadataSchema

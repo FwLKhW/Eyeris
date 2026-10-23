@@ -8,7 +8,7 @@ from PIL import Image
 from slint import slint
 
 from src.config import THUMBNAIL_SIZE
-from src.schema import IndexedImageSchema
+from src.schema import IndexedImageSchema, MetadataSchema
 
 
 def load_image(path: str) -> slint.Image:
@@ -31,6 +31,11 @@ def index_image(image_path: Path) -> tuple[IndexedImageSchema, Image.Image]:
 
     img = Image.open(image_path)
 
+    rating = 0
+    tags = []
+    creator = ""
+    description = ""
+
     indexed = IndexedImageSchema(
         id=hash_image(image_path),
         name=image_path.name,
@@ -42,6 +47,13 @@ def index_image(image_path: Path) -> tuple[IndexedImageSchema, Image.Image]:
         indexed=int(datetime.now(UTC).timestamp()),
         created=int(image_path.stat().st_ctime),
         modified=int(image_path.stat().st_mtime),
+        metadata=MetadataSchema(
+            rating=rating,
+            tags=tags,
+            palette=[],
+            creator=creator,
+            description=description,
+        ),
     )
     img.thumbnail((THUMBNAIL_SIZE, THUMBNAIL_SIZE))
 
