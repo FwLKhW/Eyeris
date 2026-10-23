@@ -73,8 +73,8 @@ def indexed_image_to_slint(img):
         return slint.Color(
             {
                 "red": rgb[0],
-                "blue": rgb[0],
-                "green": rgb[0],
+                "blue": rgb[1],
+                "green": rgb[2],
             }
         )
 
