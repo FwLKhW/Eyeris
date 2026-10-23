@@ -2,11 +2,11 @@ import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
 
-import { FullButton, IconButton } from "button.slint";
+import { FullButton, SimpleButton } from "button.slint";
 
 export enum PopoverPosition { top, bottom }
 
-export component IconButtonPopover inherits IconButton {
+export component SimpleButtonPopover inherits SimpleButton {
     in property <length> popup-width: 0px;
     in property <PopoverPosition> position: bottom;
 
@@ -39,7 +39,7 @@ export component FullButtonPopover inherits FullButton {
     in property <PopoverPosition> position: bottom;
 
     callback pre-action();
-    
+
     clicked => {
         pre-action();
         popup.show();

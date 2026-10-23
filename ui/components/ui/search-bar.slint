@@ -3,7 +3,7 @@ import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
 
-import { IconButton } from "button.slint";
+import { SimpleButton } from "button.slint";
 import { UIText } from "text.slint";
 import { Icon } from "icon.slint";
 
@@ -27,7 +27,7 @@ export component SearchBar {
             padding-left: UIMetrics.spacing-xs;
             padding-right: UIMetrics.spacing-xs;
 
-            IconButton {
+            SimpleButton {
                 icon: icon;
                 size: small;
                 bg-hover: transparent;
@@ -70,7 +70,7 @@ export component SearchBar {
                 }
             }
 
-            IconButton {
+            SimpleButton {
                 visible: input.text != "" && input.has-focus;
                 icon: Icons.close;
                 size: small;

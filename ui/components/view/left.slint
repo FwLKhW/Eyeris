@@ -17,6 +17,7 @@ export component Left inherits Rectangle {
     VerticalLayout {
         TabGroup {
             icons: [Icons.home, Icons.tag, Icons.chart];
+            labels: ["Home", "Tag", "Chart"];
             selected-index <=> TabState.index;
         }
 

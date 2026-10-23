@@ -2,8 +2,8 @@ import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
 
-import { FullButton, IconButton } from "../ui/button.slint";
-import { IconButtonPopover } from "../ui/popover.slint";
+import { FullButton, SimpleButton } from "../ui/button.slint";
+import { SimpleButtonPopover } from "../ui/popover.slint";
 import { TooltipArea } from "../ui/tooltip.slint";
 
 export component TitleBar inherits Rectangle {
@@ -21,7 +21,7 @@ export component TitleBar inherits Rectangle {
         padding-left: UIMetrics.spacing-xl;
         padding-right: UIMetrics.spacing-xl;
 
-        IconButtonPopover {
+        SimpleButtonPopover {
             icon: Icons.menu;
             size: small;
             icon-size: 16px;
@@ -38,7 +38,7 @@ export component TitleBar inherits Rectangle {
             horizontal-stretch: 0;
             spacing: UIMetrics.spacing-sm;
 
-            IconButton {
+            SimpleButton {
                 icon: Icons.minimize;
                 size: small;
                 icon-size: 16px;
@@ -49,7 +49,7 @@ export component TitleBar inherits Rectangle {
                 }
             }
 
-            IconButton {
+            SimpleButton {
                 icon: Icons.maximize;
                 size: small;
                 icon-size: 16px;
@@ -60,7 +60,7 @@ export component TitleBar inherits Rectangle {
                 }
             }
 
-            IconButton {
+            SimpleButton {
                 icon: Icons.close;
                 size: small;
                 icon-size: 18px;
