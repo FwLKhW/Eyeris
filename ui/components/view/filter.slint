@@ -28,6 +28,15 @@ export component Filter inherits Rectangle {
                 popup-width: 270px;
                 tooltip-text: "Color";
 
+                SimpleButton {
+                    icon: Icons.close;
+
+                    clicked => {
+                        FilterState.color = transparent;
+                        Actions.apply-filters();
+                    }
+                }
+
                 MinimalColorPalette { }
 
                 HorizontalLayout {
