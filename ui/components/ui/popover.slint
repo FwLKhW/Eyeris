@@ -1,6 +1,7 @@
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
+import { Align } from "../../types.slint";
 
 import { FullButton, SimpleButton } from "button.slint";
 
@@ -8,6 +9,7 @@ export enum PopoverPosition { top, bottom }
 
 export component SimpleButtonPopover inherits SimpleButton {
     in property <length> popup-width: 0px;
+    in property <Align> popup-align: center;
     in property <PopoverPosition> position: bottom;
 
     clicked => {
@@ -18,6 +20,7 @@ export component SimpleButtonPopover inherits SimpleButton {
         close-policy: close-on-click;
 
         width: root.popup-width == 0 ? root.width : root.popup-width;
+        x: root.popup-align == center ? root.width / 2 - self.width / 2 : root.popup-align == start ? 0 : root.width - self.width;
         y: root.position == top ? -self.height - UIMetrics.spacing-sm : root.height + UIMetrics.spacing-sm;
 
         Rectangle {
