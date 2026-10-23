@@ -6,23 +6,19 @@ class CollectionSchema(TypedDict):
     name: str
 
 
-class MetadataSchema(TypedDict):
-    rating: int
-    tags: list[str]
-    palette: list[tuple[int]]
-    creator: str
-    description: str
-
-
 class IndexedImageSchema(TypedDict):
     id: str
-    indexed: int
     path: str
     name: str
     format: str
     size: int
     width: int
     height: int
+    indexed: int
     created: int
     modified: int
-    metadata: MetadataSchema
+    rating: int
+    tags: list[str]
+    creator: str
+    description: str
+    palette: list[tuple[int, int, int]]

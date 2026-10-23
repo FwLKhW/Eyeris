@@ -10,7 +10,7 @@ from tinydb import Query, TinyDB, where
 
 from src.config import ALLOWED_IMAGE_EXTENSIONS, APPLICATION_DATA_PATH, DOT_FOLDER
 from src.schema import CollectionSchema
-from src.utils import get_color_pallete, index_image, load_image
+from src.utils import get_color_palette, index_image, indexed_image_to_slint, load_image
 
 
 class Collection:
@@ -53,8 +53,8 @@ class Collection:
             thumbnail_path = self.thumbnail_folder / f"{image_data['id']}.png"
             thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
 
-            pallete = get_color_pallete(thumbnail_path)
-            image_data["metadata"]["palette"] = pallete
+            palette = get_color_palette(thumbnail_path)
+            image_data["palette"] = palette
 
             self.db.upsert(image_data, where("id") == image_data["id"])
 
@@ -91,7 +91,8 @@ class Collection:
             else:
                 images = db.search(final_query)
             print(f"Loaded {len(images)} with query {final_query}")
-            return images
+
+            return [indexed_image_to_slint(i) for i in images]
 
     def schema(self):
         return CollectionSchema(name=self.name, path=str(self.path))
