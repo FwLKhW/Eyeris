@@ -3,12 +3,12 @@ import { UIMetrics } from "../../styling/ui-metrics.slint";
 import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
 
+import { HorizontalTabGroup, VerticalTabGroup } from "../ui/tab-group.slint";
 import { MinimalColorPalette } from "../ui/color-palette.slint";
 import { SimpleButtonPopover } from "../ui/popover.slint";
 import { SimpleButton } from "../ui/button.slint";
 import { SearchBar } from "../ui/search-bar.slint";
 import { Slider } from "../ui/slider.slint";
-import { TabGroup } from "../ui/tab-group.slint";
 
 export component Filter inherits Rectangle {
     clip: true;
@@ -42,27 +42,46 @@ export component Filter inherits Rectangle {
 
             SimpleButtonPopover {
                 icon: Icons.file-text;
+                label: FilterState.types == jpg ? "JPG" : FilterState.types == png ? "PNG" : FilterState.types == webp ? "WEBP" : "";
                 color: UIPalette.blue;
                 hover-color: UIPalette.blue;
-                popup-width: 200px;
+                popup-width: 110px;
                 tooltip-text: "Types";
 
-                TabGroup {
+                VerticalTabGroup {
                     // TODO: icons
-                    icons: [Icons.file-text, Icons.file-text, Icons.file-text];
+                    icons: [Icons.file-text, Icons.file-text, Icons.file-text, Icons.file-text];
                     labels: ["All", "JPG", "PNG", "WEBP"];
-                    show-icon: false;
+                    show-label: true;
+                    selected-index: FilterState.types == jpg ? 1 : FilterState.types == png ? 2 : FilterState.types == webp ? 3 : 0;
+
+                    changed selected-index => {
+                        if self.selected-index == 0 {
+                            FilterState.types = all;
+                        }
+                        if self.selected-index == 1 {
+                            FilterState.types = jpg;
+                        }
+                        if self.selected-index == 2 {
+                            FilterState.types = png;
+                        }
+                        if self.selected-index == 3 {
+                            FilterState.types = webp;
+                        }
+                    }
                 }
             }
 
             SimpleButtonPopover {
                 icon: Icons.box;
+                label: FilterState.shape == portrait ? "Portrait" : FilterState.shape == square ? "Square" : FilterState.shape == landscape ? "Landscape" : "";
                 color: UIPalette.mauve;
                 hover-color: UIPalette.mauve;
                 popup-width: 240px;
                 tooltip-text: "Shape";
+                show-label: true;
 
-                TabGroup {
+                HorizontalTabGroup {
                     icons: [
                         Icons.close,
                         Icons.aspect-portrait,
@@ -70,7 +89,7 @@ export component Filter inherits Rectangle {
                         Icons.aspect-landscape
                     ];
                     labels: ["All", "Portrait", "Square", "Landscape"];
-                    selected-index: FilterState.shape == all ? 0 : FilterState.shape == portrait ? 1 : FilterState.shape == square ? 2 : 3;
+                    selected-index: FilterState.shape == portrait ? 1 : FilterState.shape == square ? 2 : FilterState.shape == landscape ? 3 : 0;
 
                     changed selected-index => {
                         if self.selected-index == 0 {
