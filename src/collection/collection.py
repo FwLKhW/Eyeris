@@ -10,7 +10,7 @@ from tinydb import Query, TinyDB, where
 
 from src.config import ALLOWED_IMAGE_EXTENSIONS, APPLICATION_DATA_PATH, DOT_FOLDER
 from src.schema import CollectionSchema
-from src.utils import index_image, load_image
+from src.utils import get_color_pallete, index_image, load_image
 
 
 class Collection:
@@ -37,26 +37,26 @@ class Collection:
             )
         ]
 
-        if clean:
-            for image_path in image_paths:
-                image_data, thumbnail = index_image(image_path)
-                thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
-                self.db.upsert(image_data, where("id") == image_data["id"])
-        else:
-            Img = Query()
-            for image_path in image_paths:
+        Img = Query()
+        for image_path in image_paths:
+            if not clean:
                 matches = self.db.search(
                     Img.fragment(
                         {"path": str(image_path), "size": image_path.stat().st_size}
                     )
                 )
-
                 if len(matches) > 0:
                     continue
 
-                image_data, thumbnail = index_image(image_path)
-                thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
-                self.db.upsert(image_data, where("id") == image_data["id"])
+            image_data, thumbnail = index_image(image_path)
+
+            thumbnail_path = self.thumbnail_folder / f"{image_data['id']}.png"
+            thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
+
+            pallete = get_color_pallete(thumbnail_path)
+            image_data["metadata"]["palette"] = pallete
+
+            self.db.upsert(image_data, where("id") == image_data["id"])
 
     def get_images(self, filters: dict):
         """Get IndexedImage[]"""
@@ -68,15 +68,20 @@ class Collection:
                 self.Filter.name.search(filters["name"], flags=re.IGNORECASE)
             )
 
-        if filters["types"].lower() in ["jpg", "png", "webp"]:
+        if filters.get("types") is not None and filters["types"].lower() in [
+            "jpg",
+            "png",
+            "webp",
+        ]:
             queries.append(self.Filter.format == filters["types"].upper())
 
-        if filters["shape"] == "square":
-            queries.append(lambda doc: doc.get("width", 0) == doc.get("height", 0))
-        elif filters["shape"] == "landscape":
-            queries.append(lambda doc: doc.get("width", 0) > doc.get("height", 0))
-        elif filters["shape"] == "portrait":
-            queries.append(lambda doc: doc.get("width", 0) < doc.get("height", 0))
+        if filters.get("shape") is not None:
+            if filters["shape"] == "square":
+                queries.append(lambda doc: doc.get("width", 0) == doc.get("height", 0))
+            elif filters["shape"] == "landscape":
+                queries.append(lambda doc: doc.get("width", 0) > doc.get("height", 0))
+            elif filters["shape"] == "portrait":
+                queries.append(lambda doc: doc.get("width", 0) < doc.get("height", 0))
 
         final_query = None if len(queries) == 0 else reduce(operator.and_, queries)
 
