@@ -1,4 +1,4 @@
-import { FilterState } from "../../globals.slint";
+import { FilterState, Actions } from "../../globals.slint";
 import { UIMetrics } from "../../styling/ui-metrics.slint";
 
 export component ColorNode inherits Rectangle {
@@ -14,6 +14,7 @@ export component ColorNode inherits Rectangle {
 
         clicked => {
             FilterState.color = root.value;
+            Actions.apply-filters();
         }
     }
 }
