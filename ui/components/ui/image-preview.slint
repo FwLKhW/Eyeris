@@ -31,8 +31,8 @@ export component ImagePreview inherits Rectangle {
         }
 
         moved => {
-            ImagePreviewState.delta-x = self.mouse-x - ImagePreviewState.initial-mouse-x;
-            ImagePreviewState.delta-y = self.mouse-y - ImagePreviewState.initial-mouse-y;
+            ImagePreviewState.delta-x = (self.mouse-x - ImagePreviewState.initial-mouse-x) * ((ImagePreviewState.image-full.width / 1980 + ImagePreviewState.image-full.height / 1080) / 2);
+            ImagePreviewState.delta-y = (self.mouse-y - ImagePreviewState.initial-mouse-y) * ((ImagePreviewState.image-full.width / 1980 + ImagePreviewState.image-full.height / 1080) / 2);
         }
     }
 }
