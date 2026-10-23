@@ -4,10 +4,11 @@ import { UIPalette } from "../../styling/ui-palette.slint";
 import { Icons } from "../../icons/icons.slint";
 
 import { MinimalColorPalette } from "../ui/color-palette.slint";
-import { IconButtonPopover } from "../ui/popover.slint";
-import { IconButton } from "../ui/button.slint";
+import { SimpleButtonPopover } from "../ui/popover.slint";
+import { SimpleButton } from "../ui/button.slint";
 import { SearchBar } from "../ui/search-bar.slint";
 import { Slider } from "../ui/slider.slint";
+import { TabGroup } from "../ui/tab-group.slint";
 
 export component Filter inherits Rectangle {
     clip: true;
@@ -20,10 +21,10 @@ export component Filter inherits Rectangle {
             alignment: start;
             spacing: UIMetrics.spacing-sm;
 
-            IconButtonPopover {
+            SimpleButtonPopover {
                 icon: FilterState.color == transparent ? Icons.circle : Icons.filled-circle;
-                icon-color: FilterState.color == transparent ? UIPalette.subtext : FilterState.color;
-                icon-hover-color: self.icon-color;
+                color: FilterState.color == transparent ? UIPalette.subtext : FilterState.color;
+                hover-color: self.color;
                 popup-width: 270px;
                 tooltip-text: "Color";
 
@@ -39,52 +40,60 @@ export component Filter inherits Rectangle {
                 }
             }
 
-            IconButton {
+            SimpleButtonPopover {
                 icon: Icons.file-text;
-                icon-color: UIPalette.blue;
-                icon-hover-color: UIPalette.blue;
+                color: UIPalette.blue;
+                hover-color: UIPalette.blue;
+                popup-width: 200px;
                 tooltip-text: "Types";
+
+                TabGroup {
+                    // TODO: icons
+                    icons: [Icons.file-text, Icons.file-text, Icons.file-text];
+                    labels: ["All", "JPG", "PNG", "WEBP"];
+                    show-icon: false;
+                }
             }
 
-            IconButton {
+            SimpleButton {
                 icon: Icons.box;
-                icon-color: UIPalette.mauve;
-                icon-hover-color: UIPalette.mauve;
+                color: UIPalette.mauve;
+                hover-color: UIPalette.mauve;
                 tooltip-text: "Shape";
             }
 
-            IconButton {
+            SimpleButton {
                 icon: Icons.tag;
-                icon-color: UIPalette.orange;
-                icon-hover-color: UIPalette.orange;
+                color: UIPalette.orange;
+                hover-color: UIPalette.orange;
                 tooltip-text: "Tags";
             }
 
-            IconButton {
+            SimpleButton {
                 icon: Icons.star;
-                icon-color: UIPalette.yellow;
-                icon-hover-color: UIPalette.yellow;
+                color: UIPalette.yellow;
+                hover-color: UIPalette.yellow;
                 tooltip-text: "Stars";
             }
 
-            IconButton {
+            SimpleButton {
                 icon: Icons.crop;
-                icon-color: UIPalette.yellow;
-                icon-hover-color: UIPalette.yellow;
+                color: UIPalette.yellow;
+                hover-color: UIPalette.yellow;
                 tooltip-text: "Dimensions";
             }
 
-            IconButton {
+            SimpleButton {
                 icon: Icons.clock;
-                icon-color: UIPalette.green;
-                icon-hover-color: UIPalette.green;
+                color: UIPalette.green;
+                hover-color: UIPalette.green;
                 tooltip-text: "Created";
             }
 
-            IconButton {
+            SimpleButton {
                 icon: Icons.clock;
-                icon-color: UIPalette.orange;
-                icon-hover-color: UIPalette.orange;
+                color: UIPalette.orange;
+                hover-color: UIPalette.orange;
                 tooltip-text: "Modified";
             }
         }
