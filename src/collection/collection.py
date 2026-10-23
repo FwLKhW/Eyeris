@@ -63,7 +63,7 @@ class Collection:
 
         queries = []
 
-        if filters.get("name") is not None:
+        if filters.get("name") is not None and len(filters["name"]) > 0:
             queries.append(
                 self.Filter.name.search(filters["name"], flags=re.IGNORECASE)
             )
