@@ -11,7 +11,8 @@ export enum ButtonSize { small, medium }
 
 export component SimpleButton inherits TooltipArea {
     in property <ButtonSize> size: medium;
-    in property <bool> show-icon: true;
+    in property <LayoutAlignment> align: center;
+    in property <bool> show-label: false;
     in property <image> icon: Icons.settings;
     in property <string> label: "Button";
     in property <length> icon-size: UIMetrics.icon-md;
@@ -34,21 +35,26 @@ export component SimpleButton inherits TooltipArea {
         border-radius: UIMetrics.radius-md;
 
         HorizontalLayout {
-            alignment: center;
+            alignment: root.align;
             cross-axis-alignment: center;
             padding: root.size == small ? UIMetrics.spacing-xs : UIMetrics.spacing-md;
             padding-left: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
             padding-right: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
 
-            if root.show-icon: Icon {
+            Icon {
                 icon: root.icon;
                 icon-size: icon-size;
                 color: root.has-hover ? root.hover-color : root.color;
             }
 
-            if !root.show-icon: UIText {
-                text: root.label;
-                color: root.has-hover ? root.hover-color : root.color;
+            if root.show-label && !root.label.is-empty: HorizontalLayout {
+                padding-left: UIMetrics.spacing-sm;
+                padding-right: UIMetrics.spacing-sm;
+
+                UIText {
+                    text: root.label;
+                    color: root.has-hover ? root.hover-color : root.color;
+                }
             }
         }
     }
