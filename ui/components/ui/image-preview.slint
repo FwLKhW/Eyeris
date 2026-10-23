@@ -17,7 +17,10 @@ export component ImagePreview inherits Rectangle {
         pointer-event(event) => {
             if (event.kind == PointerEventKind.down) {
                 ImagePreviewState.is-active = true;
-                ImagePreviewState.image-full = Actions.load-image(ImagePreviewState.image-path);
+                if ImagePreviewState.loaded-image-path != ImagePreviewState.image-path {
+                    ImagePreviewState.image-full = Actions.load-image(ImagePreviewState.image-path);
+                }
+                ImagePreviewState.loaded-image-path = ImagePreviewState.image-path;
                 ImagePreviewState.initial-mouse-x = self.mouse-x;
                 ImagePreviewState.initial-mouse-y = self.mouse-y;
                 ImagePreviewState.delta-x = self.mouse-x - ImagePreviewState.initial-mouse-x;
