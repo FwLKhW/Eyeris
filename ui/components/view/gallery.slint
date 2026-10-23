@@ -15,6 +15,7 @@ import { HorizontalDivider } from "../ui/divider.slint";
 import { ScrollArea } from "../ui/scroll-area.slint";
 import { Filter } from "filter.slint";
 import { UIText } from "../ui/text.slint";
+import { UIAnimations } from "../../styling/ui-animations.slint";
 
 component ImageItem inherits Rectangle {
     in property <IndexedImage> img;
@@ -24,6 +25,7 @@ component ImageItem inherits Rectangle {
 
     init => {
         thumbnail.source = Actions.load-thumbnail(img.id);
+        thumbnail.opacity = 1;
     }
 
     VerticalLayout {
@@ -32,9 +34,15 @@ component ImageItem inherits Rectangle {
         padding: UIMetrics.spacing-xl;
 
         thumbnail := Image {
+            opacity: 0;
             height: 256px;
             min-width: 128px;
             image-fit: cover;
+
+            animate opacity {
+                duration: UIAnimations.emphasized-duration;
+                easing: ease-out;
+            }
         }
 
         VerticalLayout {
