@@ -43,6 +43,7 @@ export component Filter inherits Rectangle {
             SimpleButtonPopover {
                 icon: Icons.file-text;
                 label: FilterState.types == jpg ? "JPG" : FilterState.types == png ? "PNG" : FilterState.types == webp ? "WEBP" : "";
+                show-label: true;
                 color: UIPalette.blue;
                 hover-color: UIPalette.blue;
                 popup-width: 110px;
@@ -76,11 +77,11 @@ export component Filter inherits Rectangle {
             SimpleButtonPopover {
                 icon: Icons.box;
                 label: FilterState.shape == portrait ? "Portrait" : FilterState.shape == square ? "Square" : FilterState.shape == landscape ? "Landscape" : "";
+                show-label: true;
                 color: UIPalette.mauve;
                 hover-color: UIPalette.mauve;
                 popup-width: 240px;
                 tooltip-text: "Shape";
-                show-label: true;
 
                 HorizontalTabGroup {
                     icons: [
@@ -105,6 +106,7 @@ export component Filter inherits Rectangle {
                         if self.selected-index == 3 {
                             FilterState.shape = landscape;
                         }
+                        Actions.apply-filters();
                     }
                 }
             }
