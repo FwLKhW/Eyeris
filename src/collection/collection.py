@@ -57,29 +57,29 @@ class Collection:
                 thumbnail.save(self.thumbnail_folder / f"{image_data['id']}.png")
                 self.db.upsert(image_data, where("id") == image_data["id"])
 
-    def get_images(self, types="all", shape="all"):
+    def get_images(self, filters):
         """Get IndexedImage[]"""
 
-        filters = []
+        queries = []
 
-        if types.lower() in ["jpg", "png", "webp"]:
-            filters.append(self.Filter.format == types.upper())
+        if filters["types"].lower() in ["jpg", "png", "webp"]:
+            queries.append(self.Filter.format == filters["types"].upper())
 
-        if shape == "square":
-            filters.append(lambda doc: doc.get("width", 0) == doc.get("height", 0))
-        elif shape == "landscape":
-            filters.append(lambda doc: doc.get("width", 0) > doc.get("height", 0))
-        elif shape == "portrait":
-            filters.append(lambda doc: doc.get("width", 0) < doc.get("height", 0))
+        if filters["shape"] == "square":
+            queries.append(lambda doc: doc.get("width", 0) == doc.get("height", 0))
+        elif filters["shape"] == "landscape":
+            queries.append(lambda doc: doc.get("width", 0) > doc.get("height", 0))
+        elif filters["shape"] == "portrait":
+            queries.append(lambda doc: doc.get("width", 0) < doc.get("height", 0))
 
-        query = None if len(filters) == 0 else reduce(operator.and_, filters)
+        final_query = None if len(queries) == 0 else reduce(operator.and_, queries)
 
         with TinyDB(self.path / DOT_FOLDER / "images.json", indent=4) as db:
-            if query is None:
+            if final_query is None:
                 images = db.all()
             else:
-                images = db.search(query)
-            print(f"Loaded {len(images)} with query {query}")
+                images = db.search(final_query)
+            print(f"Loaded {len(images)} with query {final_query}")
             return images
 
     def schema(self):

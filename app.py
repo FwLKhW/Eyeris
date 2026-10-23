@@ -45,7 +45,7 @@ class App(slint.loader.app.App):
         await asyncio.to_thread(col.indexing)
         self.CollectionState.indexing = False
 
-        self.GalleryState.images = ListModel(col.get_images())
+        self.GalleryState.images = ListModel(col.get_images(self.get_filters()))
 
     @slint.callback(global_name="Actions")
     def load_thumbnail(self, id: str):
@@ -59,10 +59,14 @@ class App(slint.loader.app.App):
             return
 
         self.GalleryState.images = ListModel(
-            self.collection_manager.current_collection.get_images(
-                types=self.FilterState.types.value, shape=self.FilterState.shape.value
-            )
+            self.collection_manager.current_collection.get_images(self.get_filters())
         )
+
+    def get_filters(self):
+        return {
+            "types": self.FilterState.types.value,
+            "shape": self.FilterState.shape.value,
+        }
 
 
 async def main(app: slint.Component) -> None:
