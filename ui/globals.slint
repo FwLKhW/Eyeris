@@ -65,8 +65,11 @@ export global ColorPaletteState {
     ];
 }
 
+export enum Shape { all, portrait, square, landscape }
+
 export global FilterState {
     in-out property <color> color: transparent;
+    in-out property <Shape> shape: all;
 }
 
 export global TooltipState {

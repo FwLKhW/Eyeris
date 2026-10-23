@@ -59,12 +59,33 @@ export component Filter inherits Rectangle {
                 icon: Icons.box;
                 color: UIPalette.mauve;
                 hover-color: UIPalette.mauve;
-                popup-width: 200px;
+                popup-width: 240px;
                 tooltip-text: "Shape";
 
                 TabGroup {
-                    icons: [Icons.aspect-portrait, Icons.aspect-square, Icons.aspect-landscape];
-                    labels: ["Portrait", "Square", "Landscape"];
+                    icons: [
+                        Icons.close,
+                        Icons.aspect-portrait,
+                        Icons.aspect-square,
+                        Icons.aspect-landscape
+                    ];
+                    labels: ["All", "Portrait", "Square", "Landscape"];
+                    selected-index: FilterState.shape == all ? 0 : FilterState.shape == portrait ? 1 : FilterState.shape == square ? 2 : 3;
+
+                    changed selected-index => {
+                        if self.selected-index == 0 {
+                            FilterState.shape = all;
+                        }
+                        if self.selected-index == 1 {
+                            FilterState.shape = portrait;
+                        }
+                        if self.selected-index == 2 {
+                            FilterState.shape = square;
+                        }
+                        if self.selected-index == 3 {
+                            FilterState.shape = landscape;
+                        }
+                    }
                 }
             }
 
