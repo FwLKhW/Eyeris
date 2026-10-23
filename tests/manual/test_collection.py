@@ -18,7 +18,7 @@ print("List Collection:", collections.list())
 if col is not None:
     col = Collection(Path(col["path"]))
     col.indexing()
-    images = col.get_images()
+    images = col.get_images({})
 
     print(f"Loaded {len(images)} images from {col.path}:")
     for i, img in enumerate(images):
