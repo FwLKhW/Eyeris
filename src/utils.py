@@ -1,3 +1,4 @@
+import math
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -95,3 +96,19 @@ def indexed_image_to_slint(img):
         "description": img["description"],
         "palette": ListModel([to_slint_color(rgb) for rgb in img["palette"]]),
     }
+
+
+def have_similar_color(palette, target_color, max_distance=0.5):
+    if not palette:
+        return False
+
+    for color in palette:
+        distance = math.sqrt(
+            (color[0] - target_color[0]) ** 2
+            + (color[1] - target_color[1]) ** 2
+            + (color[2] - target_color[2]) ** 2
+        )
+        if distance <= max_distance:
+            return True
+
+    return False

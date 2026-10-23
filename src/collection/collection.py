@@ -10,7 +10,13 @@ from tinydb import Query, TinyDB, where
 
 from src.config import ALLOWED_IMAGE_EXTENSIONS, APPLICATION_DATA_PATH, DOT_FOLDER
 from src.schema import CollectionSchema
-from src.utils import get_color_palette, index_image, indexed_image_to_slint, load_image
+from src.utils import (
+    get_color_palette,
+    have_similar_color,
+    index_image,
+    indexed_image_to_slint,
+    load_image,
+)
 
 
 class Collection:
@@ -82,6 +88,11 @@ class Collection:
                 queries.append(lambda doc: doc.get("width", 0) > doc.get("height", 0))
             elif filters["shape"] == "portrait":
                 queries.append(lambda doc: doc.get("width", 0) < doc.get("height", 0))
+
+        if filters.get("color") is not None:
+            queries.append(
+                self.Filter.palette.test(have_similar_color, filters["color"])  # pyright: ignore[reportArgumentType]
+            )
 
         final_query = None if len(queries) == 0 else reduce(operator.and_, queries)
 
