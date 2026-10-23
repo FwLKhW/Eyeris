@@ -71,6 +71,26 @@ export component Left inherits Rectangle {
                         Actions.load-collection-list();
                     }
                 }
+
+                HorizontalDivider { }
+
+                FullButton {
+                    left-icon: Icons.search;
+                    left-text: "Indexing";
+
+                    clicked => {
+                        Actions.indexing();
+                    }
+                }
+
+                FullButton {
+                    left-icon: Icons.search;
+                    left-text: "Clean Indexing";
+
+                    clicked => {
+                        Actions.clean-indexing();
+                    }
+                }
             }
         }
     }

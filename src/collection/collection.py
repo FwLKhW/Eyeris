@@ -64,6 +64,9 @@ class Collection:
 
             self.db.upsert(image_data, where("id") == image_data["id"])
 
+    def clean_indexing(self):
+        self.indexing(clean=True)
+
     def get_images(self, filters: dict):
         """Get IndexedImage[]"""
 

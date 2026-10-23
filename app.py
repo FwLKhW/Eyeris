@@ -62,6 +62,34 @@ class App(slint.loader.app.App):
             self.collection_manager.current_collection.get_images(self.get_filters())
         )
 
+    @slint.callback(global_name="Actions")
+    async def indexing(self):
+        if self.collection_manager.current_collection is None:
+            return
+
+        self.CollectionState.indexing = True
+        await asyncio.to_thread(self.collection_manager.current_collection.indexing)
+        self.CollectionState.indexing = False
+
+        self.GalleryState.images = ListModel(
+            self.collection_manager.current_collection.get_images(self.get_filters())
+        )
+
+    @slint.callback(global_name="Actions")
+    async def clean_indexing(self):
+        if self.collection_manager.current_collection is None:
+            return
+
+        self.CollectionState.indexing = True
+        await asyncio.to_thread(
+            self.collection_manager.current_collection.clean_indexing
+        )
+        self.CollectionState.indexing = False
+
+        self.GalleryState.images = ListModel(
+            self.collection_manager.current_collection.get_images(self.get_filters())
+        )
+
     def get_filters(self):
         color = (
             None
