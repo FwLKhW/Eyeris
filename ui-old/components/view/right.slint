@@ -1,0 +1,34 @@
+import { GalleryState } from "../../globals.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+
+import { HorizontalDivider } from "../ui/divider.slint";
+import { ColorPalette } from "../ui/color-palette.slint";
+import { ImagePreview } from "../ui/image-preview.slint";
+
+export component Right inherits Rectangle {
+    background: UIPalette.bg-area;
+
+    VerticalLayout {
+        VerticalLayout {
+            padding: UIMetrics.spacing-xl;
+
+            ImagePreview { }
+        }
+
+        HorizontalDivider { }
+
+        VerticalLayout {
+            alignment: start;
+            cross-axis-alignment: center;
+            spacing: UIMetrics.spacing-lg;
+            padding: UIMetrics.spacing-xl;
+
+            ColorPalette {
+                colors: GalleryState.selected-image.palette;
+            }
+        }
+
+        VerticalLayout { }
+    }
+}

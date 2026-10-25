@@ -1,0 +1,38 @@
+import { ImagePreviewState, Actions } from "../../globals.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+
+export component ImagePreview inherits Rectangle {
+    min-width: 256px;
+    min-height: 256px;
+    max-height: 256px;
+
+    Image {
+        source: ImagePreviewState.preview;
+        width: 100%;
+        height: 100%;
+        image-fit: contain;
+    }
+
+    touch := TouchArea {
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down) {
+                ImagePreviewState.is-active = true;
+                if ImagePreviewState.loaded-image-path != ImagePreviewState.image-path {
+                    ImagePreviewState.image-full = Actions.load-image(ImagePreviewState.image-path);
+                }
+                ImagePreviewState.loaded-image-path = ImagePreviewState.image-path;
+                ImagePreviewState.initial-mouse-x = self.mouse-x;
+                ImagePreviewState.initial-mouse-y = self.mouse-y;
+                ImagePreviewState.delta-x = self.mouse-x - ImagePreviewState.initial-mouse-x;
+                ImagePreviewState.delta-y = self.mouse-y - ImagePreviewState.initial-mouse-y;
+            } else if (event.kind == PointerEventKind.up) {
+                ImagePreviewState.is-active = false;
+            }
+        }
+
+        moved => {
+            ImagePreviewState.delta-x = (self.mouse-x - ImagePreviewState.initial-mouse-x) * ((ImagePreviewState.image-full.width / 1980 + ImagePreviewState.image-full.height / 1080) / 2);
+            ImagePreviewState.delta-y = (self.mouse-y - ImagePreviewState.initial-mouse-y) * ((ImagePreviewState.image-full.width / 1980 + ImagePreviewState.image-full.height / 1080) / 2);
+        }
+    }
+}

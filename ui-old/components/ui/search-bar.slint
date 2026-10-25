@@ -1,0 +1,87 @@
+import { UITypography } from "../../styling/ui-typography.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { Icons } from "../../icons/icons.slint";
+
+import { SimpleButton } from "button.slint";
+import { UIText } from "text.slint";
+import { Icon } from "icon.slint";
+
+export component SearchBar {
+    in property <image> icon: Icons.search;
+    in property <string> placeholder: "Search";
+    in property <int> max-length: 24;
+    out property <string> text <=> input.text;
+
+    min-width: 160px;
+    max-width: 320px;
+
+    callback search(string);
+
+    Rectangle {
+        background: UIPalette.bg-surface;
+        border-radius: UIMetrics.radius-md;
+
+        HorizontalLayout {
+            cross-axis-alignment: center;
+            padding-left: UIMetrics.spacing-xs;
+            padding-right: UIMetrics.spacing-xs;
+
+            SimpleButton {
+                icon: icon;
+                size: small;
+                bg-hover: transparent;
+
+                clicked => {
+                    input.accepted();
+                }
+            }
+
+            input := TextInput {
+                horizontal-stretch: 1;
+                vertical-alignment: center;
+                font-size: UITypography.body.font-size;
+                opacity: UIPalette.subtle-text-opacity;
+
+                if input.text.is-empty: UIText {
+                    text: root.placeholder;
+                    color: UIPalette.subtext;
+                }
+
+                key-pressed(event) => {
+                    if event.text == Key.Escape {
+                        self.accepted();
+                        return accept;
+                    }
+                    if self.text.character-count > root.max-length
+                        && event.text != Key.Backspace
+                        && event.text != Key.LeftArrow
+                        && event.text != Key.RightArrow
+                        && event.text != Key.UpArrow
+                        && event.text != Key.DownArrow {
+                        return accept;
+                    }
+                    reject
+                }
+
+                accepted() => {
+                    self.clear-focus();
+                    root.search(self.text);
+                }
+            }
+
+            SimpleButton {
+                visible: input.text != "" && input.has-focus;
+                icon: Icons.close;
+                size: small;
+                icon-size: 16px;
+                bg-hover: transparent;
+
+                clicked => {
+                    input.text = "";
+                    input.clear-focus();
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,77 @@
+import { Align, IndexedImage, Collection } from "types.slint";
+import { UIPalette } from "styling/ui-palette.slint";
+
+export global Actions {
+    callback load-image(string) -> image;
+    callback load-collection-list();
+    callback add-collection();
+    callback open-collection(string);
+    callback load-thumbnail(string) -> image;
+    callback apply-filters();
+    callback indexing();
+    callback clean-indexing();
+}
+
+export global CollectionState {
+    in-out property <Collection> current-collection;
+    in-out property <[Collection]> collections;
+    in property <bool> indexing: false;
+}
+
+export global WindowState {
+    in-out property <length> width;
+    in-out property <length> height;
+}
+
+export global LayoutState {
+    in-out property <bool> show-titlebar: true;
+    in-out property <bool> show-left: true;
+    in-out property <bool> show-right: true;
+    in-out property <bool> show-filter: true;
+    in-out property <bool> prev-show-titlebar: true;
+    in-out property <bool> prev-show-left: true;
+    in-out property <bool> prev-show-right: true;
+    in-out property <bool> prev-show-filter: true;
+    in-out property <bool> zen-mode: false;
+}
+
+export global TabState {
+    in-out property <int> index;
+}
+
+export global GalleryState {
+    in-out property <int> per-row-images: 4;
+    in property <IndexedImage> selected-image;
+    in property <[IndexedImage]> images;
+}
+
+export global ImagePreviewState {
+    in-out property <image> preview;
+    in-out property <string> image-path;
+    in-out property <string> loaded-image-path;
+    in-out property <image> image-full;
+    in-out property <bool> is-active: false;
+    in property <length> initial-mouse-x;
+    in property <length> initial-mouse-y;
+    in property <length> delta-x;
+    in property <length> delta-y;
+}
+
+export enum Types { all, jpg, png, webp }
+export enum Shape { all, portrait, square, landscape }
+
+export global FilterState {
+    in-out property <string> name;
+    in-out property <color> color: transparent;
+    in-out property <float> color-distance: 0.15;
+    in-out property <Types> types: all;
+    in-out property <Shape> shape: all;
+}
+
+export global TooltipState {
+    in-out property <string> text: "";
+    in-out property <length> x: 0;
+    in-out property <length> y: 0;
+    in-out property <Align> align: start;
+    in-out property <bool> visible: false;
+}

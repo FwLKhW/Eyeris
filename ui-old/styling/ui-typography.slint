@@ -1,0 +1,40 @@
+export struct TextStyle {
+    font-size: length,
+    font-weight: int
+}
+
+export global UITypography {
+    out property <int> regular: 400;
+    out property <int> medium: 500;
+    out property <int> semibold: 700;
+
+    out property <TextStyle> display: {
+        font-size: 48px,
+        font-weight: root.regular
+    };
+
+    out property <TextStyle> headline: {
+        font-size: 28px,
+        font-weight: root.regular
+    };
+
+    out property <TextStyle> title: {
+        font-size: 16px,
+        font-weight: root.medium
+    };
+
+    out property <TextStyle> body: {
+        font-size: 13px,
+        font-weight: root.regular
+    };
+
+    out property <TextStyle> label: {
+        font-size: 12px,
+        font-weight: root.medium
+    };
+
+    out property <TextStyle> small: {
+        font-size: 10px,
+        font-weight: root.medium
+    };
+}

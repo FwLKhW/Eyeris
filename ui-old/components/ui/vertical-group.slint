@@ -1,0 +1,34 @@
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { Icons } from "../../icons/icons.slint";
+
+import { UIText } from "text.slint";
+
+component Title inherits HorizontalLayout {
+    in property <string> text;
+
+    padding-left: UIMetrics.spacing-lg;
+    padding-bottom: UIMetrics.spacing-sm;
+
+    UIText {
+        text: root.text;
+        color: UIPalette.subtext;
+    }
+}
+
+export component VerticalGroup inherits VerticalLayout {
+    in property <string> title;
+
+    alignment: start;
+    spacing: UIMetrics.spacing-sm;
+
+    if root.title != "": Title {
+        text: root.title;
+    }
+
+    VerticalLayout {
+        spacing: UIMetrics.spacing-sm;
+
+        @children
+    }
+}

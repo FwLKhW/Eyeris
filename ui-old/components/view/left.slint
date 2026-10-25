@@ -1,0 +1,97 @@
+import { TabState, Actions, CollectionState } from "../../globals.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { Icons } from "../../icons/icons.slint";
+
+import { FullButtonPopover } from "../ui/popover.slint";
+import { HorizontalDivider } from "../ui/divider.slint";
+import { FullButton } from "../ui/button.slint";
+import { ScrollArea } from "../ui/scroll-area.slint";
+import { HorizontalTabGroup } from "../ui/tab-group.slint";
+import { TabHome } from "tab-home.slint";
+import { Button } from "std-widgets.slint";
+
+export component Left inherits Rectangle {
+    background: UIPalette.bg-area;
+
+    VerticalLayout {
+        HorizontalLayout {
+            padding: UIMetrics.spacing-xl;
+
+            HorizontalTabGroup {
+                icons: [Icons.home, Icons.tag, Icons.chart];
+                labels: ["Home", "Tag", "Chart"];
+                selected-index <=> TabState.index;
+            }
+        }
+
+        HorizontalDivider { }
+
+        ScrollArea {
+            content-height: tab.preferred-height;
+
+            tab := TabHome { }
+        }
+
+        HorizontalDivider { }
+
+        VerticalLayout {
+            padding: UIMetrics.spacing-xl;
+
+            FullButtonPopover {
+                left-icon: Icons.heart;
+                left-text: CollectionState.current-collection.name.is-empty ? "Open a Collection" : CollectionState.current-collection.name;
+                position: top;
+
+                pre-action => {
+                    Actions.load-collection-list();
+                }
+
+                if CollectionState.collections.length > 0: VerticalLayout {
+                    spacing: UIMetrics.spacing-md;
+
+                    for lib in CollectionState.collections: FullButton {
+                        left-icon: Icons.heart;
+                        left-text: lib.name;
+
+                        clicked => {
+                            Actions.open-collection(lib.path);
+                        }
+                    }
+
+                    HorizontalDivider { }
+                }
+
+                FullButton {
+                    left-icon: Icons.folder;
+                    left-text: "Open";
+
+                    clicked => {
+                        Actions.add-collection();
+                        Actions.load-collection-list();
+                    }
+                }
+
+                HorizontalDivider { }
+
+                FullButton {
+                    left-icon: Icons.search;
+                    left-text: "Indexing";
+
+                    clicked => {
+                        Actions.indexing();
+                    }
+                }
+
+                FullButton {
+                    left-icon: Icons.search;
+                    left-text: "Clean Indexing";
+
+                    clicked => {
+                        Actions.clean-indexing();
+                    }
+                }
+            }
+        }
+    }
+}

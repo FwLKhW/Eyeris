@@ -1,0 +1,28 @@
+import { TooltipState } from "../../globals.slint";
+import { UITypography } from "../../styling/ui-typography.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+
+import { UIText } from "text.slint";
+import { Align } from "../../types.slint";
+
+export component TooltipArea inherits TouchArea {
+    in property <string> tooltip-text;
+    in property <Align> tooltip-align: end;
+
+    @children
+
+    changed has-hover => {
+        if (self.has-hover && !root.tooltip-text.is-empty) {
+            TooltipState.text = root.tooltip-text;
+            TooltipState.x = root.absolute-position.x + root.width / 2;
+            TooltipState.y = tooltip-align == end
+                ? root.absolute-position.y + root.height + UIMetrics.spacing-md
+                : root.absolute-position.y - UIMetrics.spacing-md;
+            TooltipState.align = root.tooltip-align;
+            TooltipState.visible = true;
+        } else {
+            TooltipState.visible = false;
+        }
+    }
+}

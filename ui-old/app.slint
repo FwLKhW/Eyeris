@@ -1,0 +1,214 @@
+import "../assets/fonts/Monda.ttf";
+
+import {
+    ImagePreviewState,
+    CollectionState,
+    GalleryState,
+    TooltipState,
+    FilterState,
+    LayoutState,
+    WindowState,
+    TabState,
+    Actions,
+} from "globals.slint";
+import {
+    SimpleButtonPopover,
+    FullButtonPopover,
+    HorizontalDivider,
+    UITypography,
+    SimpleButton,
+    FullButton,
+    UIMetrics,
+    UIPalette,
+    TitleBar,
+    UIText,
+    Icons,
+    Main,
+} from "lib.slint";
+
+export {
+    ImagePreviewState,
+    CollectionState,
+    GalleryState,
+    FilterState,
+    LayoutState,
+    WindowState,
+    TabState,
+    Actions,
+} from "globals.slint";
+
+
+export component App inherits Window {
+    title: "Eyeris";
+    icon: @image-url("../assets/icon.svg");
+
+    default-font-family: "Monda";
+    default-font-weight: UITypography.regular;
+
+    background: UIPalette.bg;
+
+    min-width: 960px;
+    min-height: 640px;
+    preferred-width: 1560px;
+    preferred-height: 840px;
+    maximized: true;
+
+    no-frame: true;
+    resize-border-width: 6px;
+
+    forward-focus: scope;
+
+    changed width => {
+        WindowState.width = root.width;
+    }
+
+    changed height => {
+        WindowState.height = root.height;
+    }
+
+    scope := FocusScope {
+        capture-key-pressed(event) => {
+            if event.modifiers.alt || event.text == Key.Escape || event.text == Key.Return {
+                self.focus();
+            }
+            reject
+        }
+
+        KeyBinding {
+            keys: @keys(Alt + T);
+            activated => {
+                LayoutState.show-titlebar = !LayoutState.show-titlebar;
+            }
+        }
+
+        KeyBinding {
+            keys: @keys(Alt + B);
+            activated => {
+                LayoutState.show-left = !LayoutState.show-left;
+            }
+        }
+
+        KeyBinding {
+            keys: @keys(Alt + M);
+            activated => {
+                LayoutState.show-right = !LayoutState.show-right;
+            }
+        }
+
+        KeyBinding {
+            keys: @keys(Alt + F);
+            activated => {
+                LayoutState.show-filter = !LayoutState.show-filter;
+            }
+        }
+
+        KeyBinding {
+            keys: @keys(Alt + Q);
+            activated => {
+                root.hide();
+            }
+        }
+
+        KeyBinding {
+            keys: @keys(F11);
+            activated => {
+                root.full-screen = !root.full-screen;
+            }
+        }
+
+        KeyBinding {
+            keys: @keys(Alt + Z);
+            activated => {
+                LayoutState.zen-mode = !LayoutState.zen-mode;
+                if LayoutState.zen-mode {
+                    LayoutState.prev-show-filter = LayoutState.show-filter;
+                    LayoutState.prev-show-left = LayoutState.show-left;
+                    LayoutState.prev-show-right = LayoutState.show-right;
+                    LayoutState.prev-show-titlebar = LayoutState.show-titlebar;
+                    LayoutState.show-filter = false;
+                    LayoutState.show-left = false;
+                    LayoutState.show-right = false;
+                    LayoutState.show-titlebar = false;
+                } else {
+                    LayoutState.show-filter = LayoutState.prev-show-filter;
+                    LayoutState.show-left = LayoutState.prev-show-left;
+                    LayoutState.show-right = LayoutState.prev-show-right;
+                    LayoutState.show-titlebar = LayoutState.prev-show-titlebar;
+                }
+            }
+        }
+
+        WindowMoveArea {
+            enabled: !root.full-screen && !ImagePreviewState.is-active;
+
+            VerticalLayout {
+                if LayoutState.show-titlebar: VerticalLayout {
+                    TitleBar {
+                        window-minimize => { root.minimized = true; }
+                        window-maximize => { root.maximized = !root.maximized; }
+                        window-close => { root.hide(); }
+                    }
+
+                    HorizontalDivider { }
+                }
+
+                Main { }
+            }
+        }
+    }
+
+    // Tooltip overlay
+    if TooltipState.visible: Rectangle {
+        x: TooltipState.x - self.width / 2;
+        y: TooltipState.align == start ? TooltipState.y - self.height : TooltipState.y;
+        z: 99999;
+        width: txt.width + UIMetrics.spacing-lg * 2;
+        height: txt.height + UIMetrics.spacing-sm * 2;
+        background: UIPalette.bg-surface;
+        border-radius: UIMetrics.radius-sm;
+
+        txt := UIText {
+            x: UIMetrics.spacing-lg;
+            y: UIMetrics.spacing-sm;
+            text: TooltipState.text;
+            style: UITypography.small;
+        }
+    }
+
+    // Image preview overlay
+    Rectangle {
+        visible: ImagePreviewState.is-active;
+        background: rgba(0, 0, 0, 0.8);
+        z: 999;
+
+        Image {
+            source: ImagePreviewState.image-full;
+            x: root.width / 2 - (ImagePreviewState.image-full.width / 2 * 1phx) + (ImagePreviewState.delta-x * root.width / 512 / 1px);
+            y: root.height / 2 - (ImagePreviewState.image-full.height / 2 * 1phx) + (ImagePreviewState.delta-y * root.height / 512 / 1px);
+            width: ImagePreviewState.image-full.width * 1phx;
+            height: ImagePreviewState.image-full.height * 1phx;
+        }
+    }
+
+    // Loading overlay
+    Rectangle {
+        visible: CollectionState.indexing;
+        background: rgba(0, 0, 0, 0.8);
+        z: 1000;
+
+        VerticalLayout {
+            alignment: center;
+            cross-axis-alignment: center;
+
+            UIText {
+                style: UITypography.title;
+                text: "Indexing " + CollectionState.current-collection.name;
+            }
+
+            UIText {
+                style: UITypography.body;
+                text: CollectionState.current-collection.path;
+            }
+        }
+    }
+}

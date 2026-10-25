@@ -1,0 +1,122 @@
+import { UITypography } from "../../styling/ui-typography.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { Icons } from "../../icons/icons.slint";
+
+import { TooltipArea } from "tooltip.slint";
+import { UIText } from "text.slint";
+import { Icon } from "icon.slint";
+
+export enum ButtonSize { small, medium }
+
+export component SimpleButton inherits TooltipArea {
+    in property <ButtonSize> size: medium;
+    in property <LayoutAlignment> align: center;
+    in property <bool> show-label: false;
+    in property <image> icon: Icons.settings;
+    in property <string> label: "Button";
+    in property <length> icon-size: UIMetrics.icon-md;
+    in property <color> color: UIPalette.icon;
+    in property <color> hover-color: UIPalette.icon-hover;
+    in property <color> bg-hover: UIPalette.bg-hover;
+    in property <bool> checkable: false;
+    in-out property <bool> selected: false;
+
+    mouse-cursor: MouseCursor.pointer;
+
+    clicked => {
+        if root.checkable {
+            root.selected = !root.selected;
+        }
+    }
+
+    Rectangle {
+        background: root.pressed || root.has-hover || root.selected ? root.bg-hover : transparent;
+        border-radius: UIMetrics.radius-md;
+
+        HorizontalLayout {
+            alignment: root.align;
+            cross-axis-alignment: center;
+            padding: root.size == small ? UIMetrics.spacing-xs : UIMetrics.spacing-md;
+            padding-left: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
+            padding-right: root.size == small ? UIMetrics.spacing-md : UIMetrics.spacing-xl;
+
+            Icon {
+                icon: root.icon;
+                icon-size: icon-size;
+                color: root.has-hover ? root.hover-color : root.color;
+            }
+
+            if root.show-label && !root.label.is-empty: HorizontalLayout {
+                padding-left: UIMetrics.spacing-sm;
+                padding-right: UIMetrics.spacing-sm;
+
+                UIText {
+                    text: root.label;
+                    color: root.has-hover ? root.hover-color : root.color;
+                }
+            }
+        }
+    }
+}
+
+export component FullButton inherits Rectangle {
+    in property <ButtonSize> size: medium;
+    in property <color> icon-color: UIPalette.icon;
+    in property <image> left-icon: Icons.folder;
+    in property <string> left-text: "Button";
+    in property <string> right-text;
+    in property <image> right-icon: Icons.chevron-right;
+    in property <bool> show-right: false;
+    in property <bool> activated: false;
+
+    callback clicked();
+
+    background: touch.pressed || touch.has-hover ? UIPalette.bg-hover : transparent;
+    border-radius: UIMetrics.radius-md;
+
+    HorizontalLayout {
+        spacing: UIMetrics.spacing-sm;
+        padding: UIMetrics.spacing-sm;
+        padding-left: UIMetrics.spacing-md;
+        padding-right: UIMetrics.spacing-md;
+
+        HorizontalLayout {
+            cross-axis-alignment: center;
+            spacing: UIMetrics.spacing-sm;
+            padding-right: left-text != "" ? UIMetrics.spacing-sm : 0;
+
+            Icon {
+                icon: root.left-icon;
+            }
+
+            if left-text != "": UIText {
+                text: root.left-text;
+                style: UITypography.label;
+            }
+        }
+
+        if root.show-right: HorizontalLayout {
+            alignment: end;
+            cross-axis-alignment: center;
+            spacing: UIMetrics.spacing-sm;
+
+            UIText {
+                text: root.right-text;
+                color: UIPalette.subtext;
+            }
+
+            Icon {
+                icon: root.right-icon;
+            }
+        }
+    }
+
+    touch := TouchArea {
+        mouse-cursor: MouseCursor.pointer;
+
+        clicked => {
+            root.clicked();
+        }
+    }
+}

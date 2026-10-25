@@ -1,0 +1,20 @@
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+
+export component Icon inherits HorizontalLayout {
+    in property <image> icon;
+    in property <length> icon-size: UIMetrics.icon-md;
+    in property <color> color: UIPalette.icon;
+
+    width: UIMetrics.icon-container-md;
+    height: self.width;
+    alignment: center;
+    cross-axis-alignment: center;
+
+    Image {
+        width: root.icon-size;
+        height: root.icon-size;
+        source: root.icon;
+        colorize: root.color;
+    }
+}

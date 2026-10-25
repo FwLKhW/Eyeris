@@ -1,0 +1,185 @@
+import { FilterState, Actions } from "../../globals.slint";
+import { UIMetrics } from "../../styling/ui-metrics.slint";
+import { UIPalette } from "../../styling/ui-palette.slint";
+import { Icons } from "../../icons/icons.slint";
+
+import { HorizontalTabGroup, VerticalTabGroup } from "../ui/tab-group.slint";
+import { MinimalColorPalette } from "../ui/color-palette.slint";
+import { SimpleButtonPopover } from "../ui/popover.slint";
+import { SimpleButton } from "../ui/button.slint";
+import { SearchBar } from "../ui/search-bar.slint";
+import { Slider } from "../ui/slider.slint";
+
+export component Filter inherits Rectangle {
+    clip: true;
+
+    HorizontalLayout {
+        spacing: UIMetrics.spacing-sm;
+        padding: UIMetrics.spacing-xl;
+
+        HorizontalLayout {
+            alignment: start;
+            spacing: UIMetrics.spacing-sm;
+
+            SimpleButtonPopover {
+                icon: FilterState.color == transparent ? Icons.circle : Icons.filled-circle;
+                color: FilterState.color == transparent ? UIPalette.subtext : FilterState.color;
+                hover-color: self.color;
+                popup-width: 270px;
+                tooltip-text: "Color";
+
+                SimpleButton {
+                    icon: Icons.close;
+
+                    clicked => {
+                        FilterState.color = transparent;
+                        Actions.apply-filters();
+                    }
+                }
+
+                MinimalColorPalette { }
+
+                HorizontalLayout {
+                    alignment: center;
+
+                    Slider {
+                        width: 220px;
+                        value <=> FilterState.color-distance;
+                        thumb-border-color: UIPalette.bg-surface;
+
+                        released => {
+                            Actions.apply-filters();
+                        }
+                    }
+                }
+            }
+
+            SimpleButtonPopover {
+                icon: Icons.file-text;
+                label: FilterState.types == jpg ? "JPG" : FilterState.types == png ? "PNG" : FilterState.types == webp ? "WEBP" : "";
+                show-label: true;
+                color: UIPalette.blue;
+                hover-color: UIPalette.blue;
+                popup-width: 110px;
+                tooltip-text: "Types";
+
+                VerticalTabGroup {
+                    // TODO: icons
+                    icons: [Icons.file-text, Icons.file-text, Icons.file-text, Icons.file-text];
+                    labels: ["All", "JPG", "PNG", "WEBP"];
+                    show-label: true;
+                    selected-index: FilterState.types == jpg ? 1 : FilterState.types == png ? 2 : FilterState.types == webp ? 3 : 0;
+
+                    changed selected-index => {
+                        if self.selected-index == 0 {
+                            FilterState.types = all;
+                        }
+                        if self.selected-index == 1 {
+                            FilterState.types = jpg;
+                        }
+                        if self.selected-index == 2 {
+                            FilterState.types = png;
+                        }
+                        if self.selected-index == 3 {
+                            FilterState.types = webp;
+                        }
+                        Actions.apply-filters();
+                    }
+                }
+            }
+
+            SimpleButtonPopover {
+                icon: Icons.box;
+                label: FilterState.shape == portrait ? "Portrait" : FilterState.shape == square ? "Square" : FilterState.shape == landscape ? "Landscape" : "";
+                show-label: true;
+                color: UIPalette.mauve;
+                hover-color: UIPalette.mauve;
+                popup-width: 240px;
+                tooltip-text: "Shape";
+
+                HorizontalTabGroup {
+                    icons: [
+                        Icons.close,
+                        Icons.aspect-portrait,
+                        Icons.aspect-square,
+                        Icons.aspect-landscape
+                    ];
+                    labels: ["All", "Portrait", "Square", "Landscape"];
+                    selected-index: FilterState.shape == portrait ? 1 : FilterState.shape == square ? 2 : FilterState.shape == landscape ? 3 : 0;
+
+                    changed selected-index => {
+                        if self.selected-index == 0 {
+                            FilterState.shape = all;
+                        }
+                        if self.selected-index == 1 {
+                            FilterState.shape = portrait;
+                        }
+                        if self.selected-index == 2 {
+                            FilterState.shape = square;
+                        }
+                        if self.selected-index == 3 {
+                            FilterState.shape = landscape;
+                        }
+                        Actions.apply-filters();
+                    }
+                }
+            }
+
+            SimpleButton {
+                icon: Icons.tag;
+                color: UIPalette.orange;
+                hover-color: UIPalette.orange;
+                tooltip-text: "Tags";
+            }
+
+            SimpleButton {
+                icon: Icons.star;
+                color: UIPalette.yellow;
+                hover-color: UIPalette.yellow;
+                tooltip-text: "Stars";
+            }
+
+            SimpleButton {
+                icon: Icons.crop;
+                color: UIPalette.yellow;
+                hover-color: UIPalette.yellow;
+                tooltip-text: "Dimensions";
+            }
+
+            SimpleButton {
+                icon: Icons.clock;
+                color: UIPalette.green;
+                hover-color: UIPalette.green;
+                tooltip-text: "Created";
+            }
+
+            SimpleButton {
+                icon: Icons.clock;
+                color: UIPalette.orange;
+                hover-color: UIPalette.orange;
+                tooltip-text: "Modified";
+            }
+        }
+
+        HorizontalLayout {
+            alignment: end;
+            spacing: UIMetrics.spacing-sm;
+
+            SearchBar {
+                min-width: 180px;
+                max-length: 16;
+
+                search(name) => {
+                    FilterState.name = name;
+                    Actions.apply-filters();
+                }
+            }
+
+            SearchBar {
+                min-width: 240px;
+                icon: Icons.vector-square;
+                placeholder: "Semantic Search";
+            }
+        }
+    }
+}
