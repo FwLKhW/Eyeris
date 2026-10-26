@@ -48,6 +48,18 @@ export component App inherits Window {
         width: window-control-buttons.preferred-width;
         height: window-control-buttons.preferred-height;
 
-        window-control-buttons := WindowControlButtons { }
+        window-control-buttons := WindowControlButtons {
+            minimize => {
+                root.minimized = true;
+            }
+
+            maximize => {
+                root.maximized = !root.maximized;
+            }
+
+            close => {
+                root.hide();
+            }
+        }
     }
 }

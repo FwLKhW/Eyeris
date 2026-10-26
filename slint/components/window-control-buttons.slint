@@ -2,19 +2,37 @@ import { IconButton } from "button.slint";
 import { Icons } from "../icons.slint";
 
 export component WindowControlButtons inherits HorizontalLayout {
+    callback minimize();
+    callback maximize();
+    callback close();
+
     IconButton {
         icon: Icons.minimize;
         ratio: 1.5;
         icon-scale: 0.75;
+
+        clicked => {
+            minimize();
+        }
     }
+    
     IconButton {
         icon: Icons.maximize;
         ratio: 1.5;
         icon-scale: 0.7;
+
+        clicked => {
+            maximize();
+        }
     }
+
     IconButton {
         icon: Icons.close;
         ratio: 1.5;
         icon-scale: 0.75;
+
+        clicked => {
+            close();
+        }
     }
 }
