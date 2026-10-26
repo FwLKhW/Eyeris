@@ -1,8 +1,9 @@
 import "../assets/fonts/Monda.ttf";
 
 import {
-    EyerisTypography,
-    EyerisPalette,
+    Typography,
+    Metrics,
+    Colors,
     WindowControlButtons,
     IconButton,
     Icons,
@@ -17,9 +18,9 @@ export component App inherits Window {
     icon: @image-url("../assets/icon.svg");
 
     default-font-family: "Monda";
-    default-font-weight: EyerisTypography.regular;
+    default-font-weight: Typography.regular;
 
-    background: EyerisPalette.bg;
+    background: Colors.bg;
 
     min-width: 960px;
     min-height: 640px;

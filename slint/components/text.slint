@@ -1,10 +1,10 @@
-import { EyerisTypography, TextStyle } from "../typography.slint";
-import { EyerisPalette } from "../palette.slint";
+import { Typography, TextStyle } from "../typography.slint";
+import { Colors } from "../colors.slint";
 
-export component EyerisText inherits Text {
-    in property <TextStyle> style: EyerisTypography.body;
+export component Text inherits Text {
+    in property <TextStyle> style: Typography.body;
 
-    color: EyerisPalette.fg;
+    color: Colors.fg;
     font-size: root.style.size;
     font-weight: root.style.weight;
     overflow: elide;

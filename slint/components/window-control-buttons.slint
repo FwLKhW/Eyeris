@@ -1,4 +1,4 @@
-import { EyerisPalette } from "../palette.slint";
+import { Colors } from "../colors.slint";
 import { Icons } from "../icons.slint";
 
 import { IconButton } from "button.slint";
@@ -12,6 +12,8 @@ export component WindowControlButtons inherits HorizontalLayout {
         icon: Icons.minimize;
         ratio: 1.5;
         icon-scale: 0.75;
+        tooltip: "Minimize";
+        tooltip-offset: self.height + 8px;
 
         clicked => {
             minimize();
@@ -22,6 +24,8 @@ export component WindowControlButtons inherits HorizontalLayout {
         icon: Icons.maximize;
         ratio: 1.5;
         icon-scale: 0.7;
+        tooltip: "Maximize";
+        tooltip-offset: self.height + 8px;
 
         clicked => {
             maximize();
@@ -32,7 +36,9 @@ export component WindowControlButtons inherits HorizontalLayout {
         icon: Icons.close;
         ratio: 1.5;
         icon-scale: 0.75;
-        bg-hover: EyerisPalette.danger;
+        bg-hover: Colors.danger;
+        tooltip: "Close";
+        tooltip-offset: self.height + 8px;
 
         clicked => {
             close();
