@@ -12,7 +12,7 @@ struct ColorScheme {
     bg: color,
     bg-area: color,
     bg-surface: color,
-    fg-ghost-opacity: float,
+    fg-faded-opacity: float,
     bg-hover-opacity: float,
     separator-opacity: float,
 }
@@ -39,7 +39,7 @@ export global Colors {
     out property <color> bg-area: root.theme.bg-area;
     out property <color> bg-surface: root.theme.bg-surface;
 
-    out property <float> fg-ghost-opacity: root.theme.fg-ghost-opacity;
+    out property <float> fg-faded-opacity: root.theme.fg-faded-opacity;
     out property <float> bg-hover-opacity: root.theme.bg-hover-opacity;
     out property <float> separator-opacity: root.theme.separator-opacity;
 
@@ -59,7 +59,7 @@ export global Colors {
             bg: #151515,
             bg-area: #111111,
             bg-surface: #242424,
-            fg-ghost-opacity: 65%,
+            fg-faded-opacity: 65%,
             bg-hover-opacity: 10%,
             separator-opacity: 10%,
         },
@@ -77,7 +77,7 @@ export global Colors {
             bg: #151515,
             bg-area: #111111,
             bg-surface: #242424,
-            fg-ghost-opacity: 65%,
+            fg-faded-opacity: 65%,
             bg-hover-opacity: 10%,
             separator-opacity: 5%,
         },
