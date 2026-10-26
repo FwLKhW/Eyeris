@@ -1,0 +1,9 @@
+import { EyerisText } from "text.slint";
+
+export component Tooltip inherits Rectangle {
+    in property <string> text;
+
+    EyerisText {
+        text: root.text;
+    }
+}
