@@ -3,7 +3,7 @@ export struct TextStyle {
     weight: int
 }
 
-export global EyerisTypography {
+export global Typography {
     out property <int> regular: 400;
     out property <int> medium: 500;
     out property <int> semibold: 700;
@@ -14,12 +14,12 @@ export global EyerisTypography {
     };
 
     out property <TextStyle> body: {
-        size: 12px,
+        size: 13px,
         weight: root.regular
     };
 
     out property <TextStyle> small: {
-        size: 10px,
+        size: 11px,
         weight: root.medium
     };
 }
