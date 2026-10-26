@@ -35,9 +35,12 @@ export global Colors {
     out property <color> red: root.theme.red;
 
     out property <color> fg: root.theme.fg;
+    out property <color> fg-faded: root.theme.fg.with-alpha(root.theme.fg-faded-opacity);
     out property <color> bg: root.theme.bg;
     out property <color> bg-area: root.theme.bg-area;
     out property <color> bg-surface: root.theme.bg-surface;
+    out property <color> bg-hover: root.theme.fg.with-alpha(root.theme.bg-hover-opacity);
+    out property <color> separator: root.theme.fg.with-alpha(root.theme.separator-opacity);
 
     out property <float> fg-faded-opacity: root.theme.fg-faded-opacity;
     out property <float> bg-hover-opacity: root.theme.bg-hover-opacity;
