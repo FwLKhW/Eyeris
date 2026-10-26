@@ -1,0 +1,37 @@
+import { Metrics } from "../metrics.slint";
+import { Icons } from "../icons.slint";
+
+import { HorizontalSeparator } from "../components/separator.slint";
+import { SidebarButton } from "../components/button.slint";
+
+export component Left inherits VerticalLayout {
+    VerticalLayout {
+    }
+    
+    HorizontalSeparator { }
+    
+    VerticalLayout {
+        vertical-stretch: 1;
+
+        SidebarButton {
+            icon: Icons.home;
+            text: "All";
+        }
+        SidebarButton {
+            icon: Icons.clock;
+            text: "Recent";
+        }
+        SidebarButton {
+            icon: Icons.refresh;
+            text: "Random";
+        }
+        SidebarButton {
+            icon: Icons.trash;
+            text: "Trash";
+        }
+    }
+
+    HorizontalSeparator { }
+
+    Rectangle { }
+}

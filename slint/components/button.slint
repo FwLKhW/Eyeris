@@ -53,7 +53,25 @@ export component SidebarButton inherits Rectangle {
     in property <string> text: "Button";
     in property <int> count: 0;
 
-    min-height: 32px;
+    min-height: 40px;
+    background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
 
+    HorizontalLayout {
+        cross-axis-alignment: center;
 
+        Icon {
+            icon: root.icon;
+        }
+
+        EyerisText { text: root.text; }
+
+        if root.count > 0: HorizontalLayout {
+            padding-left: Metrics.spacing-8;
+            padding-right: Metrics.spacing-8;
+
+            EyerisText { text: root.count; }
+        }
+    }
+
+    area := FocusTouchArea { }
 }
