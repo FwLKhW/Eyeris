@@ -1,8 +1,8 @@
 import { Metrics } from "../metrics.slint";
 import { Icons } from "../icons.slint";
 
+import { SidebarButton, CollectionButton } from "../components/button.slint";
 import { HorizontalSeparator } from "../components/separator.slint";
-import { SidebarButton } from "../components/button.slint";
 import { ScrollArea } from "../components/area.slint";
 import { Tabs } from "../components/tab.slint";
 
@@ -23,6 +23,7 @@ export component Left inherits VerticalLayout {
             SidebarButton {
                 icon: Icons.home;
                 text: "All";
+                count: 42;
             }
 
             SidebarButton {
@@ -36,23 +37,24 @@ export component Left inherits VerticalLayout {
             }
 
             SidebarButton {
-                icon: Icons.trash;
-                text: "Trash";
-            }
-
-            SidebarButton {
                 icon: Icons.tag;
                 text: "Tagged";
+                count: 12;
             }
 
             SidebarButton {
                 icon: Icons.tag;
                 text: "Untagged";
+                count: 30;
             }
         }
     }
 
     HorizontalSeparator { }
 
-    Rectangle { }
+    VerticalLayout {
+        padding: Metrics.spacing-8;
+
+        CollectionButton { }
+    }
 }

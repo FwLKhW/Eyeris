@@ -1,3 +1,4 @@
+import { Typography } from "../typography.slint";
 import { Metrics } from "../metrics.slint";
 import { Colors } from "../colors.slint";
 import { Icons } from "../icons.slint";
@@ -64,13 +65,41 @@ export component SidebarButton inherits Rectangle {
             icon: root.icon;
         }
 
-        EyerisText { text: root.text; }
+        EyerisText {
+            text: root.text;
+        }
 
         if root.count > 0: HorizontalLayout {
+            alignment: end;
             padding-left: Metrics.spacing-8;
             padding-right: Metrics.spacing-8;
 
-            EyerisText { text: root.count; }
+            EyerisText {
+                text: root.count;
+                style: Typography.small;
+                color: Colors.fg-faded;
+            }
+        }
+    }
+
+    area := FocusTouchArea { }
+}
+
+export component CollectionButton inherits Rectangle {
+    in property <string> text: "Collection";
+
+    min-height: 40px;
+    background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
+
+    HorizontalLayout {
+        cross-axis-alignment: center;
+
+        Icon {
+            icon: Icons.heart;
+        }
+
+        EyerisText {
+            text: root.text;
         }
     }
 
