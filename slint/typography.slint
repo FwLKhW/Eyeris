@@ -1,0 +1,25 @@
+struct TextStyle {
+    size: length,
+    weight: int
+}
+
+export global EyerisTypography {
+    out property <int> regular: 400;
+    out property <int> medium: 500;
+    out property <int> semibold: 700;
+
+    out property <TextStyle> label: {
+        size: 12px,
+        weight: root.medium
+    };
+
+    out property <TextStyle> body: {
+        size: 12px,
+        weight: root.regular
+    };
+
+    out property <TextStyle> small: {
+        size: 10px,
+        weight: root.medium
+    };
+}
