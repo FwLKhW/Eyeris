@@ -6,7 +6,7 @@ import {
     Colors,
     WindowControlButtons,
     IconButton,
-    Icons,
+    Icons, VerticalSeparator,
 } from "lib.slint";
 
 import {
@@ -40,7 +40,24 @@ export component App inherits Window {
     }
 
     WindowMoveArea {
-        
+        HorizontalLayout {
+            left := Rectangle {
+                background: Colors.bg-area;
+                width: 240px;
+            }
+            
+            VerticalSeparator {}
+            
+            center := Rectangle {
+            }
+            
+            VerticalSeparator {}
+            
+            right := Rectangle {
+                background: Colors.bg-area;
+                width: 360px;
+            }
+        }
     }
 
     Rectangle {
