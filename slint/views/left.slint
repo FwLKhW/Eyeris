@@ -3,15 +3,19 @@ import { Icons } from "../icons.slint";
 
 import { HorizontalSeparator } from "../components/separator.slint";
 import { SidebarButton } from "../components/button.slint";
+import { Tabs } from "../components/tab.slint";
 
 export component Left inherits VerticalLayout {
-    VerticalLayout {
+    Tabs {
+        icons: [Icons.home, Icons.chart, Icons.tag];
     }
     
     HorizontalSeparator { }
     
     VerticalLayout {
         vertical-stretch: 1;
+        spacing: Metrics.spacing-8;
+        padding: Metrics.spacing-8;
 
         SidebarButton {
             icon: Icons.home;

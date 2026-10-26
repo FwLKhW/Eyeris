@@ -1,0 +1,44 @@
+import { Colors } from "../colors.slint";
+
+import { IconButton, Icon } from "button.slint";
+import { FocusTouchArea } from "area.slint";
+import { Metrics } from "../metrics.slint";
+
+component Tab inherits Rectangle {
+    out property <bool> has-hover <=> area.has-hover;
+    out property <bool> has-focus <=> area.has-focus;
+    in property <image> icon <=> icon.icon;
+    in property <bool> activated: false;
+    in property <string> tooltip <=> area.tooltip;
+    in property <length> tooltip-offset <=> area.tooltip-offset;
+
+    min-height: 40px;
+    background: area.has-focus || area.has-hover || self.activated ? Colors.bg-hover : transparent;
+
+    callback clicked();
+
+    icon := Icon { }
+
+    area := FocusTouchArea {
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component Tabs inherits HorizontalLayout {
+    in property <[image]> icons;
+    in-out property <int> active-index: 0;
+
+    spacing: Metrics.spacing-8;
+    padding: Metrics.spacing-8;
+    
+    for icon[index] in self.icons: Tab {
+        icon: icon;
+        activated: index == root.active-index;
+
+        clicked => {
+            root.active-index = index;
+        }
+    }
+}

@@ -30,12 +30,13 @@ export component IconButton inherits Rectangle {
     in property <image> icon <=> icon.icon;
     in property <float> icon-scale <=> icon.scale;
     in property <color> bg-hover: Colors.bg-hover;
+    in property <bool> activated: false;
     in property <string> tooltip <=> area.tooltip;
     in property <length> tooltip-offset <=> area.tooltip-offset;
 
     height: self.size;
     width: self.height * self.ratio;
-    background: area.has-focus || area.has-hover ? root.bg-hover : transparent;
+    background: area.has-focus || area.has-hover || self.activated ? root.bg-hover : transparent;
 
     callback clicked();
 
