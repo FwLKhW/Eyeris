@@ -1,0 +1,48 @@
+import { Tooltip } from "tooltip.slint";
+
+export component FocusTouchArea inherits TouchArea {
+    out property <bool> has-focus <=> focus-scope.has-focus;
+    out property <bool> enter-pressed;
+    in property <string> tooltip;
+    in property <length> tooltip-offset;
+
+    callback key-pressed(KeyEvent) -> EventResult;
+
+    forward-focus: focus-scope;
+
+    focus-scope := FocusScope {
+        x: 0;
+        width: 0px;
+        enabled: root.enabled;
+
+        key-pressed(event) => {
+            if !root.enabled {
+                return reject;
+            }
+            if (event.text == " " || event.text == "\n") && !root.enter-pressed {
+                root.enter-pressed = true;
+                root.clicked();
+                return accept;
+            }
+            root.key-pressed(event)
+        }
+
+        key-released(event) => {
+            if !root.enabled {
+                return reject;
+            }
+            if (event.text == " " || event.text == "\n") && root.enter-pressed {
+                root.enter-pressed = false;
+                return accept;
+            }
+            reject
+        }
+    }
+
+    @children
+
+    if root.tooltip != "" && root.has-hover && !root.pressed: Tooltip {
+        y: root.tooltip-offset;
+        text: root.tooltip;
+    }
+}
