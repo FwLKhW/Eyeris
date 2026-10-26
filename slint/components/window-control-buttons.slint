@@ -1,5 +1,7 @@
-import { IconButton } from "button.slint";
+import { EyerisPalette } from "../palette.slint";
 import { Icons } from "../icons.slint";
+
+import { IconButton } from "button.slint";
 
 export component WindowControlButtons inherits HorizontalLayout {
     callback minimize();
@@ -15,7 +17,7 @@ export component WindowControlButtons inherits HorizontalLayout {
             minimize();
         }
     }
-    
+
     IconButton {
         icon: Icons.maximize;
         ratio: 1.5;
@@ -30,6 +32,7 @@ export component WindowControlButtons inherits HorizontalLayout {
         icon: Icons.close;
         ratio: 1.5;
         icon-scale: 0.75;
+        bg-hover: EyerisPalette.danger;
 
         clicked => {
             close();
