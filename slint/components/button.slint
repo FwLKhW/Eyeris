@@ -1,35 +1,32 @@
 import { EyerisPalette } from "../palette.slint";
 import { Icons } from "../icons.slint";
 
+import { FocusTouchArea } from "area.slint";
+
 export enum IconButtonSize { small, normal }
 
-export component IconButton inherits Rectangle {
+export component IconButton inherits FocusTouchArea {
     in property <IconButtonSize> size: normal;
     in property <float> ratio: 1;
     in property <image> icon: Icons.information;
     in property <float> icon-scale: 1;
     in property <color> bg-hover: EyerisPalette.fg.with-alpha(EyerisPalette.bg-hover-opacity);
 
-    callback clicked();
-
     height: self.size == normal ? 32px : 24px;
     width: self.height * self.ratio;
-    background: touch.has-hover ? self.bg-hover : transparent;
 
-    HorizontalLayout {
-        alignment: center;
-        cross-axis-alignment: center;
+    Rectangle {
+        background: root.has-focus || root.has-hover ? root.bg-hover : transparent;
 
-        Image {
-            width: (root.size == normal ? 24px : 18px) * root.icon-scale;
-            source: root.icon;
-            colorize: EyerisPalette.fg;
-        }
-    }
+        HorizontalLayout {
+            alignment: center;
+            cross-axis-alignment: center;
 
-    touch := TouchArea {
-        clicked => {
-            root.clicked();
+            Image {
+                width: (root.size == normal ? 24px : 18px) * root.icon-scale;
+                source: root.icon;
+                colorize: EyerisPalette.fg;
+            }
         }
     }
 }
