@@ -1,6 +1,6 @@
 import { Palette } from "std-widgets.slint";
 
-struct Scheme {
+struct EyerisScheme {
     success: color,
     danger: color,
     
@@ -22,12 +22,12 @@ struct Scheme {
     separator-opacity: float,
 }
 
-struct Schemes {
-    light: Scheme,
-    dark: Scheme
+struct EyerisSchemes {
+    light: EyerisScheme,
+    dark: EyerisScheme,
 }
 
-export global UIPalette {
+export global EyerisPalette {
     out property <color> success: root.scheme.success;
     out property <color> danger: root.scheme.danger;
     
@@ -48,7 +48,7 @@ export global UIPalette {
     out property <float> bg-hover-opacity: root.scheme.bg-hover-opacity;
     out property <float> separator-opacity: root.scheme.separator-opacity;
 
-    in property <Schemes> schemes: {
+    in property <EyerisSchemes> schemes: {
         // TODO: light mode
         light: {
             success: #65fd36,
@@ -88,5 +88,5 @@ export global UIPalette {
         },
     };
 
-    property <Scheme> scheme: Palette.color-scheme == ColorScheme.dark ? root.schemes.dark : root.schemes.light;
+    property <EyerisScheme> scheme: Palette.color-scheme == ColorScheme.dark ? root.schemes.dark : root.schemes.light;
 }
