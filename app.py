@@ -3,7 +3,7 @@ from pathlib import Path
 
 import slint
 
-ui_path = Path(__file__).parent / "slint"
+ui_path = Path(__file__).parent / "ui"
 sys.path.append(str(ui_path))
 
 

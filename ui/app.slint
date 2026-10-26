@@ -5,8 +5,10 @@ import {
     Metrics,
     Colors,
     WindowControlButtons,
+    VerticalSeparator,
     IconButton,
-    Icons, VerticalSeparator,
+    Icons,
+    Left, Center, Right,
 } from "lib.slint";
 
 import {
@@ -44,18 +46,21 @@ export component App inherits Window {
             left := Rectangle {
                 background: Colors.bg-area;
                 width: 240px;
+
+                Left { }
             }
-            
-            VerticalSeparator {}
-            
-            center := Rectangle {
-            }
-            
-            VerticalSeparator {}
-            
+
+            VerticalSeparator { }
+
+            center := Center { }
+
+            VerticalSeparator { }
+
             right := Rectangle {
                 background: Colors.bg-area;
                 width: 360px;
+
+                Right { }
             }
         }
     }
