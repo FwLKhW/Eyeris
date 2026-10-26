@@ -1,0 +1,92 @@
+import { Palette } from "std-widgets.slint";
+
+struct Scheme {
+    success: color,
+    danger: color,
+    
+    pink: color,
+    orange: color,
+    blue: color,
+    mauve: color,
+    yellow: color,
+    green: color,
+    red: color,
+
+    fg: color,
+    bg: color,
+    bg-area: color,
+    bg-surface: color,
+
+    fg-ghost-opacity: float,
+    bg-hover-opacity: float,
+    separator-opacity: float,
+}
+
+struct Schemes {
+    light: Scheme,
+    dark: Scheme
+}
+
+export global UIPalette {
+    out property <color> success: root.scheme.success;
+    out property <color> danger: root.scheme.danger;
+    
+    out property <color> pink: root.scheme.pink;
+    out property <color> orange: root.scheme.orange;
+    out property <color> blue: root.scheme.blue;
+    out property <color> mauve: root.scheme.mauve;
+    out property <color> yellow: root.scheme.yellow;
+    out property <color> green: root.scheme.green;
+    out property <color> red: root.scheme.red;
+
+    out property <color> fg: root.scheme.fg;
+    out property <color> bg: root.scheme.bg;
+    out property <color> bg-area: root.scheme.bg-area;
+    out property <color> bg-surface: root.scheme.bg-surface;
+
+    out property <float> fg-ghost-opacity: root.scheme.fg-ghost-opacity;
+    out property <float> bg-hover-opacity: root.scheme.bg-hover-opacity;
+    out property <float> separator-opacity: root.scheme.separator-opacity;
+
+    in property <Schemes> schemes: {
+        // TODO: light mode
+        light: {
+            success: #65fd36,
+            danger: #D92E41,
+            pink: #FA8EAB,
+            orange: #FFAF87,
+            blue: #82B0FF,
+            mauve: #CB88F7,
+            yellow: #F5C582,
+            green: #A9F073,
+            red: #FA8E8E,
+            fg: #E3E3E3,
+            bg: #151515,
+            bg-area: #111111,
+            bg-surface: #242424,
+            fg-ghost-opacity: 65%,
+            bg-hover-opacity: 10%,
+            separator-opacity: 10%,
+        },
+        dark: {
+            success: #65fd36,
+            danger: #D92E41,
+            pink: #FA8EAB,
+            orange: #FFAF87,
+            blue: #82B0FF,
+            mauve: #CB88F7,
+            yellow: #F5C582,
+            green: #A9F073,
+            red: #FA8E8E,
+            fg: #E3E3E3,
+            bg: #151515,
+            bg-area: #111111,
+            bg-surface: #242424,
+            fg-ghost-opacity: 65%,
+            bg-hover-opacity: 10%,
+            separator-opacity: 10%,
+        },
+    };
+
+    property <Scheme> scheme: Palette.color-scheme == ColorScheme.dark ? root.schemes.dark : root.schemes.light;
+}
