@@ -1,9 +1,6 @@
-import { Palette } from "std-widgets.slint";
-
-struct EyerisScheme {
+struct ColorScheme {
     success: color,
     danger: color,
-    
     pink: color,
     orange: color,
     blue: color,
@@ -11,45 +8,43 @@ struct EyerisScheme {
     yellow: color,
     green: color,
     red: color,
-
     fg: color,
     bg: color,
     bg-area: color,
     bg-surface: color,
-
     fg-ghost-opacity: float,
     bg-hover-opacity: float,
     separator-opacity: float,
 }
 
-struct EyerisSchemes {
-    light: EyerisScheme,
-    dark: EyerisScheme,
+struct ColorSchemes {
+    light: ColorScheme,
+    dark: ColorScheme,
 }
 
-export global EyerisPalette {
-    out property <color> success: root.scheme.success;
-    out property <color> danger: root.scheme.danger;
-    
-    out property <color> pink: root.scheme.pink;
-    out property <color> orange: root.scheme.orange;
-    out property <color> blue: root.scheme.blue;
-    out property <color> mauve: root.scheme.mauve;
-    out property <color> yellow: root.scheme.yellow;
-    out property <color> green: root.scheme.green;
-    out property <color> red: root.scheme.red;
+export global Colors {
+    out property <color> success: root.theme.success;
+    out property <color> danger: root.theme.danger;
 
-    out property <color> fg: root.scheme.fg;
-    out property <color> bg: root.scheme.bg;
-    out property <color> bg-area: root.scheme.bg-area;
-    out property <color> bg-surface: root.scheme.bg-surface;
+    out property <color> pink: root.theme.pink;
+    out property <color> orange: root.theme.orange;
+    out property <color> blue: root.theme.blue;
+    out property <color> mauve: root.theme.mauve;
+    out property <color> yellow: root.theme.yellow;
+    out property <color> green: root.theme.green;
+    out property <color> red: root.theme.red;
 
-    out property <float> fg-ghost-opacity: root.scheme.fg-ghost-opacity;
-    out property <float> bg-hover-opacity: root.scheme.bg-hover-opacity;
-    out property <float> separator-opacity: root.scheme.separator-opacity;
+    out property <color> fg: root.theme.fg;
+    out property <color> bg: root.theme.bg;
+    out property <color> bg-area: root.theme.bg-area;
+    out property <color> bg-surface: root.theme.bg-surface;
 
-    in property <EyerisSchemes> schemes: {
-        // TODO: light mode
+    out property <float> fg-ghost-opacity: root.theme.fg-ghost-opacity;
+    out property <float> bg-hover-opacity: root.theme.bg-hover-opacity;
+    out property <float> separator-opacity: root.theme.separator-opacity;
+
+    in property <ColorSchemes> themes: {
+        // TODO: light theme
         light: {
             success: #65fd36,
             danger: #D92E41,
@@ -88,5 +83,5 @@ export global EyerisPalette {
         },
     };
 
-    property <EyerisScheme> scheme: Palette.color-scheme == ColorScheme.dark ? root.schemes.dark : root.schemes.light;
+    property <ColorScheme> theme: root.themes.dark;
 }
