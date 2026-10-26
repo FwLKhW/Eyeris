@@ -1,3 +1,4 @@
+import { Animations } from "../animations.slint";
 import { Colors } from "../colors.slint";
 import { Icons } from "../icons.slint";
 
@@ -7,11 +8,17 @@ export component WindowControlButtons inherits HorizontalLayout {
     callback minimize();
     callback maximize();
     callback close();
+    
+    animate opacity {
+        duration: Animations.opacity-duration;
+    }
 
-    IconButton {
+    opacity: mini.has-hover || maxi.has-hover || cls.has-hover ? 1 : 0;
+    
+    mini := IconButton {
         icon: Icons.minimize;
         ratio: 1.5;
-        icon-scale: 0.75;
+        icon-scale: 0.8;
         tooltip: "Minimize";
         tooltip-offset: self.height + 8px;
 
@@ -20,10 +27,10 @@ export component WindowControlButtons inherits HorizontalLayout {
         }
     }
 
-    IconButton {
+    maxi := IconButton {
         icon: Icons.maximize;
         ratio: 1.5;
-        icon-scale: 0.7;
+        icon-scale: 0.8;
         tooltip: "Maximize";
         tooltip-offset: self.height + 8px;
 
@@ -32,10 +39,10 @@ export component WindowControlButtons inherits HorizontalLayout {
         }
     }
 
-    IconButton {
+    cls := IconButton {
         icon: Icons.close;
         ratio: 1.5;
-        icon-scale: 0.75;
+        icon-scale: 0.9;
         bg-hover: Colors.danger;
         tooltip: "Close";
         tooltip-offset: self.height + 8px;
