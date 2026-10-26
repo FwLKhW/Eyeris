@@ -1,4 +1,5 @@
 import { Tooltip } from "tooltip.slint";
+import { Colors } from "../colors.slint";
 
 export component FocusTouchArea inherits TouchArea {
     out property <bool> has-focus <=> focus-scope.has-focus;
@@ -45,5 +46,180 @@ export component FocusTouchArea inherits TouchArea {
     if root.tooltip != "" && root.has-hover && !root.pressed: Tooltip {
         y: root.tooltip-offset;
         text: root.tooltip;
+    }
+}
+
+component ScrollBar {
+    in property <bool> enabled;
+    out property <bool> has-hover: touch-area.has-hover;
+    in-out property <bool> horizontal;
+    in-out property <length> maximum;
+    in-out property <length> page-size;
+    in-out property <length> value;
+    in property <ScrollBarPolicy> policy: ScrollBarPolicy.as-needed;
+
+    property <length> track-size: root.horizontal ? root.width - 2 * root.offset : root.height - 2 * offset;
+    property <length> step-size: 10px;
+    property <length> offset: 4px;
+    property <float> state-opacity: 0%;
+
+    property <length> normal-thickness: 4px;
+    property <length> active-thickness: 8px;
+    property <bool> is-active: hide-timer.running || touch-area.has-hover || touch-area.pressed;
+
+    visible: (self.policy == ScrollBarPolicy.always-on) || (self.policy == ScrollBarPolicy.as-needed && self.maximum > 0);
+
+    thumb := Rectangle {
+        width: !root.horizontal ? (touch-area.has-hover ? root.active-thickness : root.normal-thickness) : root.maximum <= 0phx ? 0phx : max(min(32px, root.width), root.track-size * root.page-size / (root.maximum + root.page-size));
+        height: root.horizontal ? (touch-area.has-hover ? root.active-thickness : root.normal-thickness) : root.maximum <= 0phx ? 0phx : max(min(32px, root.height), root.track-size * (root.page-size / (root.maximum + root.page-size)));
+
+        x: !root.horizontal ? parent.width - self.width - root.offset : root.offset + (root.track-size - thumb.width) * (-root.value / root.maximum);
+        y: root.horizontal ? parent.height - self.height - root.offset : root.offset + (root.track-size - thumb.height) * (-root.value / root.maximum);
+
+        border-radius: self.width / 2;
+        background: Colors.fg;
+        opacity: root.is-active ? root.state-opacity : 0;
+
+        animate opacity {
+            duration: 200ms;
+            easing: ease-out;
+        }
+        animate width {
+            duration: 150ms;
+            easing: ease-out;
+        }
+        animate height {
+            duration: 150ms;
+            easing: ease-out;
+        }
+    }
+
+    touch-area := TouchArea {
+        property <length> pressed-value;
+
+        pointer-event(event) => {
+            if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
+                self.pressed-value = -root.value;
+            }
+        }
+
+        moved => {
+            if (self.enabled && self.pressed) {
+                root.value = -max(0px, min(root.maximum, self.pressed-value + (
+                    root.horizontal ? (touch-area.mouse-x - touch-area.pressed-x) * (root.maximum / (root.track-size - thumb.width))
+                    : (touch-area.mouse-y - touch-area.pressed-y) * (root.maximum / (root.track-size - thumb.height)))));
+            }
+        }
+
+        scroll-event(event) => {
+            if (root.horizontal && event.delta-x != 0) {
+                root.value = max(-root.maximum, min(0px, root.value + event.delta-x));
+                return accept;
+            } else if (!root.horizontal && event.delta-y != 0) {
+                root.value = max(-root.maximum, min(0px, root.value + event.delta-y));
+                return accept;
+            }
+            reject
+        }
+
+        changed has-hover => {
+            if !self.has-hover && !hide-timer.running {
+                hide-timer.running = true;
+            }
+        }
+
+        changed pressed => {
+            if self.pressed && hide-timer.running {
+                hide-timer.running = false;
+            }
+        }
+    }
+
+    changed value => {
+        if !self.has-hover && !hide-timer.running {
+            hide-timer.running = true;
+        }
+    }
+
+    hide-timer := Timer {
+        interval: 1.2s;
+        running: false;
+        triggered => {
+            self.running = false;
+        }
+    }
+
+    states [
+        pressed when touch-area.pressed: {
+            root.state-opacity: 90%;
+        }
+        hover when root.has-hover: {
+            root.state-opacity: 75%;
+        }
+        normal when !touch-area.pressed && !root.has-hover: {
+            root.state-opacity: 40%;
+        }
+    ]
+}
+
+export component ScrollArea {
+    in property <bool> enabled: true;
+    out property <length> visible-width <=> flickable.width;
+    out property <length> visible-height <=> flickable.height;
+    in-out property <length> content-width <=> flickable.content-width;
+    in-out property <length> content-height <=> flickable.content-height;
+    in-out property <length> content-x <=> flickable.content-x;
+    in-out property <length> content-y <=> flickable.content-y;
+
+    in-out property <length> viewport-width <=> content-width;
+    in-out property <length> viewport-height <=> content-height;
+    in-out property <length> viewport-x <=> content-x;
+    in-out property <length> viewport-y <=> content-y;
+
+    in property <ScrollBarPolicy> vertical-scrollbar-policy <=> vertical-bar.policy;
+    in property <ScrollBarPolicy> horizontal-scrollbar-policy <=> horizontal-bar.policy;
+    in-out property <bool> has-focus;
+
+    callback scrolled <=> flickable.flicked;
+
+    property <length> scroll-bar-size: 8px;
+
+    min-height: 50px;
+    min-width: 50px;
+    horizontal-stretch: 1;
+    vertical-stretch: 1;
+    preferred-height: 100%;
+    preferred-width: 100%;
+
+    flickable := Flickable {
+        x: 0;
+        y: 0;
+        width: root.width;
+        height: root.height;
+        content-y <=> vertical-bar.value;
+        content-x <=> horizontal-bar.value;
+
+        @children
+    }
+
+    vertical-bar := ScrollBar {
+        enabled: root.enabled;
+        x: root.width - root.scroll-bar-size;
+        y: 0;
+        width: root.scroll-bar-size;
+        height: parent.height;
+        maximum: flickable.content-height - flickable.height;
+        page-size: flickable.height;
+    }
+
+    horizontal-bar := ScrollBar {
+        enabled: root.enabled;
+        width: parent.width;
+        height: root.scroll-bar-size;
+        x: 0;
+        y: root.height - root.scroll-bar-size;
+        horizontal: true;
+        maximum: flickable.content-width - flickable.width;
+        page-size: flickable.width;
     }
 }
