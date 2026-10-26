@@ -1,0 +1,20 @@
+import { IconButton } from "button.slint";
+import { Icons } from "../icons.slint";
+
+export component WindowControlButtons inherits HorizontalLayout {
+    IconButton {
+        icon: Icons.minimize;
+        ratio: 1.5;
+        icon-scale: 0.75;
+    }
+    IconButton {
+        icon: Icons.maximize;
+        ratio: 1.5;
+        icon-scale: 0.7;
+    }
+    IconButton {
+        icon: Icons.close;
+        ratio: 1.5;
+        icon-scale: 0.75;
+    }
+}

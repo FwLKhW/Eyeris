@@ -3,7 +3,14 @@ import "../assets/fonts/Monda.ttf";
 import {
     EyerisTypography,
     EyerisPalette,
+    WindowControlButtons,
+    IconButton,
+    Icons,
 } from "lib.slint";
+
+import {
+    WindowState,
+} from "globals.slint";
 
 export component App inherits Window {
     title: "Eyeris";
@@ -23,7 +30,24 @@ export component App inherits Window {
     no-frame: true;
     resize-border-width: 6px;
 
+    changed width => {
+        WindowState.width = root.width;
+    }
+
+    changed height => {
+        WindowState.height = root.height;
+    }
+
     WindowMoveArea {
         
+    }
+
+    Rectangle {
+        x: WindowState.width - window-control-buttons.preferred-width;
+        y: 0;
+        width: window-control-buttons.preferred-width;
+        height: window-control-buttons.preferred-height;
+
+        window-control-buttons := WindowControlButtons { }
     }
 }
