@@ -1,34 +1,103 @@
+import { Metrics } from "../metrics.slint";
 import { Colors } from "../colors.slint";
 import { Icons } from "../icons.slint";
 
 import { FocusTouchArea } from "area.slint";
+import { EyerisText } from "text.slint";
 
-export enum IconButtonSize { small, normal }
+export enum ButtonSize { small, normal }
 
-export component IconButton inherits FocusTouchArea {
-    in property <IconButtonSize> size: normal;
+export component IconButton inherits Rectangle {
+    in property <ButtonSize> size: normal;
     in property <float> ratio: 1;
     in property <image> icon: Icons.information;
     in property <float> icon-scale: 1;
-    in property <color> bg-hover: Colors.fg.with-alpha(Colors.bg-hover-opacity);
+    in property <color> bg-hover: Colors.bg-hover;
+    in property <string> tooltip <=> area.tooltip;
+    in property <length> tooltip-offset <=> area.tooltip-offset;
 
     height: self.size == normal ? 32px : 24px;
     width: self.height * self.ratio;
+    background: area.has-focus || area.has-hover ? root.bg-hover : transparent;
 
-    Rectangle {
-        background: root.has-focus || root.has-hover ? root.bg-hover : transparent;
+    callback clicked();
 
-        HorizontalLayout {
-            alignment: center;
-            cross-axis-alignment: center;
+    HorizontalLayout {
+        alignment: center;
+        cross-axis-alignment: center;
 
-            Image {
-                width: (root.size == normal ? 24px : 18px) * root.icon-scale;
-                source: root.icon;
-                colorize: Colors.fg;
-            }
+        Image {
+            width: (root.size == normal ? 24px : 18px) * root.icon-scale;
+            source: root.icon;
+            colorize: Colors.fg;
+        }
+    }
+
+    area := FocusTouchArea {
+        clicked => {
+            root.clicked();
         }
     }
 }
 
-export component ComplexButton inherits Rectangle { }
+export component ComplexButton inherits Rectangle {
+    in property <ButtonSize> size: normal;
+    in property <LayoutAlignment> alignment: space-between;
+    in property <image> left-icon: Icons.box;
+    in property <string> left-text: "Left";
+    in property <string> right-text: "Right";
+    in property <image> right-icon: Icons.chevron-down;
+    in property <bool> show-left-icon: true;
+    in property <bool> show-left-text: true;
+    in property <bool> show-right-text: true;
+    in property <bool> show-right-icon: true;
+
+    height: self.size == normal ? 32px : 24px;
+    background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
+
+    callback clicked();
+
+    area := FocusTouchArea {
+        clicked => {
+            root.clicked();
+        }
+    }
+
+    HorizontalLayout {
+        alignment: root.alignment;
+
+        left := HorizontalLayout {
+            cross-axis-alignment: center;
+
+            if root.show-left-icon: IconButton {
+                icon: root.left-icon;
+            }
+
+            if root.show-left-text: HorizontalLayout {
+                padding-left: Metrics.spacing-6;
+                padding-right: Metrics.spacing-6;
+
+                EyerisText {
+                    text: root.left-text;
+                }
+            }
+        }
+
+        right := HorizontalLayout {
+            cross-axis-alignment: center;
+
+            if root.show-right-text: HorizontalLayout {
+                padding-left: Metrics.spacing-6;
+                padding-right: Metrics.spacing-6;
+
+                EyerisText {
+                    text: root.right-text;
+                }
+            }
+
+            if root.show-right-icon: IconButton {
+                icon: root.right-icon;
+            }
+        }
+    }
+}
