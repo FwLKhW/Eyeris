@@ -5,10 +5,12 @@ import { SidebarButton, CollectionButton } from "../components/button.slint";
 import { HorizontalSeparator } from "../components/separator.slint";
 import { ScrollArea } from "../components/area.slint";
 import { Tabs } from "../components/tab.slint";
+import { TabState } from "../globals.slint";
 
 export component Left inherits VerticalLayout {
     Tabs {
         icons: [Icons.home, Icons.chart, Icons.tag];
+        active-index <=> TabState.index;
     }
 
     HorizontalSeparator { }

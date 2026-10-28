@@ -1,4 +1,44 @@
+import { IndexedImage } from "types.slint";
+export global Actions {
+    // load image by path
+    callback load-image(string) -> image;
+
+    // collection
+    callback load-collection-list();
+    callback add-collection();
+    callback open-collection(string);
+
+    // load thumbnail by path
+    callback load-thumbnail(string) -> image;
+
+    // filter
+    callback apply-filters();
+
+    // indexing
+    callback indexing();
+    callback thumbnailing();
+}
+
 export global WindowState {
     in property <length> width;
     in property <length> height;
+}
+
+export global TabState {
+    in-out property <int> index;
+}
+
+export global GalleryState {
+    in property <IndexedImage> selected-image;
+    in property <[[IndexedImage]]> images;
+}
+
+export global ImageOverlayState {
+    in-out property <bool> show: false;
+    in-out property <image> preview;
+    in-out property <image> source;
+    in property <length> initial-mouse-x;
+    in property <length> initial-mouse-y;
+    in property <length> delta-x;
+    in property <length> delta-y;
 }

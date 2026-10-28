@@ -1,0 +1,97 @@
+import {
+    ImageOverlayState,
+    GalleryState,
+    Actions,
+} from "../globals.slint";
+import { IndexedImage } from "../types.slint";
+import { Animations } from "../animations.slint";
+import { Typography } from "../typography.slint";
+import { Metrics } from "../metrics.slint";
+import { Colors } from "../colors.slint";
+import { Icons } from "../icons.slint";
+
+import { HorizontalSeparator } from "../components/separator.slint";
+import { ScrollArea } from "../components/area.slint";
+import { EyerisText } from "../components/text.slint";
+
+component ImageItem inherits Rectangle {
+    in property <IndexedImage> img;
+
+    background: touch.pressed || touch.has-hover ? Colors.bg-hover : transparent;
+    horizontal-stretch: pow(img.height / img.width, 2);
+
+    init => {
+        thumbnail.source = Actions.load-thumbnail(img.path);
+        thumbnail.opacity = 1;
+    }
+
+    VerticalLayout {
+        cross-axis-alignment: center;
+        spacing: Metrics.spacing-8;
+        padding: Metrics.spacing-8;
+
+        thumbnail := Image {
+            opacity: 0;
+            height: 256px;
+            min-width: 128px;
+            image-fit: cover;
+
+            animate opacity {
+                duration: Animations.opacity-duration;
+                easing: ease-out;
+            }
+        }
+
+        VerticalLayout {
+            alignment: start;
+            cross-axis-alignment: center;
+            spacing: Metrics.spacing-8;
+
+            EyerisText {
+                text: img.name;
+                font-weight: Typography.medium;
+            }
+
+            EyerisText {
+                text: img.width + " x " + img.height;
+                style: Typography.small;
+                color: Colors.fg-faded;
+            }
+        }
+    }
+
+    touch := TouchArea {
+        mouse-cursor: MouseCursor.pointer;
+
+        clicked => {
+            ImageOverlayState.preview = thumbnail.source;
+            GalleryState.selected-image = img;
+        }
+    }
+}
+
+component ImageRow inherits HorizontalLayout {
+    height: 360px;
+    alignment: space-around;
+    cross-axis-alignment: center;
+    spacing: Metrics.spacing-8;
+
+    @children
+}
+
+export component Gallery inherits Rectangle {
+    VerticalLayout {
+        ScrollArea {
+            VerticalLayout {
+                spacing: Metrics.spacing-8;
+                padding: Metrics.spacing-8;
+
+                for row in GalleryState.images: ImageRow {
+                    for img in row: ImageItem {
+                        img: img;
+                    }
+                }
+            }
+        }
+    }
+}
