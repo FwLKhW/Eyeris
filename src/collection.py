@@ -19,7 +19,13 @@ class Collection:
 
     def indexing(self) -> bool:
         result = subprocess.run(
-            ["bin/image-indexing-engine", str(self.path)], check=False
+            ["bin/image-indexing-engine", str(self.path), "-ip"], check=False
+        )
+        return result.returncode == 0
+
+    def thumbnailing(self) -> bool:
+        result = subprocess.run(
+            ["bin/image-indexing-engine", str(self.path), "-t"], check=False
         )
         return result.returncode == 0
 

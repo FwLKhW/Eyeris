@@ -24,7 +24,7 @@ class App(slint.loader.app.App):
         col = self.collection_manager.add()
         if col is None:
             return
-        self.open_collection(col["path"])
+        self.active_collection(col["path"])
 
     @slint.callback(global_name="Actions")
     async def active_collection(self, path: str):
@@ -39,6 +39,7 @@ class App(slint.loader.app.App):
         await asyncio.to_thread(col.indexing)
         self.CollectionState.indexing = False
 
+        await asyncio.to_thread(col.thumbnailing)
         self.GalleryState.images = slint.ListModel(col.get_images(self.get_filters()))
 
 
