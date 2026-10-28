@@ -1,0 +1,20 @@
+import { WindowState } from "../globals.slint";
+
+import { WindowControlButtons } from "window-control-buttons.slint";
+
+export component Titlebar inherits Rectangle {
+    x: WindowState.width - window-control-buttons.preferred-width;
+    y: 0;
+    width: window-control-buttons.preferred-width;
+    height: window-control-buttons.preferred-height;
+
+    callback minimize();
+    callback maximize();
+    callback close();
+
+    window-control-buttons := WindowControlButtons {
+        minimize => { root.minimize(); }
+        maximize => { root.maximize(); }
+        close => { root.close(); }
+    }
+}

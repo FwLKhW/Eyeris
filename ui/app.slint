@@ -6,6 +6,7 @@ import {
     LoadingOverlay,
     IconButton,
     Typography,
+    Titlebar,
     Metrics,
     Colors,
     Center,
@@ -76,28 +77,15 @@ export component App inherits Window {
         }
     }
 
-    Rectangle {
-        x: WindowState.width - window-control-buttons.preferred-width;
-        y: 0;
-        width: window-control-buttons.preferred-width;
-        height: window-control-buttons.preferred-height;
-
-        window-control-buttons := WindowControlButtons {
-            minimize => {
-                root.minimized = true;
-            }
-
-            maximize => {
-                root.maximized = !root.maximized;
-            }
-
-            close => {
-                root.hide();
-            }
-        }
+    LoadingOverlay {
+        z: 998;
     }
 
-    LoadingOverlay {
+    Titlebar {
         z: 999;
+
+        minimize => { root.minimized = true; }
+        maximize => { root.maximized = !root.maximized; }
+        close => { root.hide(); }
     }
 }
