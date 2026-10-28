@@ -38,6 +38,7 @@ export component IconButton inherits Rectangle {
     height: self.size;
     width: self.height * self.ratio;
     background: area.has-focus || area.has-hover || self.activated ? root.bg-hover : transparent;
+    border-radius: Metrics.radius-md;
 
     callback clicked();
 
@@ -57,6 +58,7 @@ export component SidebarButton inherits Rectangle {
 
     min-height: 40px;
     background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
+    border-radius: Metrics.radius-md;
 
     HorizontalLayout {
         cross-axis-alignment: center;
@@ -90,6 +92,7 @@ export component CollectionButton inherits Rectangle {
 
     min-height: 40px;
     background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
+    border-radius: Metrics.radius-md;
 
     HorizontalLayout {
         cross-axis-alignment: center;

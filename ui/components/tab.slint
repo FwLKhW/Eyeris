@@ -14,6 +14,7 @@ component Tab inherits Rectangle {
 
     min-height: 40px;
     background: area.has-focus || area.has-hover || self.activated ? Colors.bg-hover : transparent;
+    border-radius: Metrics.radius-md;
 
     callback clicked();
 
