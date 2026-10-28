@@ -5,9 +5,9 @@ export global Actions {
     callback load-image(string) -> image;
 
     // collection
-    callback load-collection-list();
-    callback add-collection();
-    callback open-collection(string);
+    callback get-collection-list() -> [Collection];
+    callback open-collection();
+    callback active-collection(string);
 
     // load thumbnail by hash
     callback load-thumbnail(string) -> image;

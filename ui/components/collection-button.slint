@@ -45,7 +45,7 @@ export component CollectionButton inherits Rectangle {
                     text: collection.name;
 
                     clicked => {
-                        Actions.open-collection(collection.path);
+                        Actions.active-collection(collection.path);
                     }
                 }
 
@@ -55,12 +55,17 @@ export component CollectionButton inherits Rectangle {
             StandardButton {
                 icon: Icons.folder;
                 text: "Open";
+
+                clicked => {
+                    Actions.open-collection();
+                }
             }
         }
     }
 
     area := FocusTouchArea {
         clicked => {
+            CollectionState.collections = Actions.get-collection-list();
             popover.show();
         }
     }

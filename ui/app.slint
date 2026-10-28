@@ -1,18 +1,28 @@
 import "../assets/fonts/Monda.ttf";
 
 import {
-    Typography,
-    Metrics,
-    Colors,
     WindowControlButtons,
     VerticalSeparator,
     IconButton,
+    Typography,
+    Metrics,
+    Colors,
+    Center,
     Icons,
-    Left, Center, Right,
+    Right,
+    Left,
 } from "lib.slint";
 
 import {
     WindowState,
+} from "globals.slint";
+
+export {
+    CollectionState,
+    GalleryState,
+    WindowState,
+    TabState,
+    Actions,
 } from "globals.slint";
 
 export component App inherits Window {
