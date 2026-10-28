@@ -71,13 +71,18 @@ export component App inherits Window {
 
         Center { }
 
-        VerticalSeparator { }
+        HorizontalLayout {
+            VerticalSeparator { }
 
-        Rectangle {
-            background: Colors.bg-area;
-            width: 360px;
+            WindowMoveArea {
+                width: 360px;
 
-            Right { }
+                Rectangle {
+                    background: Colors.bg-area;
+
+                    Right { }
+                }
+            }
         }
     }
 
