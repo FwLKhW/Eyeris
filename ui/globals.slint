@@ -1,6 +1,6 @@
 import { IndexedImage } from "types.slint";
 export global Actions {
-    // load image by path
+    // load image by hash
     callback load-image(string) -> image;
 
     // collection
@@ -8,7 +8,7 @@ export global Actions {
     callback add-collection();
     callback open-collection(string);
 
-    // load thumbnail by path
+    // load thumbnail by hash
     callback load-thumbnail(string) -> image;
 
     // filter
