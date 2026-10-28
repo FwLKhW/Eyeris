@@ -3,6 +3,7 @@ import "../assets/fonts/Monda.ttf";
 import {
     WindowControlButtons,
     VerticalSeparator,
+    LoadingOverlay,
     IconButton,
     Typography,
     Metrics,
@@ -94,5 +95,9 @@ export component App inherits Window {
                 root.hide();
             }
         }
+    }
+
+    LoadingOverlay {
+        z: 999;
     }
 }

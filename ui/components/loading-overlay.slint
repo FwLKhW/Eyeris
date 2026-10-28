@@ -1,0 +1,27 @@
+import { CollectionState } from "../globals.slint";
+import { Typography } from "../typography.slint";
+
+import { EyerisText } from "text.slint";
+
+export component LoadingOverlay inherits Rectangle {
+    visible: CollectionState.indexing;
+    background: rgba(0, 0, 0, 0.8);
+
+    WindowMoveArea {
+        VerticalLayout {
+            alignment: center;
+            cross-axis-alignment: center;
+
+            EyerisText {
+                style: Typography.label;
+                font-size: 24px;
+                text: "Indexing " + CollectionState.current-collection.name;
+            }
+
+            EyerisText {
+                style: Typography.body;
+                text: CollectionState.current-collection.path;
+            }
+        }
+    }
+}
