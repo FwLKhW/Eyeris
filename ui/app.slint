@@ -38,9 +38,10 @@ export component App inherits Window {
 
     min-width: 960px;
     min-height: 640px;
-    preferred-width: 1560px;
-    preferred-height: 840px;
-    maximized: true;
+    preferred-width: 1800px;
+    preferred-height: 1000px;
+    max-width: 8192px;
+    max-height: 5120px;
 
     no-frame: true;
     resize-border-width: 6px;
@@ -53,27 +54,30 @@ export component App inherits Window {
         WindowState.height = root.height;
     }
 
-    WindowMoveArea {
+    HorizontalLayout {
         HorizontalLayout {
-            left := Rectangle {
-                background: Colors.bg-area;
+            WindowMoveArea {
                 width: 240px;
 
-                Left { }
+                Rectangle {
+                    background: Colors.bg-area;
+
+                    Left { }
+                }
             }
 
             VerticalSeparator { }
+        }
 
-            center := Center { }
+        Center { }
 
-            VerticalSeparator { }
+        VerticalSeparator { }
 
-            right := Rectangle {
-                background: Colors.bg-area;
-                width: 360px;
+        Rectangle {
+            background: Colors.bg-area;
+            width: 360px;
 
-                Right { }
-            }
+            Right { }
         }
     }
 
