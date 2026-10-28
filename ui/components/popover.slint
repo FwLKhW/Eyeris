@@ -1,0 +1,19 @@
+import { Metrics } from "../metrics.slint";
+import { Colors } from "../colors.slint";
+
+export component Popover inherits PopupWindow {
+    in property <LayoutAlignment> v-align: start;
+
+    close-policy: close-on-click;
+
+    y: root.v-align == start ? -self.height - Metrics.spacing-8 : root.height + Metrics.spacing-8;
+
+    Rectangle {
+        background: Colors.bg-surface;
+        border-radius: Metrics.radius-lg;
+        border-color: Colors.separator;
+        border-width: 1px;
+
+        @children
+    }
+}

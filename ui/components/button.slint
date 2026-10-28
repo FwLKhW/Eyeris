@@ -1,27 +1,14 @@
 import { Typography } from "../typography.slint";
+import { Actions } from "../globals.slint";
 import { Metrics } from "../metrics.slint";
 import { Colors } from "../colors.slint";
 import { Icons } from "../icons.slint";
 
+import { HorizontalSeparator } from "separator.slint";
 import { FocusTouchArea } from "area.slint";
 import { EyerisText } from "text.slint";
-
-export component Icon inherits HorizontalLayout {
-    in property <image> icon: Icons.information;
-    in property <length> size: 32px;
-    in property <float> scale: 1;
-
-    alignment: center;
-    cross-axis-alignment: center;
-    width: self.size;
-    height: self.size;
-
-    Image {
-        width: root.size * 0.6 * root.scale;
-        source: root.icon;
-        colorize: Colors.fg;
-    }
-}
+import { Popover } from "popover.slint";
+import { Icon } from "icon.slint";
 
 export component IconButton inherits Rectangle {
     out property <bool> has-hover <=> area.has-hover;
@@ -43,6 +30,35 @@ export component IconButton inherits Rectangle {
     callback clicked();
 
     icon := Icon { }
+
+    area := FocusTouchArea {
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component StandardButton inherits Rectangle {
+    in property <image> icon: Icons.box;
+    in property <string> text: "Button";
+
+    callback clicked();
+
+    min-height: 24px;
+    background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
+    border-radius: Metrics.radius-md;
+
+    HorizontalLayout {
+        cross-axis-alignment: center;
+
+        Icon {
+            icon: root.icon;
+        }
+
+        EyerisText {
+            text: root.text;
+        }
+    }
 
     area := FocusTouchArea {
         clicked => {
@@ -81,28 +97,6 @@ export component SidebarButton inherits Rectangle {
                 style: Typography.small;
                 color: Colors.fg-faded;
             }
-        }
-    }
-
-    area := FocusTouchArea { }
-}
-
-export component CollectionButton inherits Rectangle {
-    in property <string> text: "Collection";
-
-    min-height: 40px;
-    background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
-    border-radius: Metrics.radius-md;
-
-    HorizontalLayout {
-        cross-axis-alignment: center;
-
-        Icon {
-            icon: Icons.heart;
-        }
-
-        EyerisText {
-            text: root.text;
         }
     }
 

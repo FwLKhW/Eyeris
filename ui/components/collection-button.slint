@@ -1,0 +1,67 @@
+import { CollectionState } from "../globals.slint";
+import { Actions } from "../globals.slint";
+import { Metrics } from "../metrics.slint";
+import { Colors } from "../colors.slint";
+import { Icons } from "../icons.slint";
+
+import { HorizontalSeparator } from "separator.slint";
+import { StandardButton } from "button.slint";
+import { FocusTouchArea } from "area.slint";
+import { EyerisText } from "text.slint";
+import { Popover } from "popover.slint";
+import { Icon } from "icon.slint";
+
+export component CollectionButton inherits Rectangle {
+    in property <string> text: "Collection";
+
+    min-height: 40px;
+    background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
+    border-radius: Metrics.radius-md;
+
+    HorizontalLayout {
+        cross-axis-alignment: center;
+
+        Icon {
+            icon: Icons.heart;
+        }
+
+        EyerisText {
+            text: root.text;
+        }
+    }
+
+    popover := Popover {
+        width: root.width;
+
+        VerticalLayout {
+            spacing: Metrics.spacing-4;
+            padding: Metrics.spacing-4;
+
+            if CollectionState.collections.length > 0: VerticalLayout {
+                spacing: Metrics.spacing-4;
+
+                for collection in CollectionState.collections: StandardButton {
+                    icon: Icons.heart;
+                    text: collection.name;
+
+                    clicked => {
+                        Actions.open-collection(collection.path);
+                    }
+                }
+
+                HorizontalSeparator { }
+            }
+
+            StandardButton {
+                icon: Icons.folder;
+                text: "Open";
+            }
+        }
+    }
+
+    area := FocusTouchArea {
+        clicked => {
+            popover.show();
+        }
+    }
+}

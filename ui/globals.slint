@@ -1,4 +1,5 @@
-import { IndexedImage } from "types.slint";
+import { IndexedImage, Collection } from "types.slint";
+
 export global Actions {
     // load image by hash
     callback load-image(string) -> image;
@@ -22,6 +23,12 @@ export global Actions {
 export global WindowState {
     in property <length> width;
     in property <length> height;
+}
+
+export global CollectionState {
+    in-out property <Collection> current-collection;
+    in-out property <[Collection]> collections;
+    in property <bool> indexing: false;
 }
 
 export global TabState {

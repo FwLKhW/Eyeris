@@ -1,0 +1,19 @@
+import { Colors } from "../colors.slint";
+import { Icons } from "../icons.slint";
+
+export component Icon inherits HorizontalLayout {
+    in property <image> icon: Icons.information;
+    in property <length> size: 32px;
+    in property <float> scale: 1;
+
+    alignment: center;
+    cross-axis-alignment: center;
+    width: self.size;
+    height: self.size;
+
+    Image {
+        width: root.size * 0.6 * root.scale;
+        source: root.icon;
+        colorize: Colors.fg;
+    }
+}

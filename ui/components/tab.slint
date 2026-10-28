@@ -1,8 +1,9 @@
+import { Metrics } from "../metrics.slint";
 import { Colors } from "../colors.slint";
 
-import { IconButton, Icon } from "button.slint";
 import { FocusTouchArea } from "area.slint";
-import { Metrics } from "../metrics.slint";
+import { IconButton } from "button.slint";
+import { Icon } from "icon.slint";
 
 component Tab inherits Rectangle {
     out property <bool> has-hover <=> area.has-hover;
@@ -33,7 +34,7 @@ export component Tabs inherits HorizontalLayout {
 
     spacing: Metrics.spacing-8;
     padding: Metrics.spacing-8;
-    
+
     for icon[index] in self.icons: Tab {
         icon: icon;
         activated: index == root.active-index;

@@ -4,7 +4,6 @@ import {
     Actions,
 } from "../globals.slint";
 import { IndexedImage } from "../types.slint";
-import { Animations } from "../animations.slint";
 import { Typography } from "../typography.slint";
 import { Metrics } from "../metrics.slint";
 import { Colors } from "../colors.slint";
@@ -37,7 +36,7 @@ component ImageItem inherits Rectangle {
             image-fit: cover;
 
             animate opacity {
-                duration: Animations.opacity-duration;
+                duration: Metrics.opacity-duration;
                 easing: ease-out;
             }
         }
