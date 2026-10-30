@@ -25,7 +25,10 @@ class App(slint.loader.app.App):
         path = choose_folder()
         if path is None:
             return
+        await self.open_collection_by_path(path)
 
+    @slint.callback(global_name="Action")
+    async def open_collection_by_path(self, path: str):
         self.collection = Collection(Path(path))
 
         logger.info(

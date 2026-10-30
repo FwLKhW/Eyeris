@@ -18,9 +18,12 @@ export struct IndexedImage {
     colors: [color],
 }
 
+export enum ImageProperty { name, format, size, dimensions, created, modified, rating, tags, colors }
+
 export global Action {
     callback open-collection();
-    
+    callback open-collection-by-path(string);
+
     callback indexing();
     callback indexing-extended();
     callback generate-thumbnails();

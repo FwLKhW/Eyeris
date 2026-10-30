@@ -3,6 +3,7 @@ import {
     IndexedImage,
     Action,
     State,
+    ImageProperty,
 } from "../globals.slint";
 import { Typography } from "../typography.slint";
 import { Metrics } from "../metrics.slint";
@@ -13,11 +14,29 @@ import { HorizontalSeparator } from "../components/separator.slint";
 import { ScrollArea } from "../components/area.slint";
 import { EyerisText } from "../components/text.slint";
 
+component PropertyRow {
+    in property <ImageProperty> property;
+    in property <IndexedImage> img;
+
+    if property == name: EyerisText {
+        height: 24px;
+        text: img.path;
+        font-weight: Typography.medium;
+    }
+    if property == dimensions: EyerisText {
+        height: 24px;
+        text: img.width + " x " + img.height;
+        style: Typography.small;
+        color: Colors.fg-faded;
+    }
+}
+
 component ImageItem inherits Rectangle {
     in property <IndexedImage> img;
 
     background: touch.pressed || touch.has-hover ? Colors.bg-hover : transparent;
     horizontal-stretch: pow(img.height / img.width, 2);
+    border-radius: Metrics.radius-md;
 
     init => {
         thumbnail.source = Action.get-thumbnail(img.hash);
@@ -46,15 +65,14 @@ component ImageItem inherits Rectangle {
             cross-axis-alignment: center;
             spacing: Metrics.spacing-8;
 
-            EyerisText {
-                text: img.name;
-                font-weight: Typography.medium;
+            PropertyRow {
+                img: root.img;
+                property: name;
             }
 
-            EyerisText {
-                text: img.width + " x " + img.height;
-                style: Typography.small;
-                color: Colors.fg-faded;
+            PropertyRow {
+                img: root.img;
+                property: dimensions;
             }
         }
     }
@@ -70,7 +88,7 @@ component ImageItem inherits Rectangle {
 }
 
 component ImageRow inherits HorizontalLayout {
-    height: 360px;
+    height: 420px;
     alignment: space-around;
     cross-axis-alignment: center;
     spacing: Metrics.spacing-8;

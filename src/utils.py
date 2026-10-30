@@ -6,8 +6,9 @@ import slint
 from PIL import Image
 
 
-def load_image(path: Path) -> np.ndarray:
-    return np.array(Image.open(path))
+def load_image(path: Path) -> np.ndarray | None:
+    if path.exists():
+        return np.array(Image.open(path))
 
 
 def to_slint(data) -> Any:

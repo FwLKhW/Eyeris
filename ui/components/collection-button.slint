@@ -39,6 +39,15 @@ export component CollectionButton inherits Rectangle {
 
             StandardButton {
                 icon: Icons.folder;
+                text: "Example";
+
+                clicked => {
+                    Action.open-collection-by-path("fixtures/imgs/");
+                }
+            }
+
+            StandardButton {
+                icon: Icons.folder;
                 text: "Open";
 
                 clicked => {
