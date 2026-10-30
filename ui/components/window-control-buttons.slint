@@ -13,7 +13,7 @@ export component WindowControlButtons inherits HorizontalLayout {
         duration: Metrics.opacity-duration;
     }
 
-    opacity: mini.has-hover || maxi.has-hover || cls.has-hover ? 1 : 0;
+    opacity: mini.has-focus || maxi.has-focus || cls.has-focus || mini.has-hover || maxi.has-hover || cls.has-hover ? 1 : 0;
     spacing: Metrics.spacing-4;
     padding: Metrics.spacing-8;
     
