@@ -14,11 +14,13 @@
         "noconfirm",
         "noconsole",
         "numpy",
+        "oklab",
         "onefile",
         "platformdirs",
         "pyinstaller",
         "rgba",
         "slint",
+        "srgb",
         "tinydb",
         "titlebar"
     ]
