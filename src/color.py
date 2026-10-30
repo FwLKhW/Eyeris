@@ -1,3 +1,6 @@
+from slint import Color
+
+
 def oklab_to_rgb(L, a, b):
     l_ = L + 0.3963377774 * a + 0.2158037573 * b
     m_ = L - 0.1055613458 * a - 0.0638541728 * b
@@ -26,6 +29,16 @@ def oklab_to_rgb(L, a, b):
 def oklab_to_rgb_int(L, a, b):
     r, g, b_float = oklab_to_rgb(L, a, b)
     return (round(r * 255), round(g * 255), round(b_float * 255))
+
+
+def hex_to_slint_color(hex: str) -> Color:
+    return Color(
+        {
+            "red": int(hex[1:3], 16),
+            "green": int(hex[3:5], 16),
+            "blue": int(hex[5:7], 16),
+        }
+    )
 
 
 if __name__ == "__main__":
