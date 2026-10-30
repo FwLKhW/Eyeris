@@ -1,22 +1,38 @@
-import { IndexedImage, Collection } from "types.slint";
+export struct Collection {
+    path: string,
+    name: string,
+}
+
+export struct IndexedImage {
+    path: string,
+    name: string,
+    format: string,
+    size: int,
+    width: int,
+    height: int,
+    created: int,
+    modified: int,
+    rating: int,
+    tags: [string],
+    hash: string,
+    colors: [color],
+}
 
 export global Action {
-    // collection
     callback open-collection();
     
-    // load image by path
-    callback load-image(string) -> image;
+    callback indexing();
+    callback indexing-extended();
+    callback generate-thumbnails();
 
     // load thumbnail by hash
     callback load-thumbnail(string) -> image;
 
+    // load image by path
+    callback load-image(string) -> image;
+
     // filter
     callback apply-filters();
-
-    // indexing
-    callback indexing();
-    callback indexing-extended();
-    callback generate-thumbnails();
 }
 
 export global State {
