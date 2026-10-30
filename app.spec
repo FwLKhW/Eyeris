@@ -2,10 +2,15 @@
 
 
 a = Analysis(
-    ['app.py'],
+    ["app.py"],
     pathex=[],
     binaries=[],
-    datas=[('ui', 'ui'), ('assets', 'assets')],
+    datas=[
+        ("ui", "ui"),
+        ("assets", "assets"),
+        ("fixtures", "fixtures"),
+        ("bin", "bin"),
+    ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -22,7 +27,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='eyeris',
+    name="eyeris",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -35,6 +40,6 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    version='version.txt',
-    icon=['assets/icon.ico'],
+    version="version.txt",
+    icon=["assets/icon.ico"],
 )
