@@ -1,7 +1,5 @@
 import subprocess
 
-args = input("Args: ").split(sep=" ")
-
-result = subprocess.run(["bin/image-indexing-engine"] + args, check=False)
+result = subprocess.run(["bin/iie", "index", "fixtures/imgs/", "-e"], check=False)
 
 print(result)
