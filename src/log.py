@@ -9,7 +9,7 @@ def get_logger(name: str):
     if logger.hasHandlers():
         logger.handlers.clear()
 
-    log_format = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+    log_format = "%(asctime)s [%(levelname)s] %(name)s.%(funcName)s: %(message)s"
 
     date_format = "%Y-%m-%d %H:%M:%S,%f"[:-3]
     formatter = logging.Formatter(log_format, datefmt=date_format)
