@@ -1,12 +1,13 @@
 import subprocess
 from pathlib import Path
 
-from slint import slint
+import numpy as np
+import polars as pl
 
+from src.color import hex_to_slint_color
 from src.config import DOT_FOLDER
 from src.log import get_logger
-from src.schema import CollectionSchema
-from src.utils import load_slint_image
+from src.utils import load_image
 
 logger = get_logger("Collection")
 
@@ -18,6 +19,9 @@ class Collection:
         self.csv_path = self.path / DOT_FOLDER / "index.csv"
         self.thumbnails_path = self.path / DOT_FOLDER / "thumbnails"
 
+    def slint(self) -> dict:
+        return {"name": self.name, "path": str(self.path)}
+
     def indexing(self) -> bool:
         result = subprocess.run(["bin/iie", "index", str(self.path)], check=False)
         return result.returncode == 0
@@ -26,16 +30,35 @@ class Collection:
         result = subprocess.run(["bin/iie", "index", str(self.path), "-e"], check=False)
         return result.returncode == 0
 
-    def thumbnailing(self) -> bool:
+    def generate_thumbnails(self) -> bool:
         result = subprocess.run(["bin/iie", "thumb", str(self.path)], check=False)
         return result.returncode == 0
 
-    def get_images(self):
-        """Get IndexedImage[]"""
-        return []
+    def get_thumbnail(self, hash: str) -> np.ndarray:
+        return load_image(self.thumbnails_path / f"{hash}.png")
 
-    def schema(self):
-        return CollectionSchema(name=self.name, path=str(self.path))
+    def get_images_data(self) -> list:
+        q = pl.scan_csv(self.csv_path)
+        df = q.collect()
+        images = self._df_to_slint(df)
 
-    def thumbnail(self, hash: str) -> slint.Image:
-        return load_slint_image(self.thumbnails_path / f"{hash}.png")
+        return images
+
+    def _df_to_slint(self, df: pl.DataFrame) -> list:
+        def transform_item(item: dict) -> dict:
+            item.pop("id")
+            item["tags"] = item["tags"].split("|")
+            item["colors"] = []
+            for color_key in ["color_1", "color_2", "color_3", "color_4"]:
+                if item.get(color_key):
+                    item["colors"].append(hex_to_slint_color(item[color_key]))
+                item.pop(color_key)
+            return item
+
+        df_filled = df.with_columns(
+            [pl.col("tags").fill_null(""), pl.col("hash").fill_null("")]
+        )
+        raw_items = df_filled.to_dicts()
+        transformed_items = list(map(transform_item, raw_items))
+
+        return transformed_items
