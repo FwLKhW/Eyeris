@@ -19,13 +19,16 @@ component PropertyRow {
     in property <IndexedImage> img;
 
     if property == name: EyerisText {
-        height: 24px;
         text: img.path;
         font-weight: Typography.medium;
     }
     if property == dimensions: EyerisText {
-        height: 24px;
         text: img.width + " x " + img.height;
+        style: Typography.small;
+        color: Colors.fg-faded;
+    }
+    if property == size: EyerisText {
+        text: img.size < 102400 ? (img.size / 1024).to-fixed(2) + " KB" : (img.size / 1024 / 1024).to-fixed(2) + " MB";
         style: Typography.small;
         color: Colors.fg-faded;
     }
@@ -44,26 +47,29 @@ component ImageItem inherits Rectangle {
     }
 
     VerticalLayout {
-        cross-axis-alignment: center;
-        spacing: Metrics.spacing-8;
-        padding: Metrics.spacing-8;
+        spacing: Metrics.spacing-32;
+        padding: Metrics.spacing-16;
 
-        thumbnail := Image {
-            opacity: 0;
+        HorizontalLayout {
             height: 256px;
             min-width: 128px;
-            image-fit: ImageFit.contain;
 
-            animate opacity {
-                duration: Metrics.opacity-duration;
-                easing: ease-out;
+            thumbnail := Image {
+                opacity: 0;
+                image-fit: ImageFit.contain;
+
+                animate opacity {
+                    duration: Metrics.opacity-duration;
+                    easing: ease-out;
+                }
             }
         }
 
         VerticalLayout {
+            vertical-stretch: 1;
             alignment: start;
             cross-axis-alignment: center;
-            spacing: Metrics.spacing-8;
+            spacing: Metrics.spacing-24;
 
             PropertyRow {
                 img: root.img;
@@ -73,6 +79,11 @@ component ImageItem inherits Rectangle {
             PropertyRow {
                 img: root.img;
                 property: dimensions;
+            }
+
+            PropertyRow {
+                img: root.img;
+                property: size;
             }
         }
     }
@@ -88,31 +99,27 @@ component ImageItem inherits Rectangle {
 }
 
 component ImageRow inherits HorizontalLayout {
-    height: 420px;
-    alignment: space-around;
-    cross-axis-alignment: center;
-    spacing: Metrics.spacing-8;
+    height: 400px;
+    spacing: Metrics.spacing-16;
 
     @children
 }
 
-export component Gallery inherits Rectangle {
-    VerticalLayout {
-        ScrollArea {
-            VerticalLayout {
-                spacing: Metrics.spacing-8;
-                padding: Metrics.spacing-8;
+export component Gallery inherits VerticalLayout {
+    ScrollArea {
+        VerticalLayout {
+            spacing: Metrics.spacing-16;
+            padding: Metrics.spacing-16;
 
-                for start-index in (State.images.length / 4): ImageRow {
-                    for row-item-index in 4: ImageItem {
-                        img: State.images[start-index * 4 + row-item-index];
-                    }
+            for start-index in (State.images.length / 4): ImageRow {
+                for row-item-index in 4: ImageItem {
+                    img: State.images[start-index * 4 + row-item-index];
                 }
+            }
 
-                if Math.mod(State.images.length, 4) > 0: ImageRow {
-                    for row-item-index in Math.mod(State.images.length, 4): ImageItem {
-                        img: State.images[State.images.length - row-item-index - 1];
-                    }
+            if Math.mod(State.images.length, 4) > 0: ImageRow {
+                for row-item-index in Math.mod(State.images.length, 4): ImageItem {
+                    img: State.images[State.images.length - row-item-index - 1];
                 }
             }
         }
