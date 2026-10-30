@@ -1,7 +1,7 @@
-import { CollectionState } from "../globals.slint";
-import { Actions } from "../globals.slint";
 import { Metrics } from "../metrics.slint";
+import { Action } from "../globals.slint";
 import { Colors } from "../colors.slint";
+import { State } from "../globals.slint";
 import { Icons } from "../icons.slint";
 
 import { HorizontalSeparator } from "separator.slint";
@@ -37,27 +37,12 @@ export component CollectionButton inherits Rectangle {
             spacing: Metrics.spacing-4;
             padding: Metrics.spacing-4;
 
-            if CollectionState.collections.length > 0: VerticalLayout {
-                spacing: Metrics.spacing-4;
-
-                for collection in CollectionState.collections: StandardButton {
-                    icon: Icons.heart;
-                    text: collection.name;
-
-                    clicked => {
-                        Actions.active-collection(collection.path);
-                    }
-                }
-
-                HorizontalSeparator { }
-            }
-
             StandardButton {
                 icon: Icons.folder;
                 text: "Open";
 
                 clicked => {
-                    Actions.open-collection();
+                    Action.open-collection();
                 }
             }
         }
@@ -65,7 +50,6 @@ export component CollectionButton inherits Rectangle {
 
     area := FocusTouchArea {
         clicked => {
-            CollectionState.collections = Actions.get-collection-list();
             popover.show();
         }
     }

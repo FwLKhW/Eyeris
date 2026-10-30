@@ -1,4 +1,4 @@
-import { TabState } from "../globals.slint";
+import { State } from "../globals.slint";
 import { Metrics } from "../metrics.slint";
 import { Icons } from "../icons.slint";
 
@@ -12,7 +12,7 @@ import { Tabs } from "../components/tab.slint";
 export component Left inherits VerticalLayout {
     Tabs {
         icons: [Icons.home, Icons.chart, Icons.tag];
-        active-index <=> TabState.index;
+        active-index <=> State.tab-index;
     }
 
     HorizontalSeparator { }

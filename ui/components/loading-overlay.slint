@@ -1,10 +1,10 @@
-import { CollectionState } from "../globals.slint";
+import { State } from "../globals.slint";
 import { Typography } from "../typography.slint";
 
 import { EyerisText } from "text.slint";
 
 export component LoadingOverlay inherits Rectangle {
-    visible: CollectionState.indexing;
+    visible: State.indexing;
     background: rgba(0, 0, 0, 0.8);
 
     WindowMoveArea {
@@ -15,12 +15,12 @@ export component LoadingOverlay inherits Rectangle {
             EyerisText {
                 style: Typography.label;
                 font-size: 24px;
-                text: "Indexing " + CollectionState.current-collection.name;
+                text: "Indexing " + State.collection.name;
             }
 
             EyerisText {
                 style: Typography.body;
-                text: CollectionState.current-collection.path;
+                text: State.collection.path;
             }
         }
     }

@@ -1,7 +1,7 @@
 import {
     ImageOverlayState,
-    GalleryState,
-    Actions,
+    Action,
+    State,
 } from "../globals.slint";
 import { IndexedImage } from "../types.slint";
 import { Typography } from "../typography.slint";
@@ -20,7 +20,7 @@ component ImageItem inherits Rectangle {
     horizontal-stretch: pow(img.height / img.width, 2);
 
     init => {
-        thumbnail.source = Actions.load-thumbnail(img.path);
+        thumbnail.source = Action.load-thumbnail(img.path);
         thumbnail.opacity = 1;
     }
 
@@ -64,7 +64,7 @@ component ImageItem inherits Rectangle {
 
         clicked => {
             ImageOverlayState.preview = thumbnail.source;
-            GalleryState.selected-image = img;
+            State.selected-image = img;
         }
     }
 }
@@ -85,15 +85,15 @@ export component Gallery inherits Rectangle {
                 spacing: Metrics.spacing-8;
                 padding: Metrics.spacing-8;
 
-                for start-index in (GalleryState.images.length / 4): ImageRow {
+                for start-index in (State.images.length / 4): ImageRow {
                     for row-item-index in 4: ImageItem {
-                        img: GalleryState.images[start-index * 4 + row-item-index];
+                        img: State.images[start-index * 4 + row-item-index];
                     }
                 }
 
-                if Math.mod(GalleryState.images.length, 4) > 0: ImageRow {
-                    for row-item-index in Math.mod(GalleryState.images.length, 4): ImageItem {
-                        img: GalleryState.images[GalleryState.images.length - row-item-index - 1];
+                if Math.mod(State.images.length, 4) > 0: ImageRow {
+                    for row-item-index in Math.mod(State.images.length, 4): ImageItem {
+                        img: State.images[State.images.length - row-item-index - 1];
                     }
                 }
             }

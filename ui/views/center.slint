@@ -1,10 +1,10 @@
-import { TabState } from "../../ui/globals.slint";
+import { State } from "../../ui/globals.slint";
 
 import { Dashboard } from "../../ui/views/dashboard.slint";
 import { Gallery } from "../../ui/views/gallery.slint";
 
 export component Center inherits VerticalLayout {
-    if TabState.index == 0: Gallery { }
-    if TabState.index == 1: Dashboard { }
-    if TabState.index == 2: Dashboard { }
+    if State.tab-index == 0: Gallery { }
+    if State.tab-index == 1: Dashboard { }
+    if State.tab-index == 2: Dashboard { }
 }

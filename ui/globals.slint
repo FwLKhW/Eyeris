@@ -1,13 +1,11 @@
 import { IndexedImage, Collection } from "types.slint";
 
-export global Actions {
-    // load image by hash
-    callback load-image(string) -> image;
-
+export global Action {
     // collection
-    callback get-collection-list() -> [Collection];
     callback open-collection();
-    callback active-collection(string);
+    
+    // load image by path
+    callback load-image(string) -> image;
 
     // load thumbnail by hash
     callback load-thumbnail(string) -> image;
@@ -17,27 +15,24 @@ export global Actions {
 
     // indexing
     callback indexing();
-    callback thumbnailing();
+    callback indexing-extended();
+    callback generate-thumbnails();
+}
+
+export global State {
+    in-out property <Collection> collection;
+    in property <bool> indexing;
+    in property <bool> generating-thumbnails;
+
+    in-out property <int> tab-index;
+
+    in property <[IndexedImage]> images;
+    in property <IndexedImage> selected-image;
 }
 
 export global WindowState {
     in property <length> width;
     in property <length> height;
-}
-
-export global CollectionState {
-    in-out property <Collection> current-collection;
-    in-out property <[Collection]> collections;
-    in property <bool> indexing: false;
-}
-
-export global TabState {
-    in-out property <int> index;
-}
-
-export global GalleryState {
-    in property <IndexedImage> selected-image;
-    in property <[[IndexedImage]]> images;
 }
 
 export global ImageOverlayState {
