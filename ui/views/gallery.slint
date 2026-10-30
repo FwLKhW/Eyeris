@@ -85,9 +85,15 @@ export component Gallery inherits Rectangle {
                 spacing: Metrics.spacing-8;
                 padding: Metrics.spacing-8;
 
-                for row in GalleryState.images: ImageRow {
-                    for img in row: ImageItem {
-                        img: img;
+                for start-index in (GalleryState.images.length / 4): ImageRow {
+                    for row-item-index in 4: ImageItem {
+                        img: GalleryState.images[start-index * 4 + row-item-index];
+                    }
+                }
+
+                if Math.mod(GalleryState.images.length, 4) > 0: ImageRow {
+                    for row-item-index in Math.mod(GalleryState.images.length, 4): ImageItem {
+                        img: GalleryState.images[GalleryState.images.length - row-item-index - 1];
                     }
                 }
             }
