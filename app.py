@@ -54,6 +54,13 @@ class App(slint.loader.app.App):
             return
         return to_slint(self.collection.get_thumbnail(hash))
 
+    @slint.callback(global_name="Action")
+    def get_image(self, rel_path: str):
+        if self.collection is None:
+            return
+        img = to_slint(self.collection.get_image(rel_path))
+        return img
+
 
 async def main(app: slint.Component) -> None:
     app.show()

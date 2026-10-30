@@ -92,8 +92,29 @@ component ImageItem inherits Rectangle {
         mouse-cursor: MouseCursor.pointer;
 
         clicked => {
-            ImageOverlayState.preview = thumbnail.source;
             State.selected-image = img;
+        }
+
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down) {
+                ImageOverlayState.preview = thumbnail.source;
+                ImageOverlayState.image-path = root.img.path;
+                if ImageOverlayState.loaded-image-path != ImageOverlayState.image-path {
+                    ImageOverlayState.source = Action.get-image(ImageOverlayState.image-path);
+                }
+                ImageOverlayState.loaded-image-path = ImageOverlayState.image-path;
+                ImageOverlayState.initial-mouse-x = self.mouse-x;
+                ImageOverlayState.initial-mouse-y = self.mouse-y;
+            } else if (event.kind == PointerEventKind.up) {
+                ImageOverlayState.show = false;
+            }
+        }
+
+        moved => {
+            ImageOverlayState.show = true;
+
+            ImageOverlayState.delta-x = (self.mouse-x - ImageOverlayState.initial-mouse-x) * ((ImageOverlayState.source.width / 1980 + ImageOverlayState.source.height / 1080) / 2);
+            ImageOverlayState.delta-y = (self.mouse-y - ImageOverlayState.initial-mouse-y) * ((ImageOverlayState.source.width / 1980 + ImageOverlayState.source.height / 1080) / 2);
         }
     }
 }

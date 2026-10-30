@@ -17,7 +17,9 @@ import {
 
 import {
     WindowState,
+    ImageOverlayState,
 } from "globals.slint";
+import { ImageOverlay } from "components/image-overlay.slint";
 
 export {
     WindowState,
@@ -55,6 +57,7 @@ export component App inherits Window {
     HorizontalLayout {
         HorizontalLayout {
             WindowMoveArea {
+                enabled: !ImageOverlayState.show;
                 width: 240px;
 
                 Rectangle {
@@ -73,6 +76,7 @@ export component App inherits Window {
             VerticalSeparator { }
 
             WindowMoveArea {
+                enabled: !ImageOverlayState.show;
                 width: 360px;
 
                 Rectangle {
@@ -83,6 +87,16 @@ export component App inherits Window {
             }
         }
     }
+
+    // Rectangle {
+    //     background: rgba(0, 0, 0, 0.8);
+    //     z: 999;
+    
+    //     Image {
+    //         source: @image-url("fixtures/imgs/train.webp");
+    //     }
+    // }
+    ImageOverlay { }
 
     LoadingOverlay {
         z: 998;

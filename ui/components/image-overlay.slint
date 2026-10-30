@@ -1,0 +1,15 @@
+import { ImageOverlayState } from "../globals.slint";
+
+export component ImageOverlay inherits Rectangle {
+    visible: ImageOverlayState.show;
+    background: rgba(0, 0, 0, 0.8);
+    z: 999;
+
+    Image {
+        source: ImageOverlayState.source;
+        x: root.width / 2 - (ImageOverlayState.source.width / 2 * 1phx) + (ImageOverlayState.delta-x * root.width / 512 / 1px);
+        y: root.height / 2 - (ImageOverlayState.source.height / 2 * 1phx) + (ImageOverlayState.delta-y * root.height / 512 / 1px);
+        width: ImageOverlayState.source.width * 1phx;
+        height: ImageOverlayState.source.height * 1phx;
+    }
+}

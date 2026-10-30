@@ -37,6 +37,9 @@ class Collection:
     def get_thumbnail(self, hash: str) -> np.ndarray | None:
         return load_image(self.thumbnails_path / f"{hash}.png")
 
+    def get_image(self, rel_path: str) -> np.ndarray | None:
+        return load_image(self.path / rel_path)
+
     def get_images_data(self) -> list:
         q = pl.scan_csv(self.csv_path)
         df = q.collect()
