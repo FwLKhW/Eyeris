@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import slint
@@ -9,7 +10,7 @@ def load_image(path: Path) -> np.ndarray:
     return np.array(Image.open(path))
 
 
-def to_slint(data):
+def to_slint(data) -> Any:
     if isinstance(data, dict):
         return {k: to_slint(v) for k, v in data.items()}
     elif isinstance(data, list):

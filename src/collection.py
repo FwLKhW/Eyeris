@@ -34,8 +34,11 @@ class Collection:
         result = subprocess.run(["bin/iie", "thumb", str(self.path)], check=False)
         return result.returncode == 0
 
-    def get_thumbnail(self, hash: str) -> np.ndarray:
-        return load_image(self.thumbnails_path / f"{hash}.png")
+    def get_thumbnail(self, hash: str) -> np.ndarray | None:
+        path = self.thumbnails_path / f"{hash}.png"
+        if not path.exists():
+            return None
+        return load_image(path)
 
     def get_images_data(self) -> list:
         q = pl.scan_csv(self.csv_path)

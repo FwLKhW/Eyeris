@@ -20,7 +20,7 @@ component ImageItem inherits Rectangle {
     horizontal-stretch: pow(img.height / img.width, 2);
 
     init => {
-        thumbnail.source = Action.load-thumbnail(img.path);
+        thumbnail.source = Action.get-thumbnail(img.hash);
         thumbnail.opacity = 1;
     }
 
@@ -33,7 +33,7 @@ component ImageItem inherits Rectangle {
             opacity: 0;
             height: 256px;
             min-width: 128px;
-            image-fit: cover;
+            image-fit: ImageFit.contain;
 
             animate opacity {
                 duration: Metrics.opacity-duration;

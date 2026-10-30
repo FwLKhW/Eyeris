@@ -26,10 +26,10 @@ export global Action {
     callback generate-thumbnails();
 
     // load thumbnail by hash
-    callback load-thumbnail(string) -> image;
+    callback get-thumbnail(string) -> image;
 
     // load image by path
-    callback load-image(string) -> image;
+    callback get-image(string) -> image;
 
     // filter
     callback apply-filters();
