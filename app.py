@@ -43,6 +43,7 @@ class App(slint.loader.app.App):
         await to_thread(col.indexing)
         self.CollectionState.indexing = False
 
+        await to_thread(col.indexing_extended)
         await to_thread(col.thumbnailing)
 
 
