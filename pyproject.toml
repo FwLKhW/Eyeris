@@ -1,5 +1,5 @@
 [project]
-name = "app"
+name = "eyeris"
 version = "0.1.0"
 description = "A Digital Asset Management focus on images."
 readme = "README.md"
