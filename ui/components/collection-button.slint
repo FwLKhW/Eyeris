@@ -1,6 +1,6 @@
 import { Metrics } from "../metrics.slint";
 import { Action } from "../globals.slint";
-import { Colors } from "../colors.slint";
+import { Theme } from "../theme.slint";
 import { State } from "../globals.slint";
 import { Icons } from "../icons.slint";
 
@@ -15,7 +15,7 @@ export component CollectionButton inherits Rectangle {
     in property <string> text: "Collection";
 
     height: Metrics.px-60;
-    background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
+    background: area.has-hover || area.has-focus ? Theme.bg-hover : transparent;
 
     HorizontalLayout {
         cross-axis-alignment: center;

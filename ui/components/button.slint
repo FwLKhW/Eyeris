@@ -1,7 +1,7 @@
 import { Typography } from "../typography.slint";
 import { Metrics } from "../metrics.slint";
 import { Action } from "../globals.slint";
-import { Colors } from "../colors.slint";
+import { Theme } from "../theme.slint";
 import { Icons } from "../icons.slint";
 
 import { HorizontalSeparator } from "separator.slint";
@@ -17,7 +17,7 @@ export component IconButton inherits Rectangle {
     in property <float> ratio: 1;
     in property <image> icon <=> icon.icon;
     in property <float> icon-scale <=> icon.scale;
-    in property <color> bg-hover: Colors.bg-hover;
+    in property <color> bg-hover: Theme.bg-hover;
     in property <bool> activated: false;
     in property <string> tooltip <=> area.tooltip;
     in property <length> tooltip-offset <=> area.tooltip-offset;
@@ -44,7 +44,7 @@ export component StandardButton inherits Rectangle {
     callback clicked();
 
     height: Metrics.px-48;
-    background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
+    background: area.has-hover || area.has-focus ? Theme.bg-hover : transparent;
 
     HorizontalLayout {
         cross-axis-alignment: center;

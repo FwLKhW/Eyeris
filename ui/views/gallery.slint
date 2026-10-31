@@ -7,7 +7,7 @@ import {
 } from "../globals.slint";
 import { Typography } from "../typography.slint";
 import { Metrics } from "../metrics.slint";
-import { Colors } from "../colors.slint";
+import { Theme } from "../theme.slint";
 import { Icons } from "../icons.slint";
 
 import { HorizontalSeparator } from "../components/separator.slint";
@@ -25,19 +25,19 @@ component PropertyRow inherits Rectangle {
     if property == dimensions: EyerisText {
         text: img.width + " x " + img.height;
         style: Typography.small;
-        color: Colors.fg-faded;
+        color: Theme.fg-faded;
     }
     if property == size: EyerisText {
         text: img.size < 102400 ? (img.size / 1024).to-fixed(2) + " KB" : (img.size / 1024 / 1024).to-fixed(2) + " MB";
         style: Typography.small;
-        color: Colors.fg-faded;
+        color: Theme.fg-faded;
     }
 }
 
 component ImageItem inherits Rectangle {
     in property <IndexedImage> img;
 
-    background: touch.pressed || touch.has-hover ? Colors.bg-hover : transparent;
+    background: touch.pressed || touch.has-hover ? Theme.bg-hover : transparent;
     horizontal-stretch: pow(img.height / img.width, 2) * (1920 / img.width) * (1080 / img.height);
 
     init => {

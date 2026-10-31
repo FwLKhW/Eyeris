@@ -1,7 +1,7 @@
 import "../assets/fonts/Monda.ttf";
 
 import { Typography } from "typography.slint";
-import { Colors } from "colors.slint";
+import { Theme } from "theme.slint";
 
 import {
     ImageOverlayState,
@@ -36,7 +36,7 @@ export component App inherits Window {
     default-font-family: "Monda";
     default-font-weight: Typography.regular;
 
-    background: Colors.bg;
+    background: Theme.bg;
 
     min-width: 960px;
     min-height: 640px;
@@ -64,7 +64,7 @@ export component App inherits Window {
                 width: 240px;
 
                 Rectangle {
-                    background: Colors.bg-area;
+                    background: Theme.bg-area;
 
                     Left { }
                 }
@@ -83,7 +83,7 @@ export component App inherits Window {
                 width: 360px;
 
                 Rectangle {
-                    background: Colors.bg-area;
+                    background: Theme.bg-area;
 
                     Right { }
                 }

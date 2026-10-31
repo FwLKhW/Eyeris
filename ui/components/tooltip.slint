@@ -1,5 +1,5 @@
 import { Typography } from "../typography.slint";
-import { Colors } from "../colors.slint";
+import { Theme } from "../theme.slint";
 
 import { EyerisText } from "text.slint";
 
@@ -8,9 +8,9 @@ export component Tooltip inherits Rectangle {
 
     width: txt.width + 16px;
     height: txt.height + 12px;
-    background: Colors.bg-area;
+    background: Theme.bg-area;
     border-width: 1px;
-    border-color: Colors.fg.with-alpha(Colors.separator-opacity);
+    border-color: Theme.fg.with-alpha(Theme.separator-opacity);
 
     txt := EyerisText {
         style: Typography.small;

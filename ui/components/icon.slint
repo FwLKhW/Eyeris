@@ -1,4 +1,4 @@
-import { Colors } from "../colors.slint";
+import { Theme } from "../theme.slint";
 import { Icons } from "../icons.slint";
 
 export component Icon inherits HorizontalLayout {
@@ -14,6 +14,6 @@ export component Icon inherits HorizontalLayout {
     Image {
         width: root.size * 0.6 * root.scale;
         source: root.icon;
-        colorize: Colors.fg;
+        colorize: Theme.fg;
     }
 }

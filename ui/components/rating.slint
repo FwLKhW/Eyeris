@@ -1,4 +1,4 @@
-import { Colors } from "../colors.slint";
+import { Theme } from "../theme.slint";
 import { Icons } from "../icons.slint";
 
 import { Icon } from "icon.slint";
@@ -9,7 +9,7 @@ export component Star inherits Image {
     callback clicked();
 
     source: Icons.star;
-    colorize: root.value >= 1 ? Colors.yellow : Colors.fg-faded;
+    colorize: root.value >= 1 ? Theme.yellow : Theme.fg-faded;
 
     area := TouchArea {
         clicked => {

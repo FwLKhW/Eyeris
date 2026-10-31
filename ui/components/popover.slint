@@ -1,5 +1,5 @@
 import { Metrics } from "../metrics.slint";
-import { Colors } from "../colors.slint";
+import { Theme } from "../theme.slint";
 
 export component PopoverOnce inherits PopupWindow {
     in property <LayoutAlignment> v-align: start;
@@ -9,8 +9,8 @@ export component PopoverOnce inherits PopupWindow {
     y: root.v-align == start ? -self.height : root.height;
 
     Rectangle {
-        background: Colors.bg-surface;
-        border-color: Colors.separator;
+        background: Theme.bg-surface;
+        border-color: Theme.separator;
         border-width: 1px;
 
         @children
@@ -26,8 +26,8 @@ export component Popover inherits PopupWindow {
     y: root.v-align == start ? -self.height : root.height;
 
     Rectangle {
-        background: Colors.bg-surface;
-        border-color: Colors.separator;
+        background: Theme.bg-surface;
+        border-color: Theme.separator;
         border-width: 1px;
 
         @children

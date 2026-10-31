@@ -1,5 +1,5 @@
 import { Metrics } from "../metrics.slint";
-import { Colors } from "../colors.slint";
+import { Theme } from "../theme.slint";
 import { Icons } from "../icons.slint";
 
 import { IconButton } from "../components/button.slint";
@@ -46,7 +46,7 @@ export component WindowControlButtons inherits HorizontalLayout {
         icon: Icons.close;
         ratio: 1.5;
         icon-scale: 0.9;
-        bg-hover: Colors.danger;
+        bg-hover: Theme.danger;
         tooltip: "Close";
         tooltip-offset: self.height + 8px;
 

@@ -1,5 +1,5 @@
 import { Tooltip } from "tooltip.slint";
-import { Colors } from "../colors.slint";
+import { Theme } from "../theme.slint";
 
 export component FocusTouchArea inherits TouchArea {
     out property <bool> has-focus <=> focus-scope.has-focus;
@@ -77,7 +77,7 @@ component ScrollBar {
         y: root.horizontal ? parent.height - self.height - root.offset : root.offset + (root.track-size - thumb.height) * (-root.value / root.maximum);
 
         border-radius: self.width / 2;
-        background: Colors.fg;
+        background: Theme.fg;
         opacity: root.is-active ? root.state-opacity : 0;
 
         animate opacity {

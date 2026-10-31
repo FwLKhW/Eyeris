@@ -1,5 +1,5 @@
 import { Metrics } from "../metrics.slint";
-import { Colors } from "../colors.slint";
+import { Theme } from "../theme.slint";
 
 import { FocusTouchArea } from "area.slint";
 import { IconButton } from "button.slint";
@@ -14,7 +14,7 @@ component Tab inherits Rectangle {
     in property <length> tooltip-offset <=> area.tooltip-offset;
 
     min-height: Metrics.px-60;
-    background: self.activated ? Colors.bg-hover : transparent;
+    background: self.activated ? Theme.bg-hover : transparent;
 
     callback clicked();
 
