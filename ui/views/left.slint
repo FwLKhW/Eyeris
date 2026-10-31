@@ -19,8 +19,7 @@ export component Left inherits VerticalLayout {
 
     ScrollArea {
         VerticalLayout {
-            spacing: Metrics.spacing-8;
-            padding: Metrics.spacing-8;
+            spacing: Metrics.px-8;
 
             SidebarButton {
                 icon: Icons.home;
@@ -54,11 +53,7 @@ export component Left inherits VerticalLayout {
 
     HorizontalSeparator { }
 
-    VerticalLayout {
-        padding: Metrics.spacing-8;
-
-        CollectionButton {
-            text: State.collection.name;
-        }
+    CollectionButton {
+        text: State.collection.name;
     }
 }

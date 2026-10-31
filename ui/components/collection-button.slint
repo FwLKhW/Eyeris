@@ -14,11 +14,13 @@ import { Icon } from "icon.slint";
 export component CollectionButton inherits Rectangle {
     in property <string> text: "Collection";
 
-    min-height: 40px;
+    height: Metrics.px-60;
     background: area.has-hover || area.has-focus ? Colors.bg-hover : transparent;
 
     HorizontalLayout {
         cross-axis-alignment: center;
+        padding-left: Metrics.px-8;
+        padding-right: Metrics.px-8;
 
         Icon {
             icon: Icons.heart;
@@ -33,18 +35,15 @@ export component CollectionButton inherits Rectangle {
         width: root.width;
 
         VerticalLayout {
-            spacing: Metrics.spacing-4;
-            padding: Metrics.spacing-4;
-
             StandardButton {
                 icon: Icons.folder;
                 text: "Example";
-
+                
                 clicked => {
                     Action.open-collection-by-path("fixtures/Example/");
                 }
             }
-
+            
             StandardButton {
                 icon: Icons.folder;
                 text: "Open";

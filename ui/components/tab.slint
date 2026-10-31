@@ -13,8 +13,8 @@ component Tab inherits Rectangle {
     in property <string> tooltip <=> area.tooltip;
     in property <length> tooltip-offset <=> area.tooltip-offset;
 
-    min-height: 40px;
-    background: area.has-focus || area.has-hover || self.activated ? Colors.bg-hover : transparent;
+    min-height: Metrics.px-60;
+    background: self.activated ? Colors.bg-hover : transparent;
 
     callback clicked();
 
@@ -30,9 +30,6 @@ component Tab inherits Rectangle {
 export component Tabs inherits HorizontalLayout {
     in property <[image]> icons;
     in-out property <int> active-index: 0;
-
-    spacing: Metrics.spacing-8;
-    padding: Metrics.spacing-8;
 
     for icon[index] in self.icons: Tab {
         icon: icon;
