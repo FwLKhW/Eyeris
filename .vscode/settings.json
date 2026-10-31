@@ -19,9 +19,11 @@
         "platformdirs",
         "pyinstaller",
         "rgba",
+        "sentencepiece",
         "slint",
         "srgb",
         "tinydb",
-        "titlebar"
+        "titlebar",
+        "ultralytics"
     ]
 }
