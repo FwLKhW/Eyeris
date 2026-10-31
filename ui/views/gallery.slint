@@ -38,7 +38,7 @@ component ImageItem inherits Rectangle {
     in property <IndexedImage> img;
 
     background: touch.pressed || touch.has-hover ? Colors.bg-hover : transparent;
-    horizontal-stretch: pow(img.height / img.width, 2);
+    horizontal-stretch: pow(img.height / img.width, 2) * (1920 / img.width) * (1080 / img.height);
     border-radius: Metrics.radius-md;
 
     init => {
@@ -51,9 +51,8 @@ component ImageItem inherits Rectangle {
         padding: Metrics.spacing-16;
 
         Rectangle {
-            background: #222;
             height: 256px;
-            min-width: 128px;
+            min-width: 160px;
 
             HorizontalLayout {
                 thumbnail := Image {
