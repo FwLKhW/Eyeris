@@ -17,8 +17,6 @@ class Collection:
         self.path = path
         self.name = path.name
         self.db_path = self.path / DOT_FOLDER / "index.db"
-        self.db = sqlite3.connect(self.db_path)
-        self.db.row_factory = sqlite3.Row
         self.thumbnails_path = self.path / DOT_FOLDER / "thumbnails"
 
     def slint(self) -> dict:
@@ -43,6 +41,11 @@ class Collection:
         return load_image(self.path / rel_path)
 
     def get_images_data(self) -> list:
+        if not self.db_path.exists():
+            return []
+
+        self.db = sqlite3.connect(self.db_path)
+        self.db.row_factory = sqlite3.Row
         cur = self.db.execute("SELECT * FROM images")
         rows = cur.fetchall()
         images = [row2slint(dict(row)) for row in rows]
