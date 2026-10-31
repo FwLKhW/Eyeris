@@ -39,7 +39,6 @@ component ImageItem inherits Rectangle {
 
     background: touch.pressed || touch.has-hover ? Colors.bg-hover : transparent;
     horizontal-stretch: pow(img.height / img.width, 2) * (1920 / img.width) * (1080 / img.height);
-    border-radius: Metrics.radius-md;
 
     init => {
         thumbnail.source = Action.get-thumbnail(img.hash);

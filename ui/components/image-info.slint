@@ -1,0 +1,14 @@
+import { IndexedImage } from "../globals.slint";
+import { Metrics } from "../metrics.slint";
+
+import { EyerisText } from "text.slint";
+
+export component ImageInfo inherits VerticalLayout {
+    in property <IndexedImage> img;
+
+    spacing: Metrics.spacing-8;
+
+    EyerisText {
+        
+    }
+}
