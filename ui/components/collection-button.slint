@@ -7,8 +7,8 @@ import { Icons } from "../icons.slint";
 import { HorizontalSeparator } from "separator.slint";
 import { StandardButton } from "button.slint";
 import { FocusTouchArea } from "area.slint";
+import { PopoverOnce } from "popover.slint";
 import { EyerisText } from "text.slint";
-import { Popover } from "popover.slint";
 import { Icon } from "icon.slint";
 
 export component CollectionButton inherits Rectangle {
@@ -31,7 +31,7 @@ export component CollectionButton inherits Rectangle {
         }
     }
 
-    popover := Popover {
+    popover := PopoverOnce {
         width: root.width;
 
         VerticalLayout {
