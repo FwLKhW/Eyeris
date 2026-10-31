@@ -12,6 +12,8 @@ dependencies = [
     "polars>=2.1.0",
     "slint>=1.18.1b1",
     "tinydb>=4.9.0",
+    "transformers>=5.22.1",
+    "ultralytics>=8.4.194",
 ]
 
 [dependency-groups]

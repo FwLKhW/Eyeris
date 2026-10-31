@@ -12,3 +12,4 @@ wheels/
 bin
 **/*.log
 fixtures/**/.*
+*.pt
