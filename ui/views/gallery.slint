@@ -47,7 +47,7 @@ component ImageItem inherits Rectangle {
 
     VerticalLayout {
         spacing: Metrics.px-32;
-        padding: Metrics.px-16;
+        // padding: Metrics.px-16;
 
         Rectangle {
             height: 256px;
@@ -56,7 +56,8 @@ component ImageItem inherits Rectangle {
             HorizontalLayout {
                 thumbnail := Image {
                     opacity: 0;
-                    image-fit: ImageFit.contain;
+                    // image-fit: ImageFit.contain;
+                    image-fit: ImageFit.cover;
 
                     animate opacity {
                         duration: Metrics.opacity-duration;
@@ -123,7 +124,7 @@ component ImageItem inherits Rectangle {
 
 component ImageRow inherits HorizontalLayout {
     height: 400px;
-    spacing: Metrics.px-16;
+    spacing: Metrics.px-48;
 
     @children
 }
@@ -131,8 +132,8 @@ component ImageRow inherits HorizontalLayout {
 export component Gallery inherits VerticalLayout {
     ScrollArea {
         VerticalLayout {
-            spacing: Metrics.px-32;
-            padding: Metrics.px-16;
+            padding: Metrics.px-48;
+            spacing: Metrics.px-96;
 
             for start-index in (State.images.length / 4): ImageRow {
                 for row-item-index in 4: ImageItem {
