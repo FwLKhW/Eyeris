@@ -1,0 +1,31 @@
+import { Colors } from "../colors.slint";
+import { Icons } from "../icons.slint";
+
+import { Icon } from "icon.slint";
+
+export component Star inherits Image {
+    in property <int> value;
+
+    callback clicked();
+
+    source: Icons.star;
+    colorize: root.value >= 1 ? Colors.yellow : Colors.fg-faded;
+
+    area := TouchArea {
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component Rating inherits HorizontalLayout {
+    in-out property <int> value;
+
+    for i in 5: Star {
+        value: i;
+
+        clicked => {
+            root.value = i;
+        }
+    }
+}

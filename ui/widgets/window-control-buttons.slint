@@ -2,21 +2,19 @@ import { Metrics } from "../metrics.slint";
 import { Colors } from "../colors.slint";
 import { Icons } from "../icons.slint";
 
-import { IconButton } from "button.slint";
+import { IconButton } from "../components/button.slint";
 
 export component WindowControlButtons inherits HorizontalLayout {
     callback minimize();
     callback maximize();
     callback close();
-    
-    animate opacity {
-        duration: Metrics.opacity-duration;
-    }
+
+    animate opacity { duration: Metrics.opacity-duration; }
 
     opacity: mini.has-focus || maxi.has-focus || cls.has-focus || mini.has-hover || maxi.has-hover || cls.has-hover ? 1 : 0;
     spacing: Metrics.px-4;
     padding: Metrics.px-8;
-    
+
     mini := IconButton {
         size: 28px;
         icon: Icons.minimize;
