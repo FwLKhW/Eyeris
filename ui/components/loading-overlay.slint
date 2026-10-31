@@ -1,5 +1,6 @@
-import { State } from "../globals.slint";
 import { Typography } from "../typography.slint";
+import { Metrics } from "../metrics.slint";
+import { State } from "../globals.slint";
 
 import { EyerisText } from "text.slint";
 
@@ -11,16 +12,23 @@ export component LoadingOverlay inherits Rectangle {
         VerticalLayout {
             alignment: center;
             cross-axis-alignment: center;
+            spacing: Metrics.spacing-8;
 
             EyerisText {
                 style: Typography.label;
                 font-size: 24px;
-                text: "Indexing " + State.collection.name;
+                text: State.collection.name;
             }
-
+            
             EyerisText {
                 style: Typography.body;
                 text: State.collection.path;
+            }
+            
+            EyerisText {
+                style: Typography.body;
+                font-size: 16px;
+                text: "Indexing ...";
             }
         }
     }
