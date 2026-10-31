@@ -1,21 +1,15 @@
 # Development
 
-Setup:
+### Setup
 
 ```bash
 uv sync
 ```
 
-Run app:
+Download latest binary of [image-indexing-engine](https://github.com/FwLKhW/image-indexing-engine/releases/latest) and place it inside `./bin` folder.
+
+### Run app
 
 ```bash
-just dev
+uv run app.py
 ```
-
-Build:
-
-```bash
-just build
-```
-
-The final single executable file is located at `build/eyeris.exe`.
