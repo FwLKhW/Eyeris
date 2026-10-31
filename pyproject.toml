@@ -21,5 +21,4 @@ dependencies = [
 [dependency-groups]
 dev = [
     "ipykernel>=7.4.0",
-    "pyinstaller>=6.22.3",
 ]
