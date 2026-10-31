@@ -25,7 +25,7 @@ class App(slint.loader.app.App):
         path = choose_folder()
         if path is None:
             return
-        await self.open_collection_by_path(path)
+        self.open_collection_by_path(path)
 
     @slint.callback(global_name="Action")
     async def open_collection_by_path(self, path: str):
@@ -38,14 +38,12 @@ class App(slint.loader.app.App):
         self.State.collection = to_slint(self.collection.slint())
 
         self.State.indexing = True
-        await to_thread(self.collection.indexing)
+        if not self.collection.db_path.exists():
+            await to_thread(self.collection.indexing_extended)
+        if not self.collection.thumbnails_path.exists():
+            await to_thread(self.collection.generate_thumbnails)
         self.State.indexing = False
-        self.State.images = to_slint(self.collection.get_images_data())
 
-        await to_thread(self.collection.indexing_extended)
-        self.State.images = to_slint(self.collection.get_images_data())
-
-        await to_thread(self.collection.generate_thumbnails)
         self.State.images = to_slint(self.collection.get_images_data())
 
     @slint.callback(global_name="Action")
