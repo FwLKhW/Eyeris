@@ -14,7 +14,7 @@ import { HorizontalSeparator } from "../components/separator.slint";
 import { ScrollArea } from "../components/area.slint";
 import { EyerisText } from "../components/text.slint";
 
-component PropertyRow {
+component PropertyRow inherits Rectangle {
     in property <ImageProperty> property;
     in property <IndexedImage> img;
 
@@ -50,40 +50,44 @@ component ImageItem inherits Rectangle {
         spacing: Metrics.spacing-32;
         padding: Metrics.spacing-16;
 
-        HorizontalLayout {
+        Rectangle {
+            background: #222;
             height: 256px;
             min-width: 128px;
 
-            thumbnail := Image {
-                opacity: 0;
-                image-fit: ImageFit.contain;
+            HorizontalLayout {
+                thumbnail := Image {
+                    opacity: 0;
+                    image-fit: ImageFit.contain;
 
-                animate opacity {
-                    duration: Metrics.opacity-duration;
-                    easing: ease-out;
+                    animate opacity {
+                        duration: Metrics.opacity-duration;
+                        easing: ease-out;
+                    }
                 }
             }
         }
 
-        VerticalLayout {
-            vertical-stretch: 1;
-            alignment: start;
-            cross-axis-alignment: center;
-            spacing: Metrics.spacing-24;
+        Rectangle {
+            clip: true;
 
-            PropertyRow {
-                img: root.img;
-                property: name;
-            }
+            VerticalLayout {
+                cross-axis-alignment: center;
+                
+                PropertyRow {
+                    img: root.img;
+                    property: name;
+                }
 
-            PropertyRow {
-                img: root.img;
-                property: dimensions;
-            }
+                PropertyRow {
+                    img: root.img;
+                    property: dimensions;
+                }
 
-            PropertyRow {
-                img: root.img;
-                property: size;
+                PropertyRow {
+                    img: root.img;
+                    property: size;
+                }
             }
         }
     }
@@ -129,7 +133,7 @@ component ImageRow inherits HorizontalLayout {
 export component Gallery inherits VerticalLayout {
     ScrollArea {
         VerticalLayout {
-            spacing: Metrics.spacing-16;
+            spacing: Metrics.spacing-32;
             padding: Metrics.spacing-16;
 
             for start-index in (State.images.length / 4): ImageRow {
