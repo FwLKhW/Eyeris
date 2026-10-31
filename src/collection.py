@@ -1,10 +1,10 @@
+import sqlite3
 import subprocess
 from pathlib import Path
 
 import numpy as np
-import polars as pl
 
-from src.color import hex_to_slint_color
+from src.color import dec2slint
 from src.config import DOT_FOLDER
 from src.log import get_logger
 from src.utils import load_image
@@ -16,7 +16,9 @@ class Collection:
     def __init__(self, path: Path) -> None:
         self.path = path
         self.name = path.name
-        self.csv_path = self.path / DOT_FOLDER / "index.csv"
+        self.db_path = self.path / DOT_FOLDER / "index.db"
+        self.db = sqlite3.connect(self.db_path)
+        self.db.row_factory = sqlite3.Row
         self.thumbnails_path = self.path / DOT_FOLDER / "thumbnails"
 
     def slint(self) -> dict:
@@ -41,27 +43,18 @@ class Collection:
         return load_image(self.path / rel_path)
 
     def get_images_data(self) -> list:
-        q = pl.scan_csv(self.csv_path)
-        df = q.collect()
-        images = self._df_to_slint(df)
-
+        cur = self.db.execute("SELECT * FROM images")
+        rows = cur.fetchall()
+        images = [row2slint(dict(row)) for row in rows]
         return images
 
-    def _df_to_slint(self, df: pl.DataFrame) -> list:
-        def transform_item(item: dict) -> dict:
-            item.pop("id")
-            item["tags"] = item["tags"].split("|")
-            item["colors"] = []
-            for color_key in ["color_1", "color_2", "color_3", "color_4"]:
-                if item.get(color_key):
-                    item["colors"].append(hex_to_slint_color(item[color_key]))
-                item.pop(color_key)
-            return item
 
-        df_filled = df.with_columns(
-            [pl.col("tags").fill_null(""), pl.col("hash").fill_null("")]
-        )
-        raw_items = df_filled.to_dicts()
-        transformed_items = list(map(transform_item, raw_items))
-
-        return transformed_items
+def row2slint(item: dict) -> dict:
+    item.pop("id")
+    item["tags"] = item["tags"].split("|")
+    item["colors"] = []
+    for color_key in ["color_1", "color_2", "color_3", "color_4"]:
+        if item.get(color_key):
+            item["colors"].append(dec2slint(item[color_key]))
+        item.pop(color_key)
+    return item

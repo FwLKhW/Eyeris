@@ -41,5 +41,15 @@ def hex_to_slint_color(hex: str) -> Color:
     )
 
 
+def dec2slint(decimal: int):
+    return Color(
+        {
+            "red": (decimal >> 16) & 0xFF,
+            "green": (decimal >> 8) & 0xFF,
+            "blue": decimal & 0xFF,
+        }
+    )
+
+
 if __name__ == "__main__":
     print(oklab_to_rgb_int(0.86, -0.1, 0.17))  # (192, 227, 36)
