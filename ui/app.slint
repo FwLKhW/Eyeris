@@ -16,8 +16,9 @@ import {
 } from "lib.slint";
 
 import {
-    WindowState,
     ImageOverlayState,
+    WindowState,
+    State,
 } from "globals.slint";
 import { ImageOverlay } from "components/image-overlay.slint";
 
@@ -48,6 +49,7 @@ export component App inherits Window {
 
     changed width => {
         WindowState.width = root.width;
+        State.images-per-row = root.width < 200px ? 2 : root.width < 400px ? 3 : 4;
     }
 
     changed height => {

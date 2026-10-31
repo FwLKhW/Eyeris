@@ -4,6 +4,10 @@ import { Dashboard } from "../../ui/views/dashboard.slint";
 import { Gallery } from "../../ui/views/gallery.slint";
 
 export component Center inherits VerticalLayout {
+    changed width => {
+        State.images-per-row = Math.clamp(root.width / 256px, 1, 5);
+    }
+
     if State.tab-index == 0: Gallery { }
     if State.tab-index == 1: Dashboard { }
     if State.tab-index == 2: Dashboard { }
