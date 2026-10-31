@@ -59,6 +59,8 @@ export component Left inherits VerticalLayout {
     VerticalLayout {
         padding: Metrics.spacing-8;
 
-        CollectionButton { }
+        CollectionButton {
+            text: State.collection.name;
+        }
     }
 }

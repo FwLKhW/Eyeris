@@ -26,7 +26,7 @@ export component CollectionButton inherits Rectangle {
         }
 
         EyerisText {
-            text: root.text;
+            text: root.text.is-empty ? "Collection" : root.text;
         }
     }
 
