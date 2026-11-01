@@ -59,7 +59,7 @@ class App(slint.loader.app.App):
         if self.collection is None:
             return
         self.State.images = to_slint(
-            self.collection.get_images_data({"search": self.State.filters.search})
+            self.collection.get_images_data(self._get_filters())
         )
 
     @slint.callback(global_name="Action")
@@ -74,6 +74,9 @@ class App(slint.loader.app.App):
             return
         img = to_slint(self.collection.get_image(rel_path))
         return img
+
+    def _get_filters(self):
+        return {"search": self.State.filters.search}
 
 
 async def main(app: slint.Component) -> None:

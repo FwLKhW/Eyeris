@@ -1,13 +1,13 @@
 import { Metrics } from "../metrics.slint";
 import { Theme } from "../theme.slint";
+import { Action, State } from "../globals.slint";
 import { Icons } from "../icons.slint";
 
+import { StandardButton } from "../components/button.slint";
 import { FocusTouchArea } from "../components/area.slint";
-import { EyerisText } from "../components/text.slint";
-import { IconButton, StandardButton } from "../components/button.slint";
-import { Icon } from "../components/icon.slint";
 import { PopoverOnce } from "../components/popover.slint";
-import { Action, State } from "../globals.slint";
+import { EyerisText } from "../components/text.slint";
+import { Icon } from "../components/icon.slint";
 
 export component FilterButton inherits Rectangle {
     in property <image> icon;
@@ -19,6 +19,7 @@ export component FilterButton inherits Rectangle {
     callback clicked();
 
     height: Metrics.px-48;
+    background: area.has-hover ? Theme.bg-hover : transparent;
 
     HorizontalLayout {
         cross-axis-alignment: center;
@@ -50,7 +51,7 @@ export component Filters inherits HorizontalLayout {
 
     FilterButton {
         icon: Icons.clock;
-        icon-color: Theme.green; 
+        icon-color: Theme.green;
         tooltip: "Created";
         tooltip-offset: self.height;
 
@@ -75,14 +76,14 @@ export component Filters inherits HorizontalLayout {
             popover.show();
         }
     }
-    
+
     FilterButton {
         icon: Icons.clock;
-        icon-color: Theme.orange; 
+        icon-color: Theme.orange;
         tooltip: "Modified";
         tooltip-offset: self.height;
     }
-    
+
     Rectangle {
         horizontal-stretch: 1;
     }
