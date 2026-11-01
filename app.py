@@ -8,6 +8,7 @@ from crossfiledialog import choose_folder
 
 from src.appdata import AppData
 from src.collection import Collection
+from src.index import generate_thumbnails, indexing_extended
 from src.log import get_logger
 from src.utils import to_slint
 
@@ -43,13 +44,13 @@ class App(slint.loader.app.App):
             f"Open collection '{self.collection.name}' ({self.collection.path})"
         )
 
-        self.State.collection = to_slint(self.collection.slint())
+        self.State.collection = to_slint(self.collection.to_slint())
 
         self.State.indexing = True
         if not self.collection.db_path.exists():
-            await to_thread(self.collection.indexing_extended)
+            await to_thread(indexing_extended(self.collection.path))
         if not self.collection.thumbnails_path.exists():
-            await to_thread(self.collection.generate_thumbnails)
+            await to_thread(generate_thumbnails(self.collection.path))
         self.State.indexing = False
 
         self.reload_images()
