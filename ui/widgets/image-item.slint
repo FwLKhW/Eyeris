@@ -17,7 +17,6 @@ import { Rating } from "../components/rating.slint";
 export component ImageItem inherits Rectangle {
     in-out property <IndexedImage> img;
 
-    background: touch.pressed || touch.has-hover ? Theme.bg-hover : transparent;
     horizontal-stretch: pow(img.height / img.width, 2) * (1920 / img.width) * (1080 / img.height);
 
     init => {
@@ -44,6 +43,36 @@ export component ImageItem inherits Rectangle {
                     }
                 }
             }
+
+            touch := TouchArea {
+                mouse-cursor: MouseCursor.pointer;
+
+                clicked => {
+                    State.selected-image = img;
+                }
+
+                pointer-event(event) => {
+                    if (event.kind == PointerEventKind.down) {
+                        ImageOverlayState.preview = thumbnail.source;
+                        ImageOverlayState.image-path = root.img.path;
+                        if ImageOverlayState.loaded-image-path != ImageOverlayState.image-path {
+                            ImageOverlayState.source = Action.get-image(ImageOverlayState.image-path);
+                        }
+                        ImageOverlayState.loaded-image-path = ImageOverlayState.image-path;
+                        ImageOverlayState.initial-mouse-x = self.mouse-x;
+                        ImageOverlayState.initial-mouse-y = self.mouse-y;
+                    } else if (event.kind == PointerEventKind.up) {
+                        ImageOverlayState.show = false;
+                    }
+                }
+
+                moved => {
+                    ImageOverlayState.show = true;
+
+                    ImageOverlayState.delta-x = (self.mouse-x - ImageOverlayState.initial-mouse-x) * ((ImageOverlayState.source.width / 1980 + ImageOverlayState.source.height / 1080) / 2);
+                    ImageOverlayState.delta-y = (self.mouse-y - ImageOverlayState.initial-mouse-y) * ((ImageOverlayState.source.width / 1980 + ImageOverlayState.source.height / 1080) / 2);
+                }
+            }
         }
 
         Rectangle {
@@ -66,36 +95,6 @@ export component ImageItem inherits Rectangle {
                     property: size;
                 }
             }
-        }
-    }
-
-    touch := TouchArea {
-        mouse-cursor: MouseCursor.pointer;
-
-        clicked => {
-            State.selected-image = img;
-        }
-
-        pointer-event(event) => {
-            if (event.kind == PointerEventKind.down) {
-                ImageOverlayState.preview = thumbnail.source;
-                ImageOverlayState.image-path = root.img.path;
-                if ImageOverlayState.loaded-image-path != ImageOverlayState.image-path {
-                    ImageOverlayState.source = Action.get-image(ImageOverlayState.image-path);
-                }
-                ImageOverlayState.loaded-image-path = ImageOverlayState.image-path;
-                ImageOverlayState.initial-mouse-x = self.mouse-x;
-                ImageOverlayState.initial-mouse-y = self.mouse-y;
-            } else if (event.kind == PointerEventKind.up) {
-                ImageOverlayState.show = false;
-            }
-        }
-
-        moved => {
-            ImageOverlayState.show = true;
-
-            ImageOverlayState.delta-x = (self.mouse-x - ImageOverlayState.initial-mouse-x) * ((ImageOverlayState.source.width / 1980 + ImageOverlayState.source.height / 1080) / 2);
-            ImageOverlayState.delta-y = (self.mouse-y - ImageOverlayState.initial-mouse-y) * ((ImageOverlayState.source.width / 1980 + ImageOverlayState.source.height / 1080) / 2);
         }
     }
 }
