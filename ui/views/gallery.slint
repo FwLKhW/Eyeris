@@ -6,8 +6,7 @@ import { ImageItem } from "../widgets/image-item.slint";
 import { ScrollArea } from "../components/area.slint";
 
 component ImageRow inherits HorizontalLayout {
-    height: 400px;
-    alignment: stretch;
+    height: 460px;
     spacing: Metrics.px-48;
 
     @children
@@ -17,7 +16,7 @@ export component Gallery inherits VerticalLayout {
     ScrollArea {
         VerticalLayout {
             padding: Metrics.px-48;
-            spacing: Metrics.px-96;
+            spacing: Metrics.px-144;
 
             for start-index in (State.images.length / State.images-per-row): ImageRow {
                 for row-item-index in State.images-per-row: ImageItem {

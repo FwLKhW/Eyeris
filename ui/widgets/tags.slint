@@ -1,0 +1,13 @@
+import { Metrics } from "../metrics.slint";
+
+import { EyerisText } from "../components/text.slint";
+
+export component Tags inherits FlexboxLayout {
+    in property <[string]> tags;
+
+    spacing: Metrics.px-8;
+
+    for tag in tags: EyerisText {
+        text: tag;
+    }
+}

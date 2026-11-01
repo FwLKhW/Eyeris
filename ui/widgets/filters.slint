@@ -19,7 +19,6 @@ export component FilterButton inherits Rectangle {
     callback clicked();
 
     height: Metrics.px-48;
-    background: area.has-focus ? Theme.bg-hover : transparent;
 
     HorizontalLayout {
         cross-axis-alignment: center;
@@ -86,12 +85,5 @@ export component Filters inherits HorizontalLayout {
     
     Rectangle {
         horizontal-stretch: 1;
-    }
-    
-    FilterButton {
-        icon: Icons.trash;
-        icon-color: Theme.danger;
-        tooltip: "Clear";
-        tooltip-offset: self.height;
     }
 }

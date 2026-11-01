@@ -1,0 +1,21 @@
+import { Metrics } from "../metrics.slint";
+
+import { FocusTouchArea } from "../components/area.slint";
+
+export component ColorLine inherits HorizontalLayout {
+    in property <[color]> colors;
+
+    padding: Metrics.px-8;
+
+    for c in colors: Rectangle {
+        height: 24px;
+        min-width: 24px;
+        background: c;
+
+        area := FocusTouchArea {
+            clicked => {
+                // TODO search by color
+            }
+        }
+    }
+}
