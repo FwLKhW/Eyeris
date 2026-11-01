@@ -1,7 +1,4 @@
 {
-    "slint.libraryPaths": {
-        "ui": "./ui/ui.slint"
-    },
     "cSpell.words": [
         "crossfiledialog",
         "distpath",
@@ -20,10 +17,29 @@
         "pyinstaller",
         "rgba",
         "sentencepiece",
+        "siglip",
         "slint",
         "srgb",
         "tinydb",
         "titlebar",
         "ultralytics"
-    ]
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.jj": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        ".gitignore": true,
+        ".venv": true,
+        ".vscode": true,
+        "bin": true,
+        "*.log": true,
+        "*.pt": true,
+        "uv.lock": true,
+        "justfile": true,
+        "README.md": true,
+        "pyproject.toml": true,
+    }
 }
