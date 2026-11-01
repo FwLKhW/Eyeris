@@ -16,30 +16,37 @@ class SS:
             name="images", metadata={"hnsw:space": "cosine"}
         )
 
-    def index_images(self, image_paths: list[Path]):
+    def index_images(self, image_paths: list[Path], batch_size: int = 32):
         if not image_paths:
             return
 
-        images = []
-        valid_paths = []
+        cnt = 0
+        total = len(image_paths)
+        for i in range(0, len(image_paths), batch_size):
+            batch_paths = image_paths[i : i + batch_size]
+            images = []
+            valid_paths = []
 
-        for path in image_paths:
-            try:
-                img = Image.open(path).convert("RGB")
-                images.append(img)
-                valid_paths.append(path)
-            except Exception as e:  # noqa: BLE001
-                print(f"Skipping {path} due to load error: {e}")
+            for path in batch_paths:
+                try:
+                    img = Image.open(path).convert("RGB")
+                    images.append(img)
+                    valid_paths.append(path)
+                except Exception as e:  # noqa: BLE001
+                    print(f"Skipping {path} due to load error: {e}")
 
-        if not images:
-            return
+            if not images:
+                continue
 
-        embeddings = self.model.encode(
-            images, normalize_embeddings=True, convert_to_numpy=True
-        ).tolist()
-        ids = [str(path.resolve()) for path in valid_paths]
+            embeddings = self.model.encode(
+                images, normalize_embeddings=True, convert_to_numpy=True
+            ).tolist()
+            ids = [str(path.resolve()) for path in valid_paths]
 
-        self.collection.upsert(ids=ids, embeddings=embeddings)
+            self.collection.upsert(ids=ids, embeddings=embeddings)
+
+            cnt += len(ids)
+            print(f"{cnt}/{total} images indexed")
 
     def search(self, text: str, thres: float = 0.25, limit: int = 50) -> list[Path]:
         count = self.collection.count()
