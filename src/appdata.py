@@ -28,6 +28,10 @@ class AppData:
         )
         self.db.commit()
 
+    def clear_collection_history(self):
+        self.db.execute("DELETE FROM collections")
+        self.db.commit()
+
 
 if __name__ == "__main__":
     pass
