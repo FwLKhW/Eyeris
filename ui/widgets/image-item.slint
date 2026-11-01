@@ -30,7 +30,7 @@ export component ImageItem inherits Rectangle {
         mouse-cursor: MouseCursor.pointer;
 
         clicked => {
-            State.selected-image = img;
+            State.selected-image = root.img;
         }
 
         pointer-event(event) => {

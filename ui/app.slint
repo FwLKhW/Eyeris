@@ -88,23 +88,11 @@ export component App inherits Window {
         }
     }
 
-    // Rectangle {
-    //     background: rgba(0, 0, 0, 0.8);
-    //     z: 999;
-
-    //     Image {
-    //         source: @image-url("fixtures/imgs/train.webp");
-    //     }
-    // }
     ImageOverlay { }
 
-    LoadingOverlay {
-        z: 998;
-    }
+    LoadingOverlay { }
 
     Titlebar {
-        z: 999;
-
         minimize => { root.minimized = true; }
         maximize => { root.maximized = !root.maximized; }
         close => { root.hide(); }

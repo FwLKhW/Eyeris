@@ -1,10 +1,11 @@
 import { IndexedImage } from "../globals.slint";
 import { Typography } from "../typography.slint";
 import { Metrics } from "../metrics.slint";
+import { State } from "../globals.slint";
 
 import { EyerisText } from "../components/text.slint";
 
-component Row inherits HorizontalLayout {
+component InfoRow inherits HorizontalLayout {
     in property <string> name;
     in property <string> value;
 
@@ -24,29 +25,34 @@ component Row inherits HorizontalLayout {
 }
 
 export component ImageInfo inherits VerticalLayout {
-    in-out property <IndexedImage> img;
+    in property <IndexedImage> img <=> State.selected-image;
 
     padding: Metrics.px-16;
 
     if img.width > 0: VerticalLayout {
         spacing: Metrics.px-8;
 
-        Row {
+        InfoRow {
             name: "Name";
             value: img.name;
         }
 
-        Row {
+        InfoRow {
             name: "Type";
             value: img.format;
         }
 
-        Row {
+        InfoRow {
             name: "Size";
+            value: img.size < 102400 ? (img.size / 1024).to-fixed(2) + " KB" : (img.size / 1024 / 1024).to-fixed(2) + " MB";
+        }
+
+        InfoRow {
+            name: "Dimensions";
             value: img.width + " x " + img.height;
         }
 
-        Row {
+        InfoRow {
             name: "Rating";
             value: img.rating;
         }
