@@ -67,13 +67,13 @@ export component Input {
             }
 
             IconButton {
-                visible: input.text != "" && input.has-focus;
+                visible: input.text != "";
                 icon: Icons.close;
                 bg-hover: transparent;
 
                 clicked => {
                     input.text = "";
-                    input.clear-focus();
+                    input.accepted();
                 }
             }
         }
