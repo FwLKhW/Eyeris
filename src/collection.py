@@ -40,24 +40,47 @@ class Collection:
     def get_image(self, rel_path: str) -> np.ndarray | None:
         return load_image(self.path / rel_path)
 
-    def get_images_data(self) -> list:
+    def get_images_data(self, filters: dict | None = None) -> list:
         if not self.db_path.exists():
             return []
 
         self.db = sqlite3.connect(self.db_path)
         self.db.row_factory = sqlite3.Row
-        cur = self.db.execute("SELECT * FROM images")
+        cur = self.db.execute(self._get_query_by_filters(filters))
+
         rows = cur.fetchall()
-        images = [row2slint(dict(row)) for row in rows]
+        images = [self._row_to_dict(dict(row)) for row in rows]
         return images
 
+    def _get_query_by_filters(self, filters: dict | None = None) -> str:
+        """Example:
+        filters = {
+            "search": "cat",
+        }
+        """
 
-def row2slint(item: dict) -> dict:
-    item.pop("id")
-    item["tags"] = item["tags"].split("|")
-    item["colors"] = []
-    for color_key in ["color_1", "color_2", "color_3", "color_4"]:
-        if item.get(color_key):
-            item["colors"].append(dec2slint(item[color_key]))
-        item.pop(color_key)
-    return item
+        query = "SELECT * FROM images"
+
+        if filters is None or len(filters) == 0:
+            return query
+
+        conditions = []
+
+        for key, value in filters.items():
+            if key == "search":
+                conditions.append(f"(name LIKE '%{value}%')")
+
+        if conditions:
+            query += " WHERE " + " AND ".join(conditions)
+
+        return query
+
+    def _row_to_dict(self, item: dict) -> dict:
+        item.pop("id")
+        item["tags"] = item["tags"].split("|")
+        item["colors"] = []
+        for color_key in ["color_1", "color_2", "color_3", "color_4"]:
+            if item.get(color_key):
+                item["colors"].append(dec2slint(item[color_key]))
+            item.pop(color_key)
+        return item
