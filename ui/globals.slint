@@ -35,6 +35,7 @@ export struct Filters {
 export enum ImageProperty { name, format, size, dimensions, created, modified, rating, tags, colors }
 
 export global Action {
+    callback fetch-collection-list();
     callback open-collection();
     callback open-collection-by-path(string);
 
@@ -52,6 +53,7 @@ export global Action {
 }
 
 export global State {
+    in-out property <[Collection]> collection-list;
     in-out property <Collection> collection;
     in property <bool> indexing;
     in property <bool> generating-thumbnails;

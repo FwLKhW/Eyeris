@@ -35,6 +35,15 @@ export component CollectionButton inherits Rectangle {
         width: root.width;
 
         VerticalLayout {
+            for collection in State.collection-list: StandardButton {
+                icon: Icons.heart;
+                text: collection.name;
+                
+                clicked => {
+                    Action.open-collection-by-path(collection.path);
+                }
+            }
+
             StandardButton {
                 icon: Icons.folder;
                 text: "Example";
@@ -57,6 +66,7 @@ export component CollectionButton inherits Rectangle {
 
     area := FocusTouchArea {
         clicked => {
+            Action.fetch-collection-list();
             popover.show();
         }
     }

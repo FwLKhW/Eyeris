@@ -1,11 +1,12 @@
-from pprint import pp
 import sys
 from asyncio.threads import to_thread
 from pathlib import Path
+from pprint import pp
 
 import slint
 from crossfiledialog import choose_folder
 
+from src.appdata import AppData
 from src.collection import Collection
 from src.log import get_logger
 from src.utils import to_slint
@@ -19,7 +20,12 @@ logger = get_logger("Application")
 class App(slint.loader.app.App):
     def __init__(self) -> None:
         super().__init__()
+        self.appdata = AppData()
         self.collection: Collection | None = None
+
+    @slint.callback(global_name="Action")
+    async def fetch_collection_list(self):
+        self.State.collection_list = to_slint(self.appdata.get_collections())
 
     @slint.callback(global_name="Action")
     async def open_collection(self):
@@ -30,6 +36,7 @@ class App(slint.loader.app.App):
 
     @slint.callback(global_name="Action")
     async def open_collection_by_path(self, path: str):
+        self.appdata.upsert_collection(Path(path))
         self.collection = Collection(Path(path))
 
         logger.info(
