@@ -6,6 +6,7 @@ import { Theme } from "../theme.slint";
 
 import { EyerisText } from "../components/text.slint";
 import { Rating } from "../components/rating.slint";
+import { FocusTouchArea } from "../components/area.slint";
 
 component Tags inherits FlexboxLayout {
     in property <[string]> tags;
@@ -14,6 +15,24 @@ component Tags inherits FlexboxLayout {
 
     for tag in tags: EyerisText {
         text: tag;
+    }
+}
+
+component Colors inherits HorizontalLayout {
+    in property <[color]> colors;
+
+    padding: Metrics.px-8;
+
+    for c in colors: Rectangle {
+        height: 24px;
+        min-width: 24px;
+        background: c;
+
+        area := FocusTouchArea {
+            clicked => {
+                // TODO search by color
+            }
+        }
     }
 }
 
@@ -53,6 +72,10 @@ export component PropertyRow inherits Rectangle {
 
         if property == tags: Tags {
             tags <=> img.tags;
+        }
+
+        if property == colors: Colors {
+            colors: img.colors;
         }
     }
 }

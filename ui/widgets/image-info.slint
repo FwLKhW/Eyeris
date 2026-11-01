@@ -56,5 +56,14 @@ export component ImageInfo inherits VerticalLayout {
             name: "Rating";
             value: img.rating;
         }
+
+        InfoRow {
+            name: "Colors";
+            value: "rgb(" + img.colors[0].red + ", " + img.colors[0].green + ", " + img.colors[0].blue + ")\n" + 
+                "rgb(" + img.colors[1].red + ", " + img.colors[1].green + ", " + img.colors[1].blue + ")\n" + 
+                "rgb(" + img.colors[2].red + ", " + img.colors[2].green + ", " + img.colors[2].blue + ")\n" + 
+                "rgb(" + img.colors[3].red + ", " + img.colors[3].green + ", " + img.colors[3].blue + ")"
+            ;
+        }
     }
 }
