@@ -12,8 +12,8 @@ import { Tabs } from "../components/tab.slint";
 
 export component Left inherits VerticalLayout {
     Tabs {
-        icons: [Icons.home, Icons.chart, Icons.tag];
-        active-index <=> State.tab-index;
+        icons: [Icons.home, Icons.tag];
+        active-index <=> State.left-tab-index;
     }
 
     HorizontalSeparator { }

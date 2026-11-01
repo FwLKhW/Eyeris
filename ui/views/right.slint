@@ -3,8 +3,19 @@ import { State } from "../globals.slint";
 import { ImagePreview } from "../widgets/image-preview.slint";
 import { ImageInfo } from "../widgets/image-info.slint";
 
+import { HorizontalSeparator } from "../components/separator.slint";
+import { Tabs } from "../components/tab.slint";
+import { Icons } from "../icons.slint";
+
 export component Right inherits VerticalLayout {
     alignment: start;
+
+    Tabs {
+        icons: [Icons.eye, Icons.chart];
+        active-index <=> State.right-tab-index;
+    }
+
+    HorizontalSeparator { }
 
     VerticalLayout {
         height: 374px;

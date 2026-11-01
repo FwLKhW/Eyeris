@@ -1,3 +1,97 @@
+import { Metrics } from "../metrics.slint";
+import { Theme } from "../theme.slint";
+import { Icons } from "../icons.slint";
+
+import { FocusTouchArea } from "../components/area.slint";
+import { EyerisText } from "../components/text.slint";
+import { IconButton, StandardButton } from "../components/button.slint";
+import { Icon } from "../components/icon.slint";
+import { PopoverOnce } from "../components/popover.slint";
+import { Action, State } from "../globals.slint";
+
+export component FilterButton inherits Rectangle {
+    in property <image> icon;
+    in property <color> icon-color;
+    in property <string> text;
+    in property <string> tooltip <=> area.tooltip;
+    in property <length> tooltip-offset <=> area.tooltip-offset;
+
+    callback clicked();
+
+    height: Metrics.px-48;
+    background: area.has-focus ? Theme.bg-hover : transparent;
+
+    HorizontalLayout {
+        cross-axis-alignment: center;
+        padding-left: Metrics.px-8;
+        padding-right: Metrics.px-8;
+
+        Icon {
+            icon: root.icon;
+            color: root.icon-color;
+        }
+
+        if !root.text.is-empty: EyerisText {
+            text: root.text;
+        }
+    }
+
+    area := FocusTouchArea {
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
 export component Filters inherits HorizontalLayout {
+    height: Metrics.px-60;
+    padding-left: Metrics.px-8;
+    padding-right: Metrics.px-8;
+    cross-axis-alignment: center;
+
+    FilterButton {
+        icon: Icons.clock;
+        icon-color: Theme.green; 
+        tooltip: "Created";
+        tooltip-offset: self.height;
+
+        popover := PopoverOnce {
+            width: 12rem;
+            v-align: end;
+
+            VerticalLayout {
+                StandardButton {
+                    icon: Icons.clock;
+                    text: "Last a day";
+
+                    clicked => {
+                        State.filters.last-created = 24 * 3600000;
+                        Action.reload-images();
+                    }
+                }
+            }
+        }
+
+        clicked => {
+            popover.show();
+        }
+    }
     
+    FilterButton {
+        icon: Icons.clock;
+        icon-color: Theme.orange; 
+        tooltip: "Modified";
+        tooltip-offset: self.height;
+    }
+    
+    Rectangle {
+        horizontal-stretch: 1;
+    }
+    
+    FilterButton {
+        icon: Icons.trash;
+        icon-color: Theme.danger;
+        tooltip: "Clear";
+        tooltip-offset: self.height;
+    }
 }

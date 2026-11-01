@@ -24,7 +24,7 @@ export struct Filters {
     // format: string,
     // size-min: int,
     // size-max: int,
-    // last-created: int,
+    last-created: int,
     // last-modified: int,
     // rating-min: int,
     // rating-max: int,
@@ -58,7 +58,8 @@ export global State {
     in property <bool> indexing;
     in property <bool> generating-thumbnails;
 
-    in-out property <int> tab-index;
+    in-out property <int> left-tab-index;
+    in-out property <int> right-tab-index;
 
     in property <[IndexedImage]> images;
     in property <IndexedImage> selected-image;

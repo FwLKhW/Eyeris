@@ -16,6 +16,7 @@ export component IconButton inherits Rectangle {
     in property <length> size <=> icon.size;
     in property <float> ratio: 1;
     in property <image> icon <=> icon.icon;
+    in property <color> icon-color: Theme.fg;
     in property <float> icon-scale <=> icon.scale;
     in property <color> bg-hover: Theme.bg-hover;
     in property <bool> activated: false;
@@ -28,7 +29,9 @@ export component IconButton inherits Rectangle {
 
     callback clicked();
 
-    icon := Icon { }
+    icon := Icon { 
+        color: icon-color;
+    }
 
     area := FocusTouchArea {
         clicked => {

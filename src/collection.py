@@ -1,5 +1,6 @@
 import sqlite3
 import subprocess
+import time
 from pathlib import Path
 
 import numpy as np
@@ -74,6 +75,9 @@ class Collection:
         for key, value in filters.items():
             if key == "search":
                 conditions.append(f"(name LIKE '%{value}%')")
+            if key == "last_created":
+                current_time_ms = time.time_ns() // 1_000_000
+                conditions.append(f"(created > {current_time_ms - value})")
 
         if conditions:
             query += " WHERE " + " AND ".join(conditions)
