@@ -1,14 +1,11 @@
 import sys
-from asyncio.threads import to_thread
 from pathlib import Path
-from pprint import pp
 
 import slint
 from crossfiledialog import choose_folder
 
 from src.appdata import AppData
 from src.collection import Collection
-from src.index import generate_thumbnails, indexing_extended
 from src.log import get_logger
 from src.utils import to_slint
 
@@ -25,34 +22,24 @@ class App(slint.loader.app.App):
         self.collection: Collection | None = None
 
     @slint.callback(global_name="Action")
-    async def fetch_collection_list(self):
+    def fetch_collection_list(self):
         self.State.collection_list = to_slint(self.appdata.get_collections())
 
     @slint.callback(global_name="Action")
-    async def open_collection(self):
+    def open_collection(self):
         path = choose_folder()
         if path is None:
             return
         self.open_collection_by_path(path)
 
     @slint.callback(global_name="Action")
-    async def open_collection_by_path(self, path: str):
+    def open_collection_by_path(self, path: str):
         self.appdata.upsert_collection(Path(path))
         self.collection = Collection(Path(path))
-
         logger.info(
             f"Open collection '{self.collection.name}' ({self.collection.path})"
         )
-
         self.State.collection = to_slint(self.collection.to_slint())
-
-        self.State.indexing = True
-        if not self.collection.db_path.exists():
-            await to_thread(indexing_extended(self.collection.path))
-        if not self.collection.thumbnails_path.exists():
-            await to_thread(generate_thumbnails(self.collection.path))
-        self.State.indexing = False
-
         self.reload_images()
 
     @slint.callback(global_name="Action")
