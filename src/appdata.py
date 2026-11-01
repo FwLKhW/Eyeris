@@ -2,15 +2,14 @@ import os
 import sqlite3
 from pathlib import Path
 
-import platformdirs
+from src.config import APPLICATION_DATA_PATH
 
 
 class AppData:
     def __init__(self):
-        self.appdata_path = platformdirs.user_data_path() / "eyeris"
-        os.makedirs(self.appdata_path, exist_ok=True)
+        os.makedirs(APPLICATION_DATA_PATH, exist_ok=True)
 
-        self.db = sqlite3.connect(self.appdata_path / "eyeris.db")
+        self.db = sqlite3.connect(APPLICATION_DATA_PATH / "eyeris.db")
         self.db.row_factory = sqlite3.Row
         self.db.execute("""
             CREATE TABLE IF NOT EXISTS collections (
