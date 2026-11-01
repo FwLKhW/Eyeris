@@ -1,9 +1,9 @@
 import {
     ImageOverlayState,
+    ImageProperty,
     IndexedImage,
     Action,
     State,
-    ImageProperty,
 } from "../globals.slint";
 import { Typography } from "../typography.slint";
 import { Metrics } from "../metrics.slint";
@@ -13,29 +13,11 @@ import { Icons } from "../icons.slint";
 import { HorizontalSeparator } from "../components/separator.slint";
 import { ScrollArea } from "../components/area.slint";
 import { EyerisText } from "../components/text.slint";
-
-component PropertyRow inherits Rectangle {
-    in property <ImageProperty> property;
-    in property <IndexedImage> img;
-
-    if property == name: EyerisText {
-        text: img.path;
-        font-weight: Typography.medium;
-    }
-    if property == dimensions: EyerisText {
-        text: img.width + " x " + img.height;
-        style: Typography.small;
-        color: Theme.fg-faded;
-    }
-    if property == size: EyerisText {
-        text: img.size < 102400 ? (img.size / 1024).to-fixed(2) + " KB" : (img.size / 1024 / 1024).to-fixed(2) + " MB";
-        style: Typography.small;
-        color: Theme.fg-faded;
-    }
-}
+import { Rating } from "../components/rating.slint";
+import { PropertyRow } from "../widgets/property-row.slint";
 
 component ImageItem inherits Rectangle {
-    in property <IndexedImage> img;
+    in-out property <IndexedImage> img;
 
     background: touch.pressed || touch.has-hover ? Theme.bg-hover : transparent;
     horizontal-stretch: pow(img.height / img.width, 2) * (1920 / img.width) * (1080 / img.height);
@@ -47,7 +29,6 @@ component ImageItem inherits Rectangle {
 
     VerticalLayout {
         spacing: Metrics.px-32;
-        // padding: Metrics.px-16;
 
         Rectangle {
             height: 256px;
@@ -72,14 +53,14 @@ component ImageItem inherits Rectangle {
 
             VerticalLayout {
                 cross-axis-alignment: center;
-                
+
                 PropertyRow {
-                    img: root.img;
+                    img <=> root.img;
                 }
 
                 PropertyRow {
-                    img: root.img;
-                    property: dimensions;
+                    img <=> root.img;
+                    property: rating;
                 }
 
                 PropertyRow {

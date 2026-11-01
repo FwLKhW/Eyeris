@@ -1,14 +1,56 @@
 import { IndexedImage } from "../globals.slint";
+import { Typography } from "../typography.slint";
 import { Metrics } from "../metrics.slint";
 
 import { EyerisText } from "../components/text.slint";
+import { Rating } from "../components/rating.slint";
+
+component Row inherits HorizontalLayout {
+    in property <string> name;
+    in property <string> value;
+
+    cross-axis-alignment: center;
+
+    EyerisText {
+        text: name;
+        width: 10rem;
+        style: Typography.label;
+    }
+
+    if !value.is-empty: EyerisText {
+        text: value;
+    }
+
+    @children
+}
 
 export component ImageInfo inherits VerticalLayout {
     in property <IndexedImage> img;
 
-    spacing: Metrics.px-8;
+    padding: Metrics.px-16;
 
-    EyerisText {
-        
+    if img.width > 0: VerticalLayout {
+        spacing: Metrics.px-8;
+
+        Row {
+            name: "Name";
+            value: img.name;
+        }
+
+        Row {
+            name: "Size";
+            value: img.width + " x " + img.height;
+        }
+
+        Row {
+            name: "Type";
+            value: img.format;
+        }
+
+        Row {
+            name: "Rating";
+
+            Rating { }
+        }
     }
 }

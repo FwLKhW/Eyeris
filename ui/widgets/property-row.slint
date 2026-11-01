@@ -1,0 +1,57 @@
+
+import { ImageProperty, IndexedImage } from "../globals.slint";
+import { Typography } from "../typography.slint";
+import { Metrics } from "../metrics.slint";
+import { Theme } from "../theme.slint";
+
+import { EyerisText } from "../components/text.slint";
+import { Rating } from "../components/rating.slint";
+
+component Tags inherits FlexboxLayout {
+    in property <[string]> tags;
+
+    spacing: Metrics.px-8;
+    flex-wrap: FlexboxLayoutWrap.wrap;
+
+    for tag in tags: EyerisText {
+        text: tag;
+    }
+}
+
+export component PropertyRow inherits HorizontalLayout {
+    in property <ImageProperty> property;
+    in-out property <IndexedImage> img;
+
+    height: 32px;
+
+    if property == name: EyerisText {
+        text: img.path;
+        font-weight: Typography.medium;
+    }
+
+    if property == format: EyerisText {
+        text: img.format;
+        style: Typography.small;
+        color: Theme.fg-faded;
+    }
+
+    if property == dimensions: EyerisText {
+        text: img.width + " x " + img.height;
+        style: Typography.small;
+        color: Theme.fg-faded;
+    }
+
+    if property == size: EyerisText {
+        text: img.size < 102400 ? (img.size / 1024).to-fixed(2) + " KB" : (img.size / 1024 / 1024).to-fixed(2) + " MB";
+        style: Typography.small;
+        color: Theme.fg-faded;
+    }
+
+    if property == rating: Rating {
+        value <=> img.rating;
+    }
+
+    if property == tags: Tags {
+        tags: img.tags;
+    }
+}

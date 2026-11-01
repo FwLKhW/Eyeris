@@ -1,31 +1,22 @@
 import { Theme } from "../theme.slint";
 import { Icons } from "../icons.slint";
 
+import { IconButton } from "button.slint";
+import { EyerisText } from "text.slint";
 import { Icon } from "icon.slint";
 
-export component Star inherits Image {
-    in property <int> value;
-
-    callback clicked();
-
-    source: Icons.star;
-    colorize: root.value >= 1 ? Theme.yellow : Theme.fg-faded;
-
-    area := TouchArea {
-        clicked => {
-            root.clicked();
-        }
-    }
-}
-
-export component Rating inherits HorizontalLayout {
+export component Rating inherits Rectangle {
     in-out property <int> value;
 
-    for i in 5: Star {
-        value: i;
+    HorizontalLayout {
+        for i in 5: IconButton {
+            icon: Icons.star;
+            // rating: i + 1;
+            // target-rating: root.value;
 
-        clicked => {
-            root.value = i;
+            clicked => {
+                root.value = i + 1;
+            }
         }
     }
 }
