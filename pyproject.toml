@@ -5,14 +5,15 @@ description = "A Digital Asset Management focus on images."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "chromadb>=1.5.9",
     "crossfiledialog>=1.3.1",
     "numpy>=2.5.4",
     "pillow>=13.0.0",
     "platformdirs>=4.13.5",
     "protobuf>=7.36.2",
+    "sentence-transformers>=6.2.0",
     "sentencepiece>=0.2.2",
     "slint>=1.18.1b1",
-    "tinydb>=4.9.0",
     "transformers>=5.22.1",
     "ultralytics>=8.4.194",
 ]
@@ -20,4 +21,5 @@ dependencies = [
 [dependency-groups]
 dev = [
     "ipykernel>=7.4.0",
+    "ipywidgets>=8.1.9",
 ]
