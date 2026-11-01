@@ -41,7 +41,7 @@ def hex_to_slint_color(hex: str) -> Color:
     )
 
 
-def dec2slint(decimal: int):
+def dec_to_slint_color(decimal: int) -> Color:
     return Color(
         {
             "red": (decimal >> 16) & 0xFF,
@@ -51,5 +51,14 @@ def dec2slint(decimal: int):
     )
 
 
+def fg_rgb(text, r, g, b) -> str:
+    return f"\033[38;2;{r};{g};{b}m{text}\033[0m"
+
+
+def bg_rgb(text, r, g, b) -> str:
+    return f"\033[48;2;{r};{g};{b}m{text}\033[0m"
+
+
 if __name__ == "__main__":
-    print(oklab_to_rgb_int(0.86, -0.1, 0.17))  # (192, 227, 36)
+    print(fg_rgb("This is a custom coral/pink color!", 255, 127, 80))
+    print(bg_rgb("This has a custom mint green background!", 152, 251, 152))

@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 
-from src.color import dec2slint
+from src.color import dec_to_slint_color
 from src.config import DOT_FOLDER
 from src.log import get_logger
 from src.utils import load_image
@@ -91,6 +91,6 @@ class Collection:
         item["colors"] = []
         for color_key in ["color_1", "color_2", "color_3", "color_4"]:
             if item.get(color_key):
-                item["colors"].append(dec2slint(item[color_key]))
+                item["colors"].append(dec_to_slint_color(item[color_key]))
             item.pop(color_key)
         return item
