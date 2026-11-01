@@ -25,7 +25,7 @@ component InfoRow inherits HorizontalLayout {
 }
 
 export component ImageInfo inherits VerticalLayout {
-    in property <IndexedImage> img <=> State.selected-image;
+    in-out property <IndexedImage> img <=> State.selected-image;
 
     padding: Metrics.px-16;
 

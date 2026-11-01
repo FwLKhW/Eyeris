@@ -1,0 +1,81 @@
+import { Typography } from "../typography.slint";
+import { Metrics } from "../metrics.slint";
+import { Theme } from "../theme.slint";
+import { Icons } from "../icons.slint";
+
+import { IconButton } from "button.slint";
+import { EyerisText } from "text.slint";
+import { Icon } from "icon.slint";
+
+export component Input {
+    in property <image> icon: Icons.search;
+    in property <string> placeholder: "Search";
+    in property <int> max-length: 24;
+    out property <string> text <=> input.text;
+
+    min-width: 160px;
+
+    callback search(string);
+
+    Rectangle {
+        background: Theme.bg-area;
+
+        HorizontalLayout {
+            cross-axis-alignment: center;
+            padding-left: Metrics.px-8;
+            padding-right: Metrics.px-8;
+
+            IconButton {
+                icon: icon;
+                bg-hover: transparent;
+
+                clicked => {
+                    input.accepted();
+                }
+            }
+
+            input := TextInput {
+                horizontal-stretch: 1;
+                vertical-alignment: center;
+                opacity: 0.8;
+
+                if input.text.is-empty: EyerisText {
+                    text: root.placeholder;
+                    color: Theme.fg-faded;
+                }
+
+                key-pressed(event) => {
+                    if event.text == Key.Escape {
+                        self.accepted();
+                        return accept;
+                    }
+                    if self.text.character-count > root.max-length
+                        && event.text != Key.Backspace
+                        && event.text != Key.LeftArrow
+                        && event.text != Key.RightArrow
+                        && event.text != Key.UpArrow
+                        && event.text != Key.DownArrow {
+                        return accept;
+                    }
+                    reject
+                }
+
+                accepted() => {
+                    self.clear-focus();
+                    root.search(self.text);
+                }
+            }
+
+            IconButton {
+                visible: input.text != "" && input.has-focus;
+                icon: Icons.close;
+                bg-hover: transparent;
+
+                clicked => {
+                    input.text = "";
+                    input.clear-focus();
+                }
+            }
+        }
+    }
+}

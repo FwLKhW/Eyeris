@@ -3,12 +3,23 @@ import { State } from "../globals.slint";
 import { Dashboard } from "../views/dashboard.slint";
 import { Gallery } from "../views/gallery.slint";
 
+import { Filters } from "../widgets/filters.slint";
+import { Searchs } from "../widgets/searchs.slint";
+
+import { HorizontalSeparator } from "../components/separator.slint";
+
 export component Center inherits VerticalLayout {
     changed width => {
         State.images-per-row = Math.clamp(root.width / 256px, 1, 5);
     }
 
-    if State.tab-index == 0: Gallery { }
-    if State.tab-index == 1: Dashboard { }
-    if State.tab-index == 2: Dashboard { }
+    // Filters { }
+
+    HorizontalSeparator { }
+
+    Gallery { }
+
+    HorizontalSeparator { }
+
+    Searchs { }
 }

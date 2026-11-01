@@ -1,0 +1,22 @@
+import { Input } from "../components/input.slint";
+import { Metrics } from "../metrics.slint";
+
+import { VerticalSeparator } from "../components/separator.slint";
+import { Icons } from "../icons.slint";
+
+export component Searchs inherits HorizontalLayout {
+    alignment: stretch;
+    height: Metrics.px-60;
+
+    Input {
+        horizontal-stretch: 3;
+    }
+
+    VerticalSeparator { }
+
+    Input {
+        horizontal-stretch: 5;
+        icon: Icons.vector-square;
+        placeholder: "Semantic Search";
+    }
+}
