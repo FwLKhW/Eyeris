@@ -18,13 +18,13 @@ class AppData:
             )
         """)
 
-    def get_collections(self) -> list[Path]:
+    def get_collections(self) -> list[dict]:
         collections = self.db.execute("SELECT * FROM collections").fetchall()
-        return [Path(p[0]) for p in collections]
+        return [{"path": Path(p[0]), "name": Path(p[0]).name} for p in collections]
 
     def upsert_collection(self, path: Path):
         self.db.execute(
-            "INSERT INTO collections (path) VALUES (?)",
+            "INSERT OR IGNORE INTO collections (path) VALUES (?)",
             (str(path.resolve()),),
         )
 

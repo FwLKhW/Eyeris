@@ -7,7 +7,9 @@ from src.appdata import AppData
 
 appdata = AppData()
 
-results = appdata.upsert_collection(Path("fixtures/Example"))
+appdata.upsert_collection(Path("fixtures/Example"))
+appdata.upsert_collection(Path("fixtures/Example"))
+appdata.upsert_collection(Path("~/Pictures"))
 results = appdata.get_collections()
 
 pp(results)
