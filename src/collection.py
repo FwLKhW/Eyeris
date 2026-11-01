@@ -1,5 +1,4 @@
 import sqlite3
-import subprocess
 import time
 from pathlib import Path
 
@@ -21,20 +20,8 @@ class Collection:
         self.db: sqlite3.Connection | None = None
         self.thumbnails_path = self.path / DOT_FOLDER / "thumbnails"
 
-    def slint(self) -> dict:
+    def to_slint(self) -> dict:
         return {"name": self.name, "path": str(self.path)}
-
-    def indexing(self) -> bool:
-        result = subprocess.run(["bin/iie", "index", str(self.path)], check=False)
-        return result.returncode == 0
-
-    def indexing_extended(self) -> bool:
-        result = subprocess.run(["bin/iie", "index", str(self.path), "-e"], check=False)
-        return result.returncode == 0
-
-    def generate_thumbnails(self) -> bool:
-        result = subprocess.run(["bin/iie", "thumb", str(self.path)], check=False)
-        return result.returncode == 0
 
     def get_thumbnail(self, hash: str) -> np.ndarray | None:
         return load_image(self.thumbnails_path / f"{hash}.png")
@@ -57,6 +44,20 @@ class Collection:
         rows = cur.fetchall()
         images = [self._row_to_dict(dict(row)) for row in rows]
         return images
+
+    def tag(self, id: int, tags: list[str]):
+        tags_str = "|".join(tags)
+        self.get_db().execute(
+            """
+            INSERT INTO images (id, tags) VALUES (?, ?)
+            ON CONFLICT(id) DO UPDATE SET tags = excluded.tags
+            """,
+            (
+                id,
+                tags_str,
+            ),
+        )
+        self.get_db().commit()
 
     def _get_query_by_filters(self, filters: dict | None = None) -> str:
         """Example:

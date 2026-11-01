@@ -5,7 +5,9 @@
         "Eyeris",
         "Flexbox",
         "flickable",
+        "hnsw",
         "ipykernel",
+        "keepdim",
         "kurisu",
         "Monda",
         "noconfirm",
@@ -20,6 +22,7 @@
         "siglip",
         "slint",
         "srgb",
+        "thres",
         "tinydb",
         "titlebar",
         "ultralytics"
