@@ -3,13 +3,18 @@ import { Metrics } from "../metrics.slint";
 
 import { VerticalSeparator } from "../components/separator.slint";
 import { Icons } from "../icons.slint";
+import { State, Action } from "../globals.slint";
 
-export component Searchs inherits HorizontalLayout {
-    alignment: stretch;
+export component SearchRow inherits HorizontalLayout {
     height: Metrics.px-60;
 
     Input {
         horizontal-stretch: 3;
+
+        search => {
+            State.filters.search = self.text;
+            Action.reload-images();
+        }
     }
 
     VerticalSeparator { }

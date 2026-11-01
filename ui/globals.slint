@@ -18,11 +18,27 @@ export struct IndexedImage {
     colors: [color],
 }
 
+export struct Filters {
+    search: string,
+    // semantic-search: string,
+    // format: string,
+    // size-min: int,
+    // size-max: int,
+    // last-created: int,
+    // last-modified: int,
+    // rating-min: int,
+    // rating-max: int,
+    // tags: [string],
+    // color: color,
+}
+
 export enum ImageProperty { name, format, size, dimensions, created, modified, rating, tags, colors }
 
 export global Action {
     callback open-collection();
     callback open-collection-by-path(string);
+
+    callback reload-images();
 
     callback indexing();
     callback indexing-extended();
@@ -33,9 +49,6 @@ export global Action {
 
     // load image by path
     callback get-image(string) -> image;
-
-    // filter
-    callback apply-filters();
 }
 
 export global State {
@@ -49,6 +62,8 @@ export global State {
     in property <IndexedImage> selected-image;
 
     in property <int> images-per-row: 4;
+
+    in-out property <Filters> filters;
 }
 
 export global WindowState {

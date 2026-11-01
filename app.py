@@ -1,3 +1,4 @@
+from pprint import pp
 import sys
 from asyncio.threads import to_thread
 from pathlib import Path
@@ -44,7 +45,15 @@ class App(slint.loader.app.App):
             await to_thread(self.collection.generate_thumbnails)
         self.State.indexing = False
 
-        self.State.images = to_slint(self.collection.get_images_data())
+        self.reload_images()
+
+    @slint.callback(global_name="Action")
+    def reload_images(self):
+        if self.collection is None:
+            return
+        self.State.images = to_slint(
+            self.collection.get_images_data({"search": self.State.filters.search})
+        )
 
     @slint.callback(global_name="Action")
     def get_thumbnail(self, hash: str):
