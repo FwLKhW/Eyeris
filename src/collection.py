@@ -17,6 +17,7 @@ class Collection:
         self.path = path
         self.name = path.name
         self.db_path = self.path / DOT_FOLDER / "index.db"
+        self.db: sqlite3.Connection | None = None
         self.thumbnails_path = self.path / DOT_FOLDER / "thumbnails"
 
     def slint(self) -> dict:
@@ -40,13 +41,17 @@ class Collection:
     def get_image(self, rel_path: str) -> np.ndarray | None:
         return load_image(self.path / rel_path)
 
+    def get_db(self) -> sqlite3.Connection:
+        if not isinstance(self.db, sqlite3.Connection):
+            self.db = sqlite3.connect(self.db_path)
+            self.db.row_factory = sqlite3.Row
+        return self.db
+
     def get_images_data(self, filters: dict | None = None) -> list:
         if not self.db_path.exists():
             return []
 
-        self.db = sqlite3.connect(self.db_path)
-        self.db.row_factory = sqlite3.Row
-        cur = self.db.execute(self._get_query_by_filters(filters))
+        cur = self.get_db().execute(self._get_query_by_filters(filters))
 
         rows = cur.fetchall()
         images = [self._row_to_dict(dict(row)) for row in rows]
