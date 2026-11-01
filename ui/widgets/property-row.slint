@@ -18,40 +18,42 @@ component Tags inherits FlexboxLayout {
     }
 }
 
-export component PropertyRow inherits HorizontalLayout {
+export component PropertyRow inherits Rectangle {
     in property <ImageProperty> property;
     in-out property <IndexedImage> img;
 
-    height: 32px;
+    HorizontalLayout {
+        cross-axis-alignment: center;
 
-    if property == name: EyerisText {
-        text: img.path;
-        font-weight: Typography.medium;
-    }
+        if property == name: EyerisText {
+            text: img.path;
+            font-weight: Typography.medium;
+        }
 
-    if property == format: EyerisText {
-        text: img.format;
-        style: Typography.small;
-        color: Theme.fg-faded;
-    }
+        if property == format: EyerisText {
+            text: img.format;
+            style: Typography.small;
+            color: Theme.fg-faded;
+        }
 
-    if property == dimensions: EyerisText {
-        text: img.width + " x " + img.height;
-        style: Typography.small;
-        color: Theme.fg-faded;
-    }
+        if property == dimensions: EyerisText {
+            text: img.width + " x " + img.height;
+            style: Typography.small;
+            color: Theme.fg-faded;
+        }
 
-    if property == size: EyerisText {
-        text: img.size < 102400 ? (img.size / 1024).to-fixed(2) + " KB" : (img.size / 1024 / 1024).to-fixed(2) + " MB";
-        style: Typography.small;
-        color: Theme.fg-faded;
-    }
+        if property == size: EyerisText {
+            text: img.size < 102400 ? (img.size / 1024).to-fixed(2) + " KB" : (img.size / 1024 / 1024).to-fixed(2) + " MB";
+            style: Typography.small;
+            color: Theme.fg-faded;
+        }
 
-    if property == rating: Rating {
-        value <=> img.rating;
-    }
+        if property == rating: Rating {
+            value <=> img.rating;
+        }
 
-    if property == tags: Tags {
-        tags: img.tags;
+        if property == tags: Tags {
+            tags <=> img.tags;
+        }
     }
 }
