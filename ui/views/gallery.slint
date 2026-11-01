@@ -7,6 +7,7 @@ import { ScrollArea } from "../components/area.slint";
 
 component ImageRow inherits HorizontalLayout {
     height: 400px;
+    alignment: stretch;
     spacing: Metrics.px-48;
 
     @children
@@ -19,9 +20,14 @@ export component Gallery inherits VerticalLayout {
             spacing: Metrics.px-96;
 
             for start-index in (State.images.length / State.images-per-row): ImageRow {
-                for row-item-index in State.images-per-row: ImageItem {
-                    img: State.images[start-index * State.images-per-row + row-item-index];
-                }
+            for row-item-index in State.images-per-row: ImageItem {
+                img: State.images[start-index * State.images-per-row + row-item-index];
+            }
+            // for row-item-index in State.images-per-row: Rectangle {
+            //     height: 256px;
+            //     background: green;
+            //     horizontal-stretch: 1;
+            // }
             }
 
             if Math.mod(State.images.length, State.images-per-row) > 0: ImageRow {
