@@ -300,6 +300,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "collection"
+version = "0.1.0"
+dependencies = [
+ "efs",
+]
+
+[[package]]
 name = "color"
 version = "0.1.0"
 dependencies = [
@@ -383,7 +390,9 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "color",
+ "efs",
  "index",
+ "rfd",
  "rusqlite",
  "xmp",
 ]

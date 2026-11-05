@@ -11,7 +11,7 @@ use rgb::Rgb;
 use color::extract_colors;
 use hash::blake3_image;
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct IndexedImage {
     pub name: String,
     pub format: String,
