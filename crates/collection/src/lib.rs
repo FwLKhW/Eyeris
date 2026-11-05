@@ -71,10 +71,7 @@ impl Collection {
         for img in &indexed_images {
             let hash_folder_path = self.images_path.join(&img.hash);
             fs::create_dir(&hash_folder_path)?;
-            fs::copy(
-                &img.origin,
-                &hash_folder_path.join(format!("{}.{}", &img.name, &img.format)),
-            )?;
+            fs::copy(&img.origin, hash_folder_path.join(&img.fullname))?;
             generate_thumbnail(Path::new(&img.origin))?;
         }
 

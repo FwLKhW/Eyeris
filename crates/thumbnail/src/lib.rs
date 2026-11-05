@@ -4,7 +4,7 @@ use anyhow::{Context, Result, bail};
 use image::imageops::FilterType;
 
 /// Create 512px bound `thumbnail.png` in the same folder as source image.
-/// 
+///
 /// # Errors
 ///
 /// Failed if image not exists or save thumbnail fail.
@@ -13,7 +13,7 @@ pub fn generate_thumbnail(img_path: &Path) -> Result<()> {
         bail!("can not get parent of image")
     };
 
-    let thumbnail_save_path = parent.join(format!("thumbnail.png"));
+    let thumbnail_save_path = parent.join("thumbnail.png");
     if thumbnail_save_path.exists() {
         return Ok(());
     }

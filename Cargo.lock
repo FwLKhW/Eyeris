@@ -294,9 +294,9 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
+ "collection",
  "colored_text",
- "db",
- "index",
+ "efs",
 ]
 
 [[package]]

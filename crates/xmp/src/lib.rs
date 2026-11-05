@@ -42,7 +42,11 @@ fn register_eyeris_namespace() -> xmp_toolkit::XmpResult<String> {
 ///
 /// Returns default empty `CustomXmp` when the file miss or wrong properties.
 #[must_use]
-#[allow(clippy::as_conversions, clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+#[allow(
+    clippy::as_conversions,
+    clippy::cast_possible_truncation,
+    clippy::cast_sign_loss
+)]
 pub fn read(filepath: &Path) -> CustomXmp {
     let Ok(meta) = XmpMeta::from_file(filepath) else {
         return CustomXmp::default();
