@@ -4,13 +4,13 @@ fn main() {
     let folder = pick_folder();
 
     if let Some(folder) = folder {
-        println!("Selected {folder:#?}\n");
+        println!("Selected {}\n", folder.display());
 
         let images = scan_images(&folder);
 
         println!("Images to be indexed:");
-        for i in images {
-            println!("{i:#?}")
+        for image in images {
+            println!("{}", image.display());
         }
     }
 }

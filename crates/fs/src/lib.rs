@@ -48,12 +48,14 @@ pub fn scan_images(path: &Path) -> Vec<PathBuf> {
     images
 }
 
+#[must_use]
 pub fn pick_images() -> Option<Vec<PathBuf>> {
     FileDialog::new()
         .add_filter("Images", &["jpg", "jpeg", "png", "webp", "avif"])
         .pick_files()
 }
 
+#[must_use]
 pub fn pick_folder() -> Option<PathBuf> {
     FileDialog::new().pick_folder()
 }
