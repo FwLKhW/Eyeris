@@ -7,23 +7,6 @@
 //   * `Rating`  – a single unsigned integer (star rating)
 //   * `Tags`    – an ordered array of strings (keywords)
 //
-// # How the XMP Toolkit is used
-//
-// The C++ XMP Toolkit (wrapped by `xmp_toolkit`) keeps namespace registrations as *global state*.
-// Before any property in the `eyeris` namespace can be addressed by its URI, that URI must be
-// registered once with `XmpMeta::register_namespace`. Registration is idempotent, so the helpers
-// below register the namespace on every call for simplicity.
-//
-// Writing follows the [`XmpFile`](xmp_toolkit::XmpFile) workflow:
-//
-//   1. `XmpFile::new`        – allocate a file handle
-//   2. `open_file(.., for_update)` – open the target file for read/write
-//   3. `xmp()`               – obtain the `XmpMeta` (create an empty one if absent)
-//   4. mutate the `XmpMeta`
-//   5. `put_xmp(&meta)`      – stage the new packet
-//   6. `try_close()`         – write the packet to disk and close
-//
-// Updates are lost if the `XmpFile` is dropped without calling `close`/`try_close`.
 
 use std::path::Path;
 
@@ -51,47 +34,31 @@ impl CustomXmp {
     pub const TAGS: &str = "Tags";
 }
 
-/// Register the `eyeris` namespace with the XMP Toolkit (global state).
-///
-/// Returns the prefix actually registered for the namespace URI. Registration is idempotent, so
-/// calling this repeatedly is safe and cheap.
 fn register_eyeris_namespace() -> xmp_toolkit::XmpResult<String> {
     XmpMeta::register_namespace(NS, PREFIX)
 }
 
 /// Read the Eyeris custom XMP metadata from a file.
 ///
-/// Returns [`None`] when the file contains no XMP packet at all. When the file has XMP but is
-/// missing the `Rating` or `Tags` properties, those fields fall back to their defaults (`0` and an
-/// empty vector) rather than failing.
-///
-/// # Errors
-///
-/// This function does not return a `Result`; a missing or unreadable XMP packet simply yields
-/// `None`. Underlying toolkit failures are converted to `None`.
-pub fn read(filepath: &Path) -> Option<CustomXmp> {
-    // `XmpMeta::from_file` opens the file read-only, reads the XMP packet, then closes the disk
-    // file immediately (read-only mode). It returns an error when there is no XMP in the file.
-    let meta = XmpMeta::from_file(filepath).ok()?;
+/// Returns default empty `CustomXmp` when the file miss or wrong properties.
+pub fn read(filepath: &Path) -> CustomXmp {
+    let Ok(meta) = XmpMeta::from_file(filepath) else {
+        return CustomXmp::default();
+    };
 
-    // Make sure our namespace is registered before addressing properties by URI.
     let _ = register_eyeris_namespace();
 
-    // `Rating` is a simple integer property. `property_i32` reads it and parses the string into an
-    // i32; we cast to u8 and default to 0 when the property is absent.
     let rating = meta
         .property_i32(NS, CustomXmp::RATING)
         .map(|value| value.value as u8)
         .unwrap_or(0);
 
-    // `Tags` is an ordered array property. `property_array` returns an iterator over the array
-    // items (the toolkit uses 1-based indices internally). Each item's value is one tag string.
     let tags = meta
         .property_array(NS, CustomXmp::TAGS)
         .map(|item| item.value)
         .collect();
 
-    Some(CustomXmp { rating, tags })
+    CustomXmp { rating, tags }
 }
 
 /// Write the `Rating` property into a file's XMP metadata.
