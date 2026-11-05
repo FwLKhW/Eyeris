@@ -15,6 +15,7 @@ pub struct IndexDB {
 impl IndexDB {
     pub const REL_PATH: &str = "index.db";
 
+    #[must_use]
     pub fn new_from_path(path: &Path) -> Self {
         Self {
             path: path.to_path_buf(),
@@ -27,40 +28,41 @@ impl IndexDB {
     pub fn add_images(&self, indexed_images: &[IndexedImage]) -> Result<()> {
         let mut conn = Connection::open(&self.path)?;
 
-        conn.execute(
+        conn.execute_batch(
             "CREATE TABLE IF NOT EXISTS images (
-                id          INTEGER PRIMARY KEY,
-                name        TEXT,
-                format      TEXT,
-                size        INTEGER,
-                width       INTEGER,
-                height      INTEGER,
-                created     INTEGER,
-                modified    INTEGER,
-                rating      INTEGER,
-                tags        TEXT,
-                hash        TEXT,
-                color_1     INTEGER,
-                color_2     INTEGER,
-                color_3     INTEGER,
-                color_4     INTEGER
-            )",
-            [],
+                id              INTEGER PRIMARY KEY,
+                origin          TEXT,
+                name            TEXT,
+                format          TEXT,
+                size            INTEGER,
+                width           INTEGER,
+                height          INTEGER,
+                created         INTEGER,
+                modified        INTEGER,
+                rating          INTEGER,
+                tags            TEXT,
+                hash            TEXT,
+                color_1         INTEGER,
+                color_2         INTEGER,
+                color_3         INTEGER,
+                color_4         INTEGER
+            ); CREATE INDEX idx_images_id ON images (id);",
         )?;
 
         let tx = conn.transaction()?;
         {
             let mut stmt = tx.prepare(
                 "INSERT INTO images (
-                    name, format, size, width, height, created, modified, rating,
-                    tags, hash, color_1, color_2, color_3, color_4
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    origin, name, format, size, width, height, created, modified,
+                    rating, tags, hash, color_1, color_2, color_3, color_4
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             )?;
 
-            for img in indexed_images.iter() {
+            for img in indexed_images {
                 let colors_int: Vec<i64> = img.colors.iter().map(rgb2dec).collect();
 
                 stmt.execute(params![
+                    img.origin,
                     img.name,
                     img.format,
                     img.size.cast_signed(),
