@@ -9,3 +9,6 @@ image = { workspace = true }
 rgb = { workspace = true }
 colored_text = { workspace = true }
 okmain = "0.2.0"
+
+[lints]
+workspace = true

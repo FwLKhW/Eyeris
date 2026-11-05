@@ -13,3 +13,6 @@ image = { workspace = true }
 rayon = { workspace = true }
 rgb = { workspace = true }
 path-slash = "0.2.1"
+
+[lints]
+workspace = true

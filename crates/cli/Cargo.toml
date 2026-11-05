@@ -9,3 +9,6 @@ colored_text = { workspace = true }
 db = { path = "../db" }
 index = { path = "../index" }
 clap = { version = "4.6.7", features = ["derive"] }
+
+[lints]
+workspace = true
