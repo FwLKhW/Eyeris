@@ -1,6 +1,8 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
+use rfd::FileDialog;
+
 #[must_use]
 pub fn scan_images(path: &Path) -> Vec<PathBuf> {
     let mut images = Vec::new();
@@ -44,4 +46,14 @@ pub fn scan_images(path: &Path) -> Vec<PathBuf> {
     }
 
     images
+}
+
+pub fn pick_images() -> Option<Vec<PathBuf>> {
+    FileDialog::new()
+        .add_filter("Images", &["jpg", "jpeg", "png", "webp", "avif"])
+        .pick_files()
+}
+
+pub fn pick_folder() -> Option<PathBuf> {
+    FileDialog::new().pick_folder()
 }
