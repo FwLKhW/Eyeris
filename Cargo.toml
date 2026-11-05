@@ -1,10 +1,19 @@
 [workspace]
 resolver = "3"
-members = ["crates/cli","crates/color", "crates/db", "crates/fs", "crates/hash", "crates/index", "crates/xmp"]
+members = [
+    "crates/cli",
+    "crates/color",
+    "crates/db",
+    "crates/fs",
+    "crates/hash",
+    "crates/index",
+    "crates/xmp",
+]
 
 
 [workspace.dependencies]
 anyhow = "1.0.104"
+colored_text = "0.6.0"
 image = { version = "0.25.10", features = [
     "jpeg",
     "png",
@@ -31,7 +40,6 @@ strip = true
 [workspace.lints.clippy]
 pedantic = { level = "deny", priority = -1 }
 nursery = { level = "deny", priority = -1 }
-# DENY PANICS
 arithmetic_side_effects = "deny"
 as_conversions = "deny"
 exit = "deny"
