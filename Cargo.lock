@@ -264,6 +264,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "color",
+ "index",
  "rusqlite",
  "xmp",
 ]
@@ -479,6 +480,7 @@ dependencies = [
  "path-slash",
  "rayon",
  "rgb",
+ "xmp",
 ]
 
 [[package]]

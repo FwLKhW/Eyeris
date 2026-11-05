@@ -6,5 +6,5 @@ edition = "2024"
 [dependencies]
 anyhow = { workspace = true }
 image = { workspace = true }
+rgb = { workspace = true }
 okmain = "0.2.0"
-rgb = { version = "0.8.53", features = ["as-bytes"], default-features = false }
