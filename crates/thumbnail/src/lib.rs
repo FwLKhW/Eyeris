@@ -3,6 +3,8 @@ use std::path::Path;
 use anyhow::{Context, Result, bail};
 use image::imageops::FilterType;
 
+/// Create 512px bound `thumbnail.png` in the same folder as source image.
+/// 
 /// # Errors
 ///
 /// Failed if image not exists or save thumbnail fail.
