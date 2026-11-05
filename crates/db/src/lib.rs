@@ -46,7 +46,7 @@ impl IndexDB {
                 color_2         INTEGER,
                 color_3         INTEGER,
                 color_4         INTEGER
-            ); CREATE INDEX idx_images_id ON images (id);",
+            ); CREATE INDEX IF NOT EXISTS idx_images_id ON images (id);",
         )?;
 
         let tx = conn.transaction()?;
