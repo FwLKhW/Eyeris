@@ -70,9 +70,23 @@ impl Collection {
         }
         for img in &indexed_images {
             let hash_folder_path = self.images_path.join(&img.hash);
-            fs::create_dir(&hash_folder_path)?;
-            fs::copy(&img.origin, hash_folder_path.join(&img.fullname))?;
-            generate_thumbnail(Path::new(&img.origin))?;
+            if let Ok(exists) = fs::exists(&hash_folder_path)
+                && !exists
+            {
+                fs::create_dir(&hash_folder_path)?;
+            }
+
+            let target_image_path = hash_folder_path.join(&img.fullname);
+            if let Ok(exists) = fs::exists(&target_image_path)
+                && !exists
+            {
+                fs::copy(&img.origin, &target_image_path)?;
+
+                println!("Generating thumbnail for {}", target_image_path.display());
+                generate_thumbnail(&target_image_path)?;
+            } else {
+                println!("Image {} already exists", target_image_path.display());
+            }
         }
 
         Ok(())
