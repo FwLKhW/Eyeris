@@ -9,7 +9,7 @@ use image::GenericImageView;
 use rgb::Rgb;
 
 use color::extract_colors;
-use hash::blake3_hash;
+use hash::blake3_image;
 
 #[derive(Debug)]
 pub struct IndexedImage {
@@ -67,7 +67,7 @@ pub fn indexing_image(img_path: &Path) -> Result<IndexedImage> {
     let img = image::open(img_path)?;
     let (width, height) = img.dimensions();
     let xmp_meta = xmp::read(img_path);
-    let hash = blake3_hash(&img);
+    let hash = blake3_image(&img);
     let colors = extract_colors(&img)?;
 
     let indexed_image = IndexedImage {
