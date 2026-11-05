@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-rfd = { version = "0.17.2", features = ["xdg-portal"] }
+rfd = { workspace = true }
 
 [lints]
 workspace = true
