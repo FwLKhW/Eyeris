@@ -32,6 +32,7 @@ impl IndexDB {
             "CREATE TABLE IF NOT EXISTS images (
                 id              INTEGER PRIMARY KEY,
                 origin          TEXT,
+                fullname        TEXT,
                 name            TEXT,
                 format          TEXT,
                 size            INTEGER,
@@ -53,9 +54,9 @@ impl IndexDB {
         {
             let mut stmt = tx.prepare(
                 "INSERT INTO images (
-                    origin, name, format, size, width, height, created, modified,
+                    origin, fullname, name, format, size, width, height, created, modified,
                     rating, tags, hash, color_1, color_2, color_3, color_4
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             )?;
 
             for img in indexed_images {
@@ -63,6 +64,7 @@ impl IndexDB {
 
                 stmt.execute(params![
                     img.origin,
+                    img.fullname,
                     img.name,
                     img.format,
                     img.size.cast_signed(),
