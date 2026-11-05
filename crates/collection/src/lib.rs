@@ -91,4 +91,21 @@ impl Collection {
 
         Ok(())
     }
+
+    /// # Errors
+    ///
+    /// DB read may fail.
+    pub fn images(&self) -> Result<Vec<IndexedImage>> {
+        IndexDB::new_from_path(&self.index_db_path).get_all_images()
+    }
+
+    #[must_use]
+    pub fn image_path(&self, hash: &str, fullname: &str) -> PathBuf {
+        self.images_path.join(hash).join(fullname)
+    }
+
+    #[must_use]
+    pub fn thumbnail_path(&self, hash: &str) -> PathBuf {
+        self.images_path.join(hash).join("thumbnail.png")
+    }
 }
