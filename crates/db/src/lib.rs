@@ -37,7 +37,7 @@ pub fn write(db_path: &Path, indexed_images: &[IndexedImage]) -> Result<()> {
     {
         let mut stmt = tx.prepare(
             "INSERT OR REPLACE INTO images (
-                id, path, name, format, size, width, height, created, modified, rating,
+                id, name, format, size, width, height, created, modified, rating,
                 tags, hash, color_1, color_2, color_3, color_4
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         )?;
