@@ -10,7 +10,6 @@ use rgb::Rgb;
 
 use color::extract_colors;
 use hash::blake3_hash;
-use xmp;
 
 #[derive(Debug)]
 pub struct IndexedImage {
@@ -29,9 +28,9 @@ pub struct IndexedImage {
 
 /// # Errors
 ///
-/// Path does not exist.
-/// Image path isn't a child of root.
-/// Or failed reading system metadata and xmp metadata.
+/// Fail when image path does not exist.
+/// Or reading system or xmp metadata.
+/// Or color extraction.
 pub fn indexing_image(img_path: &Path) -> Result<IndexedImage> {
     let name = img_path
         .file_stem()
@@ -68,19 +67,21 @@ pub fn indexing_image(img_path: &Path) -> Result<IndexedImage> {
     let img = image::open(img_path)?;
     let (width, height) = img.dimensions();
     let xmp_meta = xmp::read(img_path);
+    let hash = blake3_hash(&img);
+    let colors = extract_colors(&img)?;
 
     let indexed_image = IndexedImage {
         name,
         format,
         size,
-        width: u32::try_from(width)?,
-        height: u32::try_from(height)?,
+        width,
+        height,
         created,
         modified,
         rating: xmp_meta.rating,
         tags: xmp_meta.tags,
-        hash: blake3_hash(&img),
-        colors: extract_colors(&img)?,
+        hash,
+        colors,
     };
 
     Ok(indexed_image)

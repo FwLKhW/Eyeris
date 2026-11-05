@@ -7,8 +7,10 @@ edition = "2024"
 anyhow = { workspace = true }
 image = { workspace = true }
 rgb = { workspace = true }
-colored_text = { workspace = true }
 okmain = "0.2.0"
+
+[dev-dependencies]
+colored_text = { workspace = true }
 
 [lints]
 workspace = true

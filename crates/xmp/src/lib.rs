@@ -41,6 +41,8 @@ fn register_eyeris_namespace() -> xmp_toolkit::XmpResult<String> {
 /// Read the Eyeris custom XMP metadata from a file.
 ///
 /// Returns default empty `CustomXmp` when the file miss or wrong properties.
+#[must_use]
+#[allow(clippy::as_conversions, clippy::cast_possible_truncation, clippy::cast_sign_loss)]
 pub fn read(filepath: &Path) -> CustomXmp {
     let Ok(meta) = XmpMeta::from_file(filepath) else {
         return CustomXmp::default();
@@ -50,8 +52,7 @@ pub fn read(filepath: &Path) -> CustomXmp {
 
     let rating = meta
         .property_i32(NS, CustomXmp::RATING)
-        .map(|value| value.value as u8)
-        .unwrap_or(0);
+        .map_or(0, |value| value.value as u8);
 
     let tags = meta
         .property_array(NS, CustomXmp::TAGS)
