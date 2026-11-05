@@ -6,6 +6,7 @@ use std::{
 
 use anyhow::{Ok, Result};
 use image::GenericImageView;
+use path_slash::PathExt;
 use rgb::Rgb;
 
 use color::extract_colors;
@@ -13,6 +14,7 @@ use hash::blake3_image;
 
 #[derive(Debug, Default)]
 pub struct IndexedImage {
+    pub origin: String,
     pub name: String,
     pub format: String,
     pub size: u64,
@@ -32,6 +34,7 @@ pub struct IndexedImage {
 /// Or reading system or xmp metadata.
 /// Or color extraction.
 pub fn index_image(img_path: &Path) -> Result<IndexedImage> {
+    let origin = img_path.to_slash_lossy().to_string();
     let name = img_path
         .file_stem()
         .unwrap_or_default()
@@ -71,6 +74,7 @@ pub fn index_image(img_path: &Path) -> Result<IndexedImage> {
     let colors = extract_colors(&img)?;
 
     let indexed_image = IndexedImage {
+        origin,
         name,
         format,
         size,
