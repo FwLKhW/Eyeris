@@ -94,11 +94,10 @@ impl IndexDB {
         }
 
         let conn = Connection::open(&self.path)?;
-        let mut stmt = match conn.prepare(
+        let Ok(mut stmt) = conn.prepare(
             "SELECT origin, fullname, name, format, size, width, height, created, modified, rating, tags, hash FROM images",
-        ) {
-            Ok(stmt) => stmt,
-            Err(_) => return Ok(Vec::new()),
+        ) else {
+            return Ok(Vec::new())
         };
 
         let rows = stmt.query_map([], |row| {
