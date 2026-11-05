@@ -40,7 +40,7 @@ impl IndexDB {
                 modified        INTEGER,
                 rating          INTEGER,
                 tags            TEXT,
-                hash            TEXT,
+                hash            TEXT UNIQUE ON CONFLICT IGNORE,
                 color_1         INTEGER,
                 color_2         INTEGER,
                 color_3         INTEGER,
