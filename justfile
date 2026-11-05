@@ -1,10 +1,25 @@
 _:
     @just --list
 
-dev:
-    uv run app.py
+# Format
+fmt:
+    @cargo fmt
 
-# uv run pyinstaller --clean --noconfirm --noconsole --onefile --add-data "ui;ui" --add-data "assets;assets" -i "assets/icon.ico" -n "eyeris" --version-file version.txt --distpath build --log-level ERROR app.py
+# Lint
+lint:
+    @cargo clippy --all-targets --all-features -- -D warnings
 
-build:
-    uv run pyinstaller app.spec --clean --noconfirm --distpath build --log-level WARN
+# Test
+test:
+    @cargo nextest run --workspace --bins --all-targets --cargo-quiet --cargo-quiet --no-tests pass
+
+# Format + Lint + Test
+ci: fmt lint test
+
+# Run Dev
+r *args:
+    @cargo r {{args}}
+
+# Run Release
+rr *args:
+    @cargo r --release {{args}}
