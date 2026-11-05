@@ -84,4 +84,63 @@ impl IndexDB {
 
         Ok(())
     }
+
+    /// # Errors
+    ///
+    /// Returns an error if the database connection fails or row mapping fails.
+    pub fn get_all_images(&self) -> Result<Vec<IndexedImage>> {
+        if !self.path.exists() {
+            return Ok(Vec::new());
+        }
+
+        let conn = Connection::open(&self.path)?;
+        let mut stmt = match conn.prepare(
+            "SELECT origin, fullname, name, format, size, width, height, created, modified, rating, tags, hash FROM images",
+        ) {
+            Ok(stmt) => stmt,
+            Err(_) => return Ok(Vec::new()),
+        };
+
+        let rows = stmt.query_map([], |row| {
+            let origin: String = row.get(0)?;
+            let fullname: String = row.get(1)?;
+            let name: String = row.get(2)?;
+            let format: String = row.get(3)?;
+            let size: i64 = row.get(4)?;
+            let width: i64 = row.get(5)?;
+            let height: i64 = row.get(6)?;
+            let created: String = row.get(7)?;
+            let modified: String = row.get(8)?;
+            let rating: i64 = row.get(9)?;
+            let tags: String = row.get(10)?;
+            let hash: String = row.get(11)?;
+
+            Ok(IndexedImage {
+                origin,
+                fullname,
+                name,
+                format,
+                size: u64::try_from(size).unwrap_or(0),
+                width: u32::try_from(width).unwrap_or(0),
+                height: u32::try_from(height).unwrap_or(0),
+                created: created.parse().unwrap_or(0),
+                modified: modified.parse().unwrap_or(0),
+                rating: u8::try_from(rating).unwrap_or(0),
+                tags: if tags.is_empty() {
+                    Vec::new()
+                } else {
+                    tags.split('|').map(str::to_string).collect()
+                },
+                hash,
+                colors: Vec::new(),
+            })
+        })?;
+
+        let mut images = Vec::new();
+        for row in rows {
+            images.push(row?);
+        }
+
+        Ok(images)
+    }
 }
