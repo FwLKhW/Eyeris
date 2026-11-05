@@ -10,5 +10,9 @@ index = { path = "../index" }
 xmp = { path = "../xmp" }
 rusqlite = "0.41.1"
 
+[dev-dependencies]
+rfd = { workspace = true }
+efs = { path = "../fs"}
+
 [lints]
 workspace = true
