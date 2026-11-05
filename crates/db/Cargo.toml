@@ -1,0 +1,11 @@
+[package]
+name = "db"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = { workspace = true }
+color = { path = "../color" }
+index = { path = "../index" }
+xmp = { path = "../xmp" }
+rusqlite = "0.41.1"
