@@ -52,7 +52,7 @@ impl IndexDB {
                 "INSERT OR REPLACE INTO images (
                     id, name, format, size, width, height, created, modified, rating,
                     tags, hash, color_1, color_2, color_3, color_4
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             )?;
 
             for (id, img) in indexed_images.iter().enumerate() {

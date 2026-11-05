@@ -8,11 +8,11 @@ anyhow = { workspace = true }
 color = { path = "../color" }
 index = { path = "../index" }
 xmp = { path = "../xmp" }
-rusqlite = "0.41.1"
+rusqlite = { version = "0.41.1", features = ["bundled"] }
 
 [dev-dependencies]
 rfd = { workspace = true }
-efs = { path = "../fs"}
+efs = { path = "../fs" }
 
 [lints]
 workspace = true
