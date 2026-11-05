@@ -13,6 +13,8 @@ pub struct IndexDB {
 }
 
 impl IndexDB {
+    pub const REL_PATH: &str = "index.db";
+
     pub fn new_from_path(path: &Path) -> Self {
         Self {
             path: path.to_path_buf(),
@@ -49,17 +51,16 @@ impl IndexDB {
         let tx = conn.transaction()?;
         {
             let mut stmt = tx.prepare(
-                "INSERT OR REPLACE INTO images (
-                    id, name, format, size, width, height, created, modified, rating,
+                "INSERT INTO images (
+                    name, format, size, width, height, created, modified, rating,
                     tags, hash, color_1, color_2, color_3, color_4
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             )?;
 
-            for (id, img) in indexed_images.iter().enumerate() {
+            for img in indexed_images.iter() {
                 let colors_int: Vec<i64> = img.colors.iter().map(rgb2dec).collect();
 
                 stmt.execute(params![
-                    id.cast_signed(),
                     img.name,
                     img.format,
                     img.size.cast_signed(),
