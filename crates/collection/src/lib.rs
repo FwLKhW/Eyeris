@@ -1,12 +1,18 @@
-use std::path::{Path, PathBuf};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
 
-use anyhow::{Ok, Result, bail};
+use anyhow::{Result, bail};
 use db::IndexDB;
 use efs::scan_images;
 use index::{IndexedImage, index_image};
+use thumbnail::generate_thumbnail;
 
 pub struct Collection {
     pub path: PathBuf,
+    pub images_path: PathBuf,
+    pub index_db_path: PathBuf,
 }
 
 impl Collection {
@@ -14,6 +20,8 @@ impl Collection {
     pub fn new_from_path(path: &Path) -> Self {
         Self {
             path: path.to_path_buf(),
+            images_path: path.join("images"),
+            index_db_path: path.join("index.db"),
         }
     }
 
@@ -26,7 +34,6 @@ impl Collection {
         };
 
         self.index(&image_paths)?;
-        self.generate_thumbnails(&image_paths)?;
 
         Ok(())
     }
@@ -41,7 +48,6 @@ impl Collection {
 
         let image_paths = scan_images(&folder_path);
         self.index(&image_paths)?;
-        self.generate_thumbnails(&image_paths)?;
 
         Ok(())
     }
@@ -57,13 +63,19 @@ impl Collection {
 
         IndexDB::new_from_path(&self.path.join(IndexDB::REL_PATH)).add_images(&indexed_images)?;
 
-        Ok(())
-    }
-
-    /// # Errors
-    pub fn generate_thumbnails(&self, image_paths: &[PathBuf]) -> Result<()> {
-        for image_path in image_paths {
-            println!("Generating thumbnail for {}", image_path.display());
+        if let Ok(exists) = fs::exists(&self.images_path)
+            && !exists
+        {
+            fs::create_dir(&self.images_path)?;
+        }
+        for img in &indexed_images {
+            let hash_folder_path = self.images_path.join(&img.hash);
+            fs::create_dir(&hash_folder_path)?;
+            fs::copy(
+                &img.origin,
+                &hash_folder_path.join(format!("{}.{}", &img.name, &img.format)),
+            )?;
+            generate_thumbnail(Path::new(&img.origin))?;
         }
 
         Ok(())
