@@ -31,7 +31,7 @@ pub struct IndexedImage {
 /// Fail when image path does not exist.
 /// Or reading system or xmp metadata.
 /// Or color extraction.
-pub fn indexing_image(img_path: &Path) -> Result<IndexedImage> {
+pub fn index_image(img_path: &Path) -> Result<IndexedImage> {
     let name = img_path
         .file_stem()
         .unwrap_or_default()
