@@ -1,0 +1,15 @@
+[package]
+name = "index"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+color = { path = "../color" }
+hash = { path = "../hash" }
+efs = { path = "../fs" }
+xmp = { path = "../xmp" }
+anyhow = { workspace = true }
+image = { workspace = true }
+rayon = { workspace = true }
+rgb = { workspace = true }
+path-slash = "0.2.1"
