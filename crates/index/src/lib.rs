@@ -16,6 +16,7 @@ use hash::blake3_image;
 #[derive(Debug, Default)]
 pub struct IndexedImage {
     pub origin: String,
+    pub fullname: String,
     pub name: String,
     pub format: String,
     pub size: u64,
@@ -36,11 +37,15 @@ pub struct IndexedImage {
 /// Or color extraction.
 pub fn index_image(img_path: &Path) -> Result<IndexedImage> {
     let origin = img_path.to_slash_lossy().to_string();
+    let fullname = img_path
+        .file_name()
+        .unwrap_or_default()
+        .to_string_lossy()
+        .to_string();
     let name = img_path
         .file_stem()
         .unwrap_or_default()
-        .to_str()
-        .unwrap_or_default()
+        .to_string_lossy()
         .to_string();
 
     let fmt = FileFormat::from_file(img_path)?;
@@ -73,6 +78,7 @@ pub fn index_image(img_path: &Path) -> Result<IndexedImage> {
 
     let indexed_image = IndexedImage {
         origin,
+        fullname,
         name,
         format,
         size,
