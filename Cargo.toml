@@ -8,6 +8,7 @@ members = [
     "crates/fs",
     "crates/hash",
     "crates/index",
+    "crates/thumbnail",
     "crates/xmp",
 ]
 

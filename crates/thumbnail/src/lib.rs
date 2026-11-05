@@ -1,17 +1,17 @@
 use std::path::Path;
 
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, bail};
 use image::imageops::FilterType;
 
 /// # Errors
 ///
 /// Failed if image not exists or save thumbnail fail.
-pub fn generate_thumbnail(
-    img_path: &Path,
-    thumb_folder_path: &Path,
-    thumb_name: &str,
-) -> Result<()> {
-    let thumbnail_save_path = thumb_folder_path.join(format!("{thumb_name}.png"));
+pub fn generate_thumbnail(img_path: &Path) -> Result<()> {
+    let Some(parent) = img_path.parent() else {
+        bail!("can not get parent of image")
+    };
+
+    let thumbnail_save_path = parent.join(format!("thumbnail.png"));
     if thumbnail_save_path.exists() {
         return Ok(());
     }
