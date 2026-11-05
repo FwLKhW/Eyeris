@@ -6,6 +6,7 @@ members = [
     "crates/color",
     "crates/db",
     "crates/fs",
+    "crates/gui",
     "crates/hash",
     "crates/index",
     "crates/thumbnail",
