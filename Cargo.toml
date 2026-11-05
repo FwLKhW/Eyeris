@@ -1,0 +1,47 @@
+[workspace]
+resolver = "3"
+members = ["crates/cli","crates/color", "crates/db", "crates/fs", "crates/hash", "crates/index", "crates/xmp"]
+
+
+[workspace.dependencies]
+anyhow = "1.0.104"
+image = { version = "0.25.10", features = [
+    "jpeg",
+    "png",
+    "rayon",
+], default-features = false }
+rayon = "1.12.0"
+rgb = { version = "0.8.53", features = ["as-bytes"], default-features = false }
+
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "z"
+panic = "abort"
+strip = true
+
+# https://www.namtao.com/rust/
+[workspace.lints.clippy]
+pedantic = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+# DENY PANICS
+arithmetic_side_effects = "deny"
+as_conversions = "deny"
+exit = "deny"
+expect_used = "deny"
+indexing_slicing = "deny"
+panic = "deny"
+panic_in_result_fn = "deny"
+string_slice = "deny"
+todo = "deny"
+unchecked_time_subtraction = "deny"
+unimplemented = "deny"
+unreachable = "deny"
+unwrap_used = "deny"
