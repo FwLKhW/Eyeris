@@ -13,8 +13,6 @@ pub struct IndexDB {
 }
 
 impl IndexDB {
-    pub const REL_PATH: &str = "index.db";
-
     #[must_use]
     pub fn new_from_path(path: &Path) -> Self {
         Self {

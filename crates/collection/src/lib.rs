@@ -61,7 +61,7 @@ impl Collection {
             .filter_map(|i| index_image(i).ok())
             .collect();
 
-        IndexDB::new_from_path(&self.path.join(IndexDB::REL_PATH)).add_images(&indexed_images)?;
+        IndexDB::new_from_path(&self.index_db_path).add_images(&indexed_images)?;
 
         if let Ok(exists) = fs::exists(&self.images_path)
             && !exists
