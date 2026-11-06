@@ -45,5 +45,6 @@
         "justfile": true,
         "README.md": true,
         "pyproject.toml": true,
+        ".zed": true
     }
 }

@@ -5,7 +5,6 @@ from pathlib import Path
 import numpy as np
 
 from src.color import dec_to_slint_color
-from src.config import DOT_FOLDER
 from src.log import get_logger
 from src.utils import load_image
 
@@ -15,19 +14,12 @@ logger = get_logger("Collection")
 class Collection:
     def __init__(self, path: Path) -> None:
         self.path = path
-        self.name = path.name
-        self.db_path = self.path / DOT_FOLDER / "index.db"
+        self.db_path = self.path / "index.db"
         self.db: sqlite3.Connection | None = None
-        self.thumbnails_path = self.path / DOT_FOLDER / "thumbnails"
+        self.images_path = self.path / "images"
 
-    def to_slint(self) -> dict:
-        return {"name": self.name, "path": str(self.path)}
-
-    def get_thumbnail(self, hash: str) -> np.ndarray | None:
-        return load_image(self.thumbnails_path / f"{hash}.png")
-
-    def get_image(self, rel_path: str) -> np.ndarray | None:
-        return load_image(self.path / rel_path)
+    def get_image(self, hash: str, fullname: str) -> np.ndarray | None:
+        return load_image(self.images_path / hash / fullname)
 
     def get_db(self) -> sqlite3.Connection:
         if not isinstance(self.db, sqlite3.Connection):
