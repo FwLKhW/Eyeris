@@ -11,6 +11,8 @@ use rusqlite::{Connection, params};
 #[derive(Debug, Clone)]
 pub enum Message {
     OpenCollection,
+    AddImages,
+    AddFolder,
     Reload,
     SetRating(usize, u8),
     TagsChanged(usize, String),
