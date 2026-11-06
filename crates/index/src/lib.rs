@@ -1,0 +1,96 @@
+use std::{
+    fs,
+    path::Path,
+    time::{SystemTime, UNIX_EPOCH},
+};
+
+use anyhow::{Ok, Result};
+use file_format::FileFormat;
+use image::GenericImageView;
+use path_slash::PathExt;
+use rgb::Rgb;
+
+use color::extract_colors;
+use hash::blake3_image;
+
+#[derive(Debug, Default)]
+pub struct IndexedImage {
+    pub origin: String,
+    pub fullname: String,
+    pub name: String,
+    pub format: String,
+    pub size: u64,
+    pub width: u32,
+    pub height: u32,
+    pub created: u64,
+    pub modified: u64,
+    pub rating: u8,
+    pub tags: Vec<String>,
+    pub hash: String,
+    pub colors: Vec<Rgb<u8>>,
+}
+
+/// # Errors
+///
+/// Fail when image path does not exist.
+/// Or reading system or xmp metadata.
+/// Or color extraction.
+pub fn index_image(img_path: &Path) -> Result<IndexedImage> {
+    let origin = img_path.to_slash_lossy().to_string();
+    let fullname = img_path
+        .file_name()
+        .unwrap_or_default()
+        .to_string_lossy()
+        .to_string();
+    let name = img_path
+        .file_stem()
+        .unwrap_or_default()
+        .to_string_lossy()
+        .to_string();
+
+    let fmt = FileFormat::from_file(img_path)?;
+    let format = fmt.short_name().unwrap_or("").to_string();
+
+    let sys_meta = fs::metadata(img_path)?;
+    let size = sys_meta.len();
+    let created = u64::try_from(
+        sys_meta
+            .created()
+            .unwrap_or_else(|_| SystemTime::now())
+            .duration_since(UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_millis(),
+    )?;
+    let modified = u64::try_from(
+        sys_meta
+            .modified()
+            .unwrap_or_else(|_| SystemTime::now())
+            .duration_since(UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_millis(),
+    )?;
+
+    let img = image::open(img_path)?;
+    let (width, height) = img.dimensions();
+    let xmp_meta = xmp::read(img_path);
+    let hash = blake3_image(&img);
+    let colors = extract_colors(&img)?;
+
+    let indexed_image = IndexedImage {
+        origin,
+        fullname,
+        name,
+        format,
+        size,
+        width,
+        height,
+        created,
+        modified,
+        rating: xmp_meta.rating,
+        tags: xmp_meta.tags,
+        hash,
+        colors,
+    };
+
+    Ok(indexed_image)
+}

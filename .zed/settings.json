@@ -1,0 +1,9 @@
+{
+    "file_scan_exclusions": [
+        ".zed",
+        ".venv",
+        ".vscode",
+        "*.lock",
+        "...",
+    ]
+}

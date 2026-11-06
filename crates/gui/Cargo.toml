@@ -1,0 +1,18 @@
+[package]
+name = "gui"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = { workspace = true }
+rusqlite = { workspace = true }
+collection = { path = "../collection" }
+db = { path = "../db" }
+efs = { path = "../fs" }
+index = { path = "../index" }
+xmp = { path = "../xmp" }
+chrono = "0.4"
+iced = { version = "0.14.0", features = ["image"] }
+
+[lints]
+workspace = true

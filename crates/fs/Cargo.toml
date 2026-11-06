@@ -1,0 +1,10 @@
+[package]
+name = "efs"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rfd = { workspace = true }
+
+[lints]
+workspace = true

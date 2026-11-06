@@ -1,0 +1,14 @@
+[package]
+name = "cli"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = { workspace = true }
+colored_text = { workspace = true }
+collection = { path = "../collection" }
+efs = { path = "../fs" }
+clap = { version = "4.6.7", features = ["derive"] }
+
+[lints]
+workspace = true
