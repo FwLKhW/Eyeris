@@ -55,8 +55,7 @@ fn main() -> Result<()> {
 
             match command {
                 AddCommands::Images { image_paths } => {
-                    let image_paths: Vec<PathBuf> =
-                        image_paths.iter().map(PathBuf::from).collect();
+                    let image_paths: Vec<PathBuf> = image_paths.iter().map(PathBuf::from).collect();
 
                     collection.index(&image_paths)?;
                 }
