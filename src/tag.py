@@ -1,10 +1,11 @@
 from pathlib import Path
 
+import platformdirs
 from ultralytics import YOLO
 
 
 class AutoTagger:
-    model = YOLO("yolo26x-cls.pt")
+    model = YOLO(platformdirs.user_data_path() / "eyeris" / "yolo26x-cls.pt")
     threshold: float = 0.5
     classes = model.names
 
@@ -29,7 +30,4 @@ class AutoTagger:
 if __name__ == "__main__":
     tagger = AutoTagger()
 
-    print(tagger.tag(Path("fixtures/Example/dream.jpg")))
-    print(tagger.tag(Path("fixtures/Example/moon.jpg")))
-    print(tagger.tag(Path("fixtures/Example/sunset.jpg")))
-    print(tagger.tag(Path("fixtures/Example/dinosaur.png")))
+    print(tagger.tag(Path("fixtures/hamburger.jpg")))  # ['cheeseburger']
