@@ -68,8 +68,8 @@ impl IndexDB {
                     img.size.cast_signed(),
                     img.width.cast_signed(),
                     img.height.cast_signed(),
-                    img.created.to_string(),
-                    img.modified.to_string(),
+                    img.created.cast_signed(),
+                    img.modified.cast_signed(),
                     img.rating.cast_signed(),
                     img.tags.join("|"),
                     img.hash,
@@ -108,8 +108,8 @@ impl IndexDB {
             let size: i64 = row.get(4)?;
             let width: i64 = row.get(5)?;
             let height: i64 = row.get(6)?;
-            let created: String = row.get(7)?;
-            let modified: String = row.get(8)?;
+            let created: i64 = row.get(7)?;
+            let modified: i64 = row.get(8)?;
             let rating: i64 = row.get(9)?;
             let tags: String = row.get(10)?;
             let hash: String = row.get(11)?;
@@ -122,8 +122,8 @@ impl IndexDB {
                 size: u64::try_from(size).unwrap_or(0),
                 width: u32::try_from(width).unwrap_or(0),
                 height: u32::try_from(height).unwrap_or(0),
-                created: created.parse().unwrap_or(0),
-                modified: modified.parse().unwrap_or(0),
+                created: created.cast_unsigned(),
+                modified: modified.cast_unsigned(),
                 rating: u8::try_from(rating).unwrap_or(0),
                 tags: if tags.is_empty() {
                     Vec::new()
