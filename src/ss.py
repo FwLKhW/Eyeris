@@ -16,24 +16,29 @@ class SS:
             name="images", metadata={"hnsw:space": "cosine"}
         )
 
-    def index_images(self, image_paths: list[Path], batch_size: int = 32):
-        if not image_paths:
+    def test(self):
+        self.collection.upsert(ids=["999"], embeddings=[[1] * 512])
+
+    def index_images(self, images_data: list[dict], batch_size: int = 32):
+        """images_data: list[{id: str, path: Path}]"""
+
+        if not images_data:
             return
 
         cnt = 0
-        total = len(image_paths)
-        for i in range(0, len(image_paths), batch_size):
-            batch_paths = image_paths[i : i + batch_size]
+        total = len(images_data)
+        for i in range(0, len(images_data), batch_size):
+            batch_images = images_data[i : i + batch_size]
             images = []
             valid_paths = []
 
-            for path in batch_paths:
+            for batch_image in batch_images:
                 try:
-                    img = Image.open(path).convert("RGB")
+                    img = Image.open(batch_image["path"]).convert("RGB")
                     images.append(img)
-                    valid_paths.append(path)
+                    valid_paths.append(batch_image)
                 except Exception as e:  # noqa: BLE001
-                    print(f"Skipping {path} due to load error: {e}")
+                    print(f"Skipping {batch_image['path']} due to load error: {e}")
 
             if not images:
                 continue
@@ -41,8 +46,9 @@ class SS:
             embeddings = self.model.encode(
                 images, normalize_embeddings=True, convert_to_numpy=True
             ).tolist()
-            ids = [str(path.resolve()) for path in valid_paths]
+            ids = [batch_image["id"] for batch_image in batch_images]
 
+            print(ids, len(embeddings))
             self.collection.upsert(ids=ids, embeddings=embeddings)
 
             cnt += len(ids)
@@ -77,4 +83,40 @@ class SS:
 
 
 if __name__ == "__main__":
-    pass
+    import sqlite3
+
+    from crossfiledialog import choose_folder
+
+    collection_path = Path(choose_folder())
+    ss = SS(collection_path / "chroma")
+    ss.test()
+
+    index_db = sqlite3.connect(collection_path / "index.db")
+    index_db.row_factory = sqlite3.Row
+
+    images = index_db.execute("SELECT id, hash, fullname FROM images").fetchall()
+    images = [
+        {
+            "id": str(img["id"]),
+            "path": collection_path / "images" / img["hash"] / img["fullname"],
+        }
+        for img in images
+    ]
+
+    # ss.index_images(images)
+
+    # from pprint import pp
+
+    # queries = [
+    #     "Airplane",
+    #     "A picture of the moon",
+    #     "Thunder storm",
+    #     "Flowers",
+    #     "A picture of forest",
+    #     "Leaf",
+    # ]
+
+    # for query in queries:
+    #     print(query)
+    #     pp(ss.search(query, limit=3))
+    #     print()
