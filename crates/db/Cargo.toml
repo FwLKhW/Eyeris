@@ -5,10 +5,10 @@ edition = "2024"
 
 [dependencies]
 anyhow = { workspace = true }
+rusqlite = { workspace = true }
 color = { path = "../color" }
 index = { path = "../index" }
 xmp = { path = "../xmp" }
-rusqlite = { version = "0.41.1", features = ["bundled"] }
 
 [dev-dependencies]
 rfd = { workspace = true }

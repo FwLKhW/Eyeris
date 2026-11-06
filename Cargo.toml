@@ -25,6 +25,7 @@ image = { version = "0.25.10", features = [
 rayon = "1.12.0"
 rgb = { version = "0.8.53", features = ["as-bytes"], default-features = false }
 rfd = { version = "0.17.2", features = ["xdg-portal"] }
+rusqlite = { version = "0.41.1", features = ["bundled"] }
 
 
 [profile.dev]
