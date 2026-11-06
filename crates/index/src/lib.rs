@@ -5,7 +5,6 @@ use std::{
 };
 
 use anyhow::{Ok, Result};
-use file_format::FileFormat;
 use image::GenericImageView;
 use path_slash::PathExt;
 use rgb::Rgb;
@@ -47,9 +46,12 @@ pub fn index_image(img_path: &Path) -> Result<IndexedImage> {
         .unwrap_or_default()
         .to_string_lossy()
         .to_string();
-
-    let fmt = FileFormat::from_file(img_path)?;
-    let format = fmt.short_name().unwrap_or("").to_string();
+    let format = img_path
+        .extension()
+        .unwrap_or_default()
+        .to_string_lossy()
+        .to_string()
+        .to_uppercase();
 
     let sys_meta = fs::metadata(img_path)?;
     let size = sys_meta.len();
