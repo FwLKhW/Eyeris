@@ -7,6 +7,7 @@ use anyhow::{Result, bail};
 use db::IndexDB;
 use efs::scan_images;
 use index::{IndexedImage, index_image};
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use thumbnail::generate_thumbnail;
 
 pub struct Collection {
@@ -56,9 +57,16 @@ impl Collection {
     ///
     /// DB insertion may fail.
     pub fn index(&self, image_paths: &[PathBuf]) -> Result<()> {
-        let indexed_images: Vec<IndexedImage> = image_paths
-            .iter()
-            .filter_map(|i| index_image(i).ok())
+        let index_image_results: Vec<Result<IndexedImage>> =
+            image_paths.par_iter().map(|i| index_image(i)).collect();
+
+        let index_success_count = index_image_results.iter().filter(|r| r.is_ok()).count();
+
+        println!("Indexed {index_success_count}/{} images", image_paths.len());
+
+        let indexed_images: Vec<IndexedImage> = index_image_results
+            .into_iter()
+            .filter_map(Result::ok)
             .collect();
 
         IndexDB::new_from_path(&self.index_db_path).add_images(&indexed_images)?;
@@ -68,26 +76,40 @@ impl Collection {
         {
             fs::create_dir(&self.images_path)?;
         }
-        for img in &indexed_images {
-            let hash_folder_path = self.images_path.join(&img.hash);
-            if let Ok(exists) = fs::exists(&hash_folder_path)
-                && !exists
-            {
-                fs::create_dir(&hash_folder_path)?;
-            }
 
-            let target_image_path = hash_folder_path.join(&img.fullname);
-            if let Ok(exists) = fs::exists(&target_image_path)
-                && !exists
-            {
-                fs::copy(&img.origin, &target_image_path)?;
+        let thumbnail_gen_results: Vec<Result<()>> = indexed_images
+            .par_iter()
+            .map(|img| -> Result<()> {
+                let hash_folder_path = self.images_path.join(&img.hash);
+                if let Ok(exists) = fs::exists(&hash_folder_path)
+                    && !exists
+                {
+                    fs::create_dir(&hash_folder_path)?;
+                }
 
-                println!("Generating thumbnail for {}", target_image_path.display());
-                generate_thumbnail(&target_image_path)?;
-            } else {
-                println!("Image {} already exists", target_image_path.display());
-            }
-        }
+                let target_image_path = hash_folder_path.join(&img.fullname);
+                if let Ok(exists) = fs::exists(&target_image_path)
+                    && !exists
+                {
+                    fs::copy(&img.origin, &target_image_path)?;
+
+                    println!("Generating thumbnail for {}", target_image_path.display());
+                    generate_thumbnail(&target_image_path)?;
+                } else {
+                    println!("Image {} already exists", target_image_path.display());
+                }
+
+                Ok(())
+            })
+            .collect();
+
+        let thumbnail_gen_success_count =
+            thumbnail_gen_results.iter().filter(|r| r.is_ok()).count();
+
+        println!(
+            "Generate thumbnail {thumbnail_gen_success_count}/{} images",
+            image_paths.len()
+        );
 
         Ok(())
     }
