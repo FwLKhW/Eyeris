@@ -26,7 +26,8 @@
         "thres",
         "tinydb",
         "titlebar",
-        "ultralytics"
+        "ultralytics",
+        "venv"
     ],
     "files.exclude": {
         "**/.git": true,
@@ -39,11 +40,16 @@
         ".venv": true,
         ".vscode": true,
         "bin": true,
+        "target": true,
         "*.log": true,
         "*.pt": true,
         "uv.lock": true,
         "justfile": true,
         "README.md": true,
         "pyproject.toml": true,
+        ".zed": true,
+        "Cargo.toml": true,
+        "clippy.toml": true,
+        "rust-toolchain.toml": true
     }
 }

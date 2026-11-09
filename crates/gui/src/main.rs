@@ -54,6 +54,20 @@ impl Gui {
                     self.open_collection(&folder);
                 }
             }
+            Message::AddImages => {
+                if let Some(collection) = &self.collection {
+                    if let Err(err) = collection.add_images() {
+                        self.status = format!("Error: {}", err);
+                    }
+                }
+            }
+            Message::AddFolder => {
+                if let Some(collection) = &self.collection {
+                    if let Err(err) = collection.add_folder() {
+                        self.status = format!("Error: {}", err);
+                    }
+                }
+            }
             Message::Reload => {
                 if let Some(path) = self.collection.as_ref().map(|c| c.path.clone()) {
                     self.open_collection(&path);
@@ -90,6 +104,10 @@ impl Gui {
         let header = row![
             button("Open collection").on_press(Message::OpenCollection),
             button("Reload").on_press_maybe(self.collection.as_ref().map(|_| Message::Reload)),
+            button("Import images")
+                .on_press_maybe(self.collection.as_ref().map(|_| Message::AddImages)),
+            button("Import folder")
+                .on_press_maybe(self.collection.as_ref().map(|_| Message::AddFolder)),
             text(self.status.as_str()),
         ]
         .spacing(10.0)

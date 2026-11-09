@@ -12,7 +12,6 @@ image = { workspace = true }
 rayon = { workspace = true }
 rgb = { workspace = true }
 path-slash = "0.2.1"
-file-format = "0.29.0"
 
 [lints]
 workspace = true
