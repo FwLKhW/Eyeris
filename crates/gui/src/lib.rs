@@ -19,7 +19,8 @@ pub enum Message {
     TagsSubmitted(usize),
 }
 
-pub fn dec2color(v: i64) -> Color {
+#[must_use]
+pub const fn dec2color(v: i64) -> Color {
     // `v` is `0xRRGGBB` stored in an i64: the last 3 big-endian bytes are r, g, b.
     let [.., r, g, b] = v.to_be_bytes();
     Color::from_rgb8(r, g, b)
@@ -35,7 +36,8 @@ pub fn fmt_time(ms: u64) -> String {
         )
 }
 
-/// "a, b ,, c" -> ["a", "b", "c"]. `|` is the DB separator so it can't live in a tag.
+/// "a, b ,, c" -> vec!["a", "b", "c"]. `|` is the DB separator so it can't live in a tag.
+#[must_use]
 pub fn parse_tags(input: &str) -> Vec<String> {
     input
         .split(',')
@@ -44,6 +46,7 @@ pub fn parse_tags(input: &str) -> Vec<String> {
         .collect()
 }
 
+#[must_use]
 pub fn report(result: Result<()>, ok: &str) -> String {
     match result {
         Ok(()) => ok.to_string(),
@@ -51,6 +54,9 @@ pub fn report(result: Result<()>, ok: &str) -> String {
     }
 }
 
+/// # Errors
+/// 
+/// DB errors.
 pub fn load_collection(c: &Collection) -> Result<Vec<Item>> {
     if !c.index_db_path.exists() {
         return Ok(Vec::new());
@@ -91,7 +97,11 @@ pub fn load_collection(c: &Collection) -> Result<Vec<Item>> {
     Ok(rows.collect::<rusqlite::Result<Vec<_>>>()?)
 }
 
-/// Write rating to the collection's copy of the image (XMP) and to IndexDB.
+/// Write rating to the collection's copy of the image (XMP) and to `IndexDB`.
+///
+/// # Errors
+/// 
+/// IO errors.
 pub fn save_rating(c: &Collection, it: &Item) -> Result<()> {
     xmp::write_rating(&c.image_path(&it.hash, &it.fullname), it.rating)?;
     Connection::open(&c.index_db_path)?.execute(
@@ -101,7 +111,11 @@ pub fn save_rating(c: &Collection, it: &Item) -> Result<()> {
     Ok(())
 }
 
-/// Write tags to the collection's copy of the image (XMP) and to IndexDB (`a|b|c`).
+/// Write tags to the collection's copy of the image (XMP) and to `IndexDB` (`a|b|c`).
+/// 
+/// # Errors
+/// 
+/// IO errors.
 pub fn save_tags(c: &Collection, it: &Item) -> Result<()> {
     xmp::write_tags(&c.image_path(&it.hash, &it.fullname), &it.tags)?;
     Connection::open(&c.index_db_path)?.execute(

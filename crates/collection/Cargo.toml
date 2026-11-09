@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 anyhow = { workspace = true }
+rayon = { workspace = true }
 db = { path = "../db" }
 efs = { path = "../fs" }
 index = { path = "../index" }

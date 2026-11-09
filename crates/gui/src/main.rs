@@ -55,17 +55,17 @@ impl Gui {
                 }
             }
             Message::AddImages => {
-                if let Some(collection) = &self.collection {
-                    if let Err(err) = collection.add_images() {
-                        self.status = format!("Error: {}", err);
-                    }
+                if let Some(collection) = &self.collection
+                    && let Err(err) = collection.add_images()
+                {
+                    self.status = format!("Error: {err}");
                 }
             }
             Message::AddFolder => {
-                if let Some(collection) = &self.collection {
-                    if let Err(err) = collection.add_folder() {
-                        self.status = format!("Error: {}", err);
-                    }
+                if let Some(collection) = &self.collection
+                    && let Err(err) = collection.add_folder()
+                {
+                    self.status = format!("Error: {err}");
                 }
             }
             Message::Reload => {
