@@ -44,6 +44,8 @@ class Collection:
     def images_df(self) -> pd.DataFrame:
         df = pd.read_sql_query("SELECT * FROM images", self.db)
 
+        df["id"] = df["id"].astype(str)
+
         base_path = f"{self.path}/images/"
         df["path"] = base_path + df["hash"] + "/" + df["fullname"]
         df["thumb_path"] = base_path + df["hash"] + "/thumbnail.png"
