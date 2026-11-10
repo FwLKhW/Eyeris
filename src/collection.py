@@ -20,6 +20,8 @@ class Collection:
         image_paths = open_multiple(
             filter={"Images": ["*.png", "*.jpg", "*.jpeg", "*.webp"]}
         )
+        if image_paths is None:
+            return
         run(
             ["target/release/cli", str(self.path), "add", "images"] + image_paths,
             check=False,
@@ -27,6 +29,8 @@ class Collection:
 
     def add_folder(self):
         image_folder_path = choose_folder()
+        if image_folder_path is None:
+            return
         run(
             ["target/release/cli", str(self.path), "add", "folder", image_folder_path],
             check=False,
