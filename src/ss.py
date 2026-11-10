@@ -6,45 +6,50 @@ from src.embed import PEEmbed
 
 
 class SS:
-    pe = PEEmbed()
+    emb = PEEmbed()
 
     def __init__(self, db_path: Path):
         self.db_path = db_path
         self.client = chromadb.PersistentClient(path=self.db_path)
-        self.collection = self.client.get_or_create_collection(
+        self.chroma = self.client.get_or_create_collection(
             name="images", metadata={"hnsw:space": "cosine"}
         )
 
-    def index_images(self, images_data: list[dict], batch_size: int = 32):
+    def index_images(self, images_data: list[dict], batch_size: int = 16):
         """images_data: list[{id: str, path: str}]"""
 
         if not images_data:
             return
 
-        cnt = 0
+        indexed_count = 0
         total = len(images_data)
         print(f"Start indexing {total} images")
         for i in range(0, len(images_data), batch_size):
-            batch_images = images_data[i : i + batch_size]
+            batch = []
+            for image_data in images_data[i : i + batch_size]:
+                results = self.chroma.get(ids=[image_data["id"]], include=[])
+                if results["ids"]:
+                    continue
+                batch.append(image_data)
 
-            ids = [batch_image["id"] for batch_image in batch_images]
-            embeddings = [
-                self.pe.image(image["path"]).tolist() for image in batch_images
-            ]
+            print(f"Batch {i} - {i + batch_size}: {len(batch)}/{batch_size}")
 
-            self.collection.upsert(ids=ids, embeddings=embeddings)
+            if len(batch) > 0:
+                ids = [image["id"] for image in batch]
+                embeddings = [self.emb.image(image["path"]).tolist() for image in batch]
+                self.chroma.upsert(ids=ids, embeddings=embeddings)
 
-            cnt += len(ids)
-            print(f"{cnt}/{total} images indexed")
+            indexed_count += len(batch)
+            print(f"{indexed_count}/{total} images indexed")
 
     def search(self, text: str, thres: float = 0.25, limit: int = 50) -> list[str]:
-        count = self.collection.count()
+        count = self.chroma.count()
         if count == 0:
             return []
 
-        query_embedding = self.pe.text(text).tolist()
+        query_embedding = self.emb.text(text).tolist()
         n_results = min(count, limit)
-        results = self.collection.query(
+        results = self.chroma.query(
             query_embeddings=[query_embedding],
             n_results=n_results,
             include=["distances"],
