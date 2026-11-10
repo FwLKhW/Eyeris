@@ -4,7 +4,7 @@ import platformdirs
 from ultralytics import YOLO
 
 
-class AutoTagger:
+class YOLOTagger:
     model = YOLO(platformdirs.user_data_path() / "eyeris" / "yolo26x-cls.pt")
     threshold: float = 0.5
     classes = model.names
@@ -13,7 +13,7 @@ class AutoTagger:
         self.threshold = threshold
 
     def tag(self, path: Path) -> list[str]:
-        results = self.model(path)
+        results = self.model(path, verbose=False)
 
         probs = results[0].probs  # ty: ignore[unresolved-attribute, not-subscriptable]
         indexes = probs.top5  # ty: ignore[unresolved-attribute]
@@ -28,6 +28,6 @@ class AutoTagger:
 
 
 if __name__ == "__main__":
-    tagger = AutoTagger()
+    yolo_tagger = YOLOTagger()
 
-    print(tagger.tag(Path("fixtures/hamburger.jpg")))  # ['cheeseburger']
+    print(yolo_tagger.tag(Path("fixtures/hamburger.jpg")))  # ['cheeseburger']
