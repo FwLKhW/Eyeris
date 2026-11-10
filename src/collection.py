@@ -5,6 +5,8 @@ from subprocess import run
 import pandas as pd
 from crossfiledialog import choose_folder, open_multiple
 
+from src.ss import SS
+
 
 class Collection:
     def __init__(self, path: str | None = None):
@@ -16,6 +18,8 @@ class Collection:
 
         self.db = sqlite3.connect(self.path / "index.db")
         self.db.row_factory = sqlite3.Row
+
+        self.ss = SS(self.path / "embeddings")
 
     def add_images(self):
         image_paths = open_multiple(
