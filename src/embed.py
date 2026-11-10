@@ -7,11 +7,11 @@ class PEEmbed:
 
     def image(self, image: str):
         result = self.model(image)
-        return result.embeddings.data
+        return result.embeddings.data.squeeze(0)
 
     def text(self, text: str):
         embed = self.model.embed_text(text)
-        return embed
+        return embed.squeeze(0)
 
 
 if __name__ == "__main__":
