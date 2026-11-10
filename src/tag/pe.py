@@ -3,7 +3,7 @@ from libreyolo.models import LibreYOLO
 
 # Perception Encoder
 class PETagger:
-    model = LibreYOLO("LibrePEl14-cls.pt")
+    model = LibreYOLO("LibrePEt16-cls.pt")
     threshold = 0.65
 
     def set_tags(self, tags: list[str]):
