@@ -2,6 +2,7 @@ import sqlite3
 from pathlib import Path
 from subprocess import run
 
+import pandas as pd
 from crossfiledialog import choose_folder, open_multiple
 
 
@@ -35,3 +36,12 @@ class Collection:
             ["target/release/cli", str(self.path), "add", "folder", image_folder_path],
             check=False,
         )
+
+    def images_df(self) -> pd.DataFrame:
+        df = pd.read_sql_query("SELECT * FROM images", self.db)
+
+        base_path = f"{self.path}/images/"
+        df["path"] = base_path + df["hash"] + "/" + df["fullname"]
+        df["thumb_path"] = base_path + df["hash"] + "/thumbnail.png"
+
+        return df
