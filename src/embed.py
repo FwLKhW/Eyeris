@@ -3,7 +3,7 @@ from libreyolo.models import LibreYOLO
 
 # Perception Encoder
 class PEEmbed:
-    model = LibreYOLO("LibrePEt16-cls.pt", task="embed")
+    model = LibreYOLO("LibrePEl14-cls.pt", task="embed")
 
     def image(self, image: str):
         result = self.model(image)

@@ -23,6 +23,7 @@ class SS:
 
         cnt = 0
         total = len(images_data)
+        print(f"Start indexing {total} images")
         for i in range(0, len(images_data), batch_size):
             batch_images = images_data[i : i + batch_size]
 
