@@ -1,14 +1,20 @@
 <h1 align="center"><strong>Eyeris</strong></h1>
 
-<p align="center">Image Management System</p>
+<p align="center">A Digital Asset Management for the rest of us</p>
 
 <p align="center"><i>*Something like <a src="https://www.digikam.org/"><strong>digiKam</strong></a> and <a src="https://eagle.cool/"><strong>Eagle</strong></a> but haven't been yet any stable.*</i></p>
 
 &nbsp;
 
+> [!NOTE]
+> **Repository Archived**  
+> This repository was publicly archived on November 11, 2026. Now read-only and no longer maintained.
+
+&nbsp;
+
 ## 🖼️ **Screenshots**
 
-No. Not now.
+![GUI](assets/imgs/gui.png)
 
 &nbsp;
 
