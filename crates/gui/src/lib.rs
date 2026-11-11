@@ -103,7 +103,7 @@ pub fn load_collection(c: &Collection) -> Result<Vec<Item>> {
 /// 
 /// IO errors.
 pub fn save_rating(c: &Collection, it: &Item) -> Result<()> {
-    xmp::write_rating(&c.image_path(&it.hash, &it.fullname), it.rating)?;
+    // xmp::write_rating(&c.image_path(&it.hash, &it.fullname), it.rating)?;
     Connection::open(&c.index_db_path)?.execute(
         "UPDATE images SET rating = ?1 WHERE hash = ?2",
         params![i64::from(it.rating), it.hash],
@@ -117,7 +117,7 @@ pub fn save_rating(c: &Collection, it: &Item) -> Result<()> {
 /// 
 /// IO errors.
 pub fn save_tags(c: &Collection, it: &Item) -> Result<()> {
-    xmp::write_tags(&c.image_path(&it.hash, &it.fullname), &it.tags)?;
+    // xmp::write_tags(&c.image_path(&it.hash, &it.fullname), &it.tags)?;
     Connection::open(&c.index_db_path)?.execute(
         "UPDATE images SET tags = ?1 WHERE hash = ?2",
         params![it.tags.join("|"), it.hash],
