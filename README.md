@@ -8,7 +8,7 @@
 
 > [!NOTE]
 > **Repository Archived**  
-> This repository was publicly archived on November 11, 2026. Now read-only and no longer maintained.
+> This repository was publicly archived on November 2026. Now read-only and no longer maintained.
 
 &nbsp;
 

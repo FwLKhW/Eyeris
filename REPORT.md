@@ -17,7 +17,7 @@
 
 **Date:** November 2026
 
-**Repository:** [FwLKhW/Eyeris](https://github.com/FwLKhW/Eyeris) · Archived on Nov 11, 2026
+**Repository:** [FwLKhW/Eyeris](https://github.com/FwLKhW/Eyeris) · Archived on Nov 2026
 
 **Keywords:** digital asset management, image indexing, image tagging, semantic search, vision-language embeddings, Rust, Python
 
@@ -298,7 +298,7 @@ Each new feature (tags, filters, GUI edits) touched the database from a differen
 
 ### 7.1 Archived
 
-The repository was archived on November 11, 2026.
+The repository was archived on November 2026.
 
 The current architecture is so poorly designed to be growth. And continuing to build on it would make our brain explode.
 
